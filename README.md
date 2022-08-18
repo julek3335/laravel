@@ -1,15 +1,56 @@
-```mkdir <nazwa projektu>
-cd <nazwa projektu>
-curl -LO https://raw.githubusercontent.com/bitnami/containers/main/bitnami/laravel/docker-compose.yml # albo czymkolwiek to pobrać
+## Opis
+projekt składa się z:
+- aplikacji laravel port 8000
+- bazy danych mariadb port 3306
+- adminera port 8080
 
-docker-compose up # chwile to trwa 2-3min. czekaj na komunikat  INFO  Server running on [http://0.0.0.0:8000]
 
-w nowym oknie
 
-cd my-project # folder wewnątrz <nazwa projektu> który utworzył docker-compose
 
-git init
-git reset --hard
-git clean -fd
-git pull git@github.com:julek3335/laravel.git
 
+## Instrukcja uruchomienia po raz pierwszy:
+### Linux
+```bash
+git clone https://github.com/julek3335/laravel.git
+
+cd laravel/
+
+rm -rf project
+
+docker compose up #uruchomienie moze trwać 2-3 min
+
+Ctrl-C
+
+git restore .
+
+docker compose up
+```
+### Windows
+```cmd
+git clone https://github.com/julek3335/laravel.git
+
+cd laravel/
+
+rmdir project
+
+docker compose up  #uruchomienie moze trwać 2-3 min
+
+Ctrl-C
+
+git restore .
+
+docker compose up
+```
+
+## Interkcja z kontenerem:
+uruchomienie pojedyńczego polecenia
+```bash
+docker exec <laravel container id> <polecenie>
+# np.
+docker exec 544363 php artisan migrate:fresh
+```
+wejscie w wiersz poleceń w kontenerze:
+```bash
+docker exec -it <laravel container id> /bin/sh
+bash
+```
