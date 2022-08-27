@@ -166,13 +166,6 @@ trait HasAttributes
     protected static $setAttributeMutatorCache = [];
 
     /**
-     * The cache of the converted cast types.
-     *
-     * @var array
-     */
-    protected static $castTypeCache = [];
-
-    /**
      * The encrypter instance that is used to encrypt attributes.
      *
      * @var \Illuminate\Contracts\Encryption\Encrypter
@@ -825,23 +818,19 @@ trait HasAttributes
      */
     protected function getCastType($key)
     {
-        $castType = $this->getCasts()[$key];
-
-        if (isset(static::$castTypeCache[$castType])) {
-            return static::$castTypeCache[$castType];
+        if ($this->isCustomDateTimeCast($this->getCasts()[$key])) {
+            return 'custom_datetime';
         }
 
-        if ($this->isCustomDateTimeCast($castType)) {
-            $convertedCastType = 'custom_datetime';
-        } elseif ($this->isImmutableCustomDateTimeCast($castType)) {
-            $convertedCastType = 'immutable_custom_datetime';
-        } elseif ($this->isDecimalCast($castType)) {
-            $convertedCastType = 'decimal';
-        } else {
-            $convertedCastType = trim(strtolower($castType));
+        if ($this->isImmutableCustomDateTimeCast($this->getCasts()[$key])) {
+            return 'immutable_custom_datetime';
         }
 
-        return static::$castTypeCache[$castType] = $convertedCastType;
+        if ($this->isDecimalCast($this->getCasts()[$key])) {
+            return 'decimal';
+        }
+
+        return trim(strtolower($this->getCasts()[$key]));
     }
 
     /**
@@ -893,8 +882,8 @@ trait HasAttributes
      */
     protected function isImmutableCustomDateTimeCast($cast)
     {
-        return str_starts_with($cast, 'immutable_date:') ||
-                str_starts_with($cast, 'immutable_datetime:');
+        return strncmp($cast, 'immutable_date:', 15) === 0 ||
+               strncmp($cast, 'immutable_datetime:', 19) === 0;
     }
 
     /**
@@ -1200,7 +1189,7 @@ trait HasAttributes
      */
     public function fromJson($value, $asObject = false)
     {
-        return json_decode($value ?? '', ! $asObject);
+        return json_decode($value, ! $asObject);
     }
 
     /**
@@ -1502,13 +1491,11 @@ trait HasAttributes
      */
     protected function isClassCastable($key)
     {
-        $casts = $this->getCasts();
-
-        if (! array_key_exists($key, $casts)) {
+        if (! array_key_exists($key, $this->getCasts())) {
             return false;
         }
 
-        $castType = $this->parseCasterClass($casts[$key]);
+        $castType = $this->parseCasterClass($this->getCasts()[$key]);
 
         if (in_array($castType, static::$primitiveCastTypes)) {
             return false;
@@ -1529,13 +1516,11 @@ trait HasAttributes
      */
     protected function isEnumCastable($key)
     {
-        $casts = $this->getCasts();
-
-        if (! array_key_exists($key, $casts)) {
+        if (! array_key_exists($key, $this->getCasts())) {
             return false;
         }
 
-        $castType = $casts[$key];
+        $castType = $this->getCasts()[$key];
 
         if (in_array($castType, static::$primitiveCastTypes)) {
             return false;
