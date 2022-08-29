@@ -159,12 +159,10 @@ class Vite
             ));
 
             foreach ($manifest[$entrypoint]['css'] ?? [] as $css) {
-                $partialManifest = Collection::make($manifest)->where('file', $css);
-
                 $tags->push($this->makeTagForChunk(
-                    $partialManifest->keys()->first(),
+                    $entrypoint,
                     asset("{$buildDirectory}/{$css}"),
-                    $partialManifest->first(),
+                    $manifest[$entrypoint],
                     $manifest
                 ));
             }
