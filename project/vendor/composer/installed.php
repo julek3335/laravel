@@ -10,6 +10,15 @@
         'dev' => true,
     ),
     'versions' => array(
+        'almasaeed2010/adminlte' => array(
+            'pretty_version' => 'v3.2.0',
+            'version' => '3.2.0.0',
+            'reference' => 'bd4d9c72931f1dd28601b6bfb387554a381ad540',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../almasaeed2010/adminlte',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'brick/math' => array(
             'pretty_version' => '0.10.1',
             'version' => '0.10.1.0',
@@ -357,6 +366,15 @@
             'replaced' => array(
                 0 => 'v9.23.0',
             ),
+        ),
+        'jeroennoten/laravel-adminlte' => array(
+            'pretty_version' => 'v3.8.4',
+            'version' => '3.8.4.0',
+            'reference' => 'f06dfd13a16b7449e89fb12a768184edd5db9bbc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jeroennoten/laravel-adminlte',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,

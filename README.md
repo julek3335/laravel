@@ -54,3 +54,6 @@ wejscie w wiersz poleceń w kontenerze:
 docker exec -it <laravel container id> /bin/sh
 bash
 ```
+
+## Wykorzystane biblioteki
+- AdminLTE - szata graficzna aplikacji - https://github.com/jeroennoten/Laravel-AdminLTE/
