@@ -58,6 +58,7 @@ bash
 niestety trzeba to wykanać po każdym uruchomieniu kontenera
 ```bash
 docker exec -it laravel-myapp-1 bash -c "composer require jeroennoten/laravel-adminlte ; php artisan adminlte:install -n ;composer require laravel/breeze --dev;php artisan breeze:install;npm install; npm run dev"
+^C
 ```
 
 ## Wykorzystane biblioteki
