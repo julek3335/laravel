@@ -16,23 +16,35 @@
     <form>
         <div class="card-body">
             <div class="form-group">
-                <label for="exampleInputEmail1">Adres Email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="wpisz adres email">
+                <label for="exampleInputName1">Imię</label>
+                <input type="text" class="form-control" id="exampleInputName1" placeholder="imię">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Hasło</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Hasło">
+                <label for="exampleInputSurname1">Nazwisko</label>
+                <input type="text" class="form-control" id="exampleInputSurname1" placeholder="nazwisko">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Imię</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Imię">
+                <label for="exampleInputBirthDate1">Data urodzenia</label>
+                <input type="text" class="form-control" id="exampleInputBirthDate" placeholder="data urodzenia">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Nazwisko</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nazwisko">
+                <label for="exampleInputPhoneNumber1">Numer telefonu</label>
+                <input type="number" class="form-control" id="exampleInputPhoneNuumber1" placeholder="numer telefonu">
             </div>
-
-
+            <div class="form-group">
+                <label for="exampleInputEmail1">Adres email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="e-mail">
+            </div>
+            <div class="form-group">
+                <label for="#">Uprawienia</label>
+                <div class="form-group">
+                    <select class="form-control" id="#">
+                        <option>Administrator</option>
+                        <option>Użytkownik</option>
+                        <option>Value 3</option>
+                    </select>
+                </div>
+            </div>
             <!-- <div class="form-group">
                 <label for="exampleInputFile">Imię</label>
                 <div class="input-group">
