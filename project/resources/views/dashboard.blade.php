@@ -7,6 +7,11 @@
 @stop
 
 @section('content')
+    <div class="row mb-2">
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+            <x-adminlte-button label="Podejmij pojazd" icon="fas plus"/>
+        </div>
+    </div>
     <div class="row">
         <div class="col-6 col-sm-4 col-md-3 col-xl-2">
             <x-adminlte-info-box title="Pojazdy" text="15" icon="fas fa-light fa-car"/>

@@ -34,7 +34,7 @@
     <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="timeline">
             <div class="time-label">
-                <span class="bg-red">10 Feb. 2014</span>
+                <span class="bg-green">25.09.2022</span>
             </div>
 
             <div>
