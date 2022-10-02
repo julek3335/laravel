@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -293,7 +293,7 @@ return [
         // Navbar items:
         [
             'type'         => 'navbar-search',
-            'text'         => 'search',
+            'text'         => 'Szukaj',
             'topnav_right' => true,
         ],
         [
@@ -304,7 +304,7 @@ return [
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Szukaj',
         ],
         [
             'text' => 'blog',
@@ -312,15 +312,23 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text'        => 'Dashboard',
+            'url'         => '/',
+            'icon'        => 'fas fa-tachometer-alt',
         ],
         [
-            'text'        => 'Przykład karty pojazdu',
-            'url'         => 'example-car',
+            'text'        => 'Pojazdy',
+            'url'         => 'vehicles',
+            'icon'        => 'fas fa-light fa-truck',
+        ],
+        [
+            'text'        => 'Utwórz użytkownika',
+            'url'         => 'create-user',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Uprawnienia',
+            'url'         => 'user-rights',
             'icon'        => 'far fa-fw fa-file',
         ],
         ['header' => 'account_settings'],
@@ -426,21 +434,21 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],

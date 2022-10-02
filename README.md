@@ -4,11 +4,7 @@ projekt składa się z:
 - bazy danych mariadb port 3306
 - adminera port 8080
 
-
-
-
-
-## Instrukcja uruchomienia po raz pierwszy:
+## Instrukcja uruchomienia po raz pierwszy
 ### Linux
 ```bash
 git clone https://github.com/julek3335/laravel.git
@@ -41,9 +37,23 @@ git restore .
 
 docker compose up
 ```
+### Instalacja modułów
+
+Linux & Windows
+Wykonujemy tylko za pierwszym razem (po stworzeniu kontenerów).
+
+```bash
+docker exec -it laravel-myapp-1 bash -c "composer require jeroennoten/laravel-adminlte ; php artisan adminlte:install -n ;composer require laravel/breeze --dev;php artisan breeze:install;npm install; npm run dev"
+^C
+
+git restore . #Usuwamy z repo dodane po instalacji modułów pliki
+
+git clean -f #Usuwamy  z repo dodane po instalacji modułów pliki
+
+```
 
 ## Interkcja z kontenerem:
-uruchomienie pojedyńczego polecenia
+Uruchomienie pojedyńczego polecenia
 ```bash
 docker exec <laravel container id> <polecenie>
 # np.
@@ -53,12 +63,6 @@ wejscie w wiersz poleceń w kontenerze:
 ```bash
 docker exec -it <laravel container id> /bin/sh
 bash
-```
-## Uruchomienie modułów
-niestety trzeba to wykanać po każdym uruchomieniu kontenera
-```bash
-docker exec -it laravel-myapp-1 bash -c "composer require jeroennoten/laravel-adminlte ; php artisan adminlte:install -n ;composer require laravel/breeze --dev;php artisan breeze:install;npm install; npm run dev"
-^C
 ```
 
 ## Wykorzystane biblioteki
