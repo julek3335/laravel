@@ -1,6 +1,6 @@
 <?php
 
-// use App\Models\Company;
+use App\Models\Company;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('driving_licence_category')->default('B');
             $table->string('status')->default('free');
             $table->integer('auth_level')->default(0);
-            // $table->foreignIdFor(Company::class)->nullable();
+            $table->foreignIdFor(Company::class)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
