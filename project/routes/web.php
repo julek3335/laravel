@@ -29,14 +29,15 @@ Route::get('/example-car', function () {
     return view('car');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/user-rights', function () {
-    return view('user-rights');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'showAll')->middleware(['auth'])->name('dashboard');;
+    Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');;
+});
 
 Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/user{id}', [UserController::class, 'show']);
+// Route::get('/user{id}', [UserController::class, 'show']);
 
 require __DIR__.'/auth.php';

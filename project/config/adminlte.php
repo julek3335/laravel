@@ -328,7 +328,7 @@ return [
         ],
         [
             'text'        => 'Uprawnienia',
-            'url'         => 'user-rights',
+            'url'         => 'users',
             'icon'        => 'far fa-fw fa-file',
         ],
         ['header' => 'account_settings'],

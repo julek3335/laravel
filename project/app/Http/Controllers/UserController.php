@@ -7,16 +7,11 @@ use App\Models\User;
  
 class UserController extends Controller
 {
-    /**
-     * Show the profile for a given user.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function show($id)
-    {
-        $users = DB::select('select * from users where id = ?', array($id));
+    public function show($id){
+        return view('user', User::findOrFail($id));
+    }
 
-        return view('user', ['users' => $users]);
+    public function showAll(){
+        return view('users', ['users' => User::all()->sortBy("created_at")]);
     }
 }

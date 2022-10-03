@@ -65,5 +65,8 @@ docker exec -it <laravel container id> /bin/sh
 bash
 ```
 
+## Migracja i seed
+docker exec -it laravel-myapp-1 bash -c "php artisan migrate:fresh --seed"
+
 ## Wykorzystane biblioteki
 - AdminLTE - szata graficzna aplikacji - https://github.com/jeroennoten/Laravel-AdminLTE/
