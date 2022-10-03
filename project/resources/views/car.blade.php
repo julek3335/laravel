@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Pojazd Ford Custom')
 
 @section('content_header')
     <h1>Pojazd Ford Custom</h1>
@@ -8,7 +8,7 @@
 
 @section('content')
     <x-adminlte-alert theme="warning" title="Przegląd olejowy" dismissable>
-        Zbliża się inerwał serwisu olejowego. Do <strong>17.09.2022 r.</strong> należy wykonać serwis.
+        Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
     </x-adminlte-alert>
     <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
@@ -22,19 +22,32 @@
         </div>
         
     </x-adminlte-card>
-
+    <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+        <div class="row">
+            <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                <x-adminlte-button label="Podejmij pojazd" icon="fas fa-light fa-plus"/>
+            </div>
+        </div>
+        
+    </x-adminlte-card>
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <x-adminlte-input name="iLabel" label="Marka" placeholder="Ford"
                 fgroup-class="col-md-6" value="Ford" disable-feedback/>
             <x-adminlte-input name="iLabel" label="Model" placeholder="Custom"
                 fgroup-class="col-md-6" value="Custom" disable-feedback/>
-        </div>   
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <x-adminlte-button label="Zapisz" theme="success" class="float-right" icon="fas fa-save"/>
+                
+            </div>
+        </div>
     </x-adminlte-card>
     <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="timeline">
             <div class="time-label">
-                <span class="bg-red">10 Feb. 2014</span>
+                <span class="bg-green">25.09.2022</span>
             </div>
 
             <div>
