@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IncidentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,15 @@ Route::get('/create-user', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/user{id}', [UserController::class, 'show']);
+
+Route::get('/incident', [IncidentController::class, 'show']);
+
+Route::get('/incident-create', function () {
+    return view('incident.create');
+});
+
+Route::post('/incident-create', [IncidentController::class, 'store']);
+
+
 
 require __DIR__.'/auth.php';
