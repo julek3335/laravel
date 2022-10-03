@@ -18,4 +18,9 @@ class Vehicle extends Model
     {
         return $this->hasMany(RegistrationCard::class);
     }
+
+    public function incidents(): HasMany
+    {
+        return $this->hasMany(Incident::class);
+    }
 }

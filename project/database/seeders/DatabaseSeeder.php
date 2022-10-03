@@ -5,6 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use \App\Models\Vehicle;
+use \App\Models\Company;
+use \App\Models\User;
+use \App\Models\Incident;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,8 +19,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        \App\Models\Company::factory(5)->has(\App\Models\User::factory()-> count(3))->create();
-        $vehicles = Vehicle::factory(25)->hasRegistrationCards()->create();
+        Company::factory(5)->has(User::factory()-> count(3))->create();
+        $vehicles = Vehicle::factory(25)->hasRegistrationCards()->has(Incident::factory())->create();
 
     }
 }
