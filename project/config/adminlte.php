@@ -329,7 +329,7 @@ return [
         [
             'text'        => 'Uprawnienia',
             'url'         => 'users',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'far fa-address-card',
         ],
         ['header' => 'account_settings'],
         [
