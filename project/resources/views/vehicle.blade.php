@@ -3,7 +3,7 @@
 @section('title', 'Pojazd - ...')
 
 @section('content_header')
-    <h1>Pojazd - {{ $name }}</h1>
+    <h1>Pojazd - {{ $vehicle->name }}</h1>
 @stop
 
 @section('content')
@@ -33,10 +33,16 @@
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-6">
-                <x-adminlte-input name="iLabel" label="Marka" placeholder="Ford"
+                <x-adminlte-input name="name" label="Nazwa" placeholder="Nazwa"
+                    value="{{ $vehicle->name }}" disable-feedback/>
+                <x-adminlte-input name="mark" label="Marka" placeholder="Ford"
                     value="Ford" disable-feedback/>
-                <x-adminlte-input name="iLabel" label="Model" placeholder="Custom"
+                <x-adminlte-input name="model" label="Model" placeholder="Custom"
                     value="Custom" disable-feedback/>
+                <x-adminlte-input name="license_plate" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
+                    value="{{ $vehicle->license_plate }}" disable-feedback/>
+                <x-adminlte-input name="vehicle_identification_number" label="Numer VIN" placeholder="Numer VIN"
+                    value="{{ $registration_card->vehicle_identification_number	}}" disable-feedback/>   
                 <x-adminlte-select-bs name="selBsVehicle" label="Typ" 
                     data-title="Wybierz typ ..." data-live-search
                     data-live-search-placeholder="Wybierz typ ..." data-show-tick>
@@ -106,6 +112,9 @@
                         <strong>Przebieg</strong> <span class="float-right">125 458 km</span>
                     </li>
                     <li class="list-group-item">
+                        <strong>Status</strong> <a href="#" class="float-right">{{ $vehicle->status }}</a>
+                    </li>
+                    <li class="list-group-item">
                         <strong>Akcje serwisowe</strong> <a href="#" class="float-right">5</a>
                     </li>
                     <li class="list-group-item">
@@ -114,6 +123,12 @@
                     <li class="list-group-item">
                         <strong>Zarejestrowane trasy</strong> <a href="#" class="float-right">254</a>
                     </li>
+                    <li class="list-group-item">
+                        <strong>Data utworzenia</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->updated_at)) }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Ostatnia aktualizacja</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->updated_at)) }}</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -121,13 +136,13 @@
     <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="timeline">
             <div class="time-label">
-                <span class="bg-blue">{{ date('d.m.Y', strtotime($updated_at)) }}</span>
+                <span class="bg-blue">{{ date('d.m.Y', strtotime($vehicle->updated_at)) }}</span>
             </div>
 
             <div>
                 <i class="fas fa-save bg-yellow"></i>
                 <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($updated_at)) }}</span>
+                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($vehicle->updated_at)) }}</span>
                     <h3 class="timeline-header"><a href="#">Aktualizacja</a></h3>
                     <div class="timeline-body">
                         Aktualizacja danych.
@@ -136,13 +151,13 @@
             </div>
 
             <div class="time-label">
-                <span class="bg-green">{{ date('d.m.Y', strtotime($created_at)) }}</span>
+                <span class="bg-green">{{ date('d.m.Y', strtotime($vehicle->created_at)) }}</span>
             </div>
 
             <div>
                 <i class="fa fa-car bg-yellow"></i>
                 <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($created_at)) }}</span>
+                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($vehicle->created_at)) }}</span>
                     <h3 class="timeline-header"><a href="#">Utworzenie pojazdu</a></h3>
                     <div class="timeline-body">
                         <p>Pojazd został stworzony</p>
