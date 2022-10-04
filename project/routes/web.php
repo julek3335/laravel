@@ -32,6 +32,7 @@ Route::get('/example-car', function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'showAll')->middleware(['auth'])->name('dashboard');;
     Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');;
+    Route::post('/users', [UserController::class, 'created']);
 });
 
 Route::get('/create-user', function () {

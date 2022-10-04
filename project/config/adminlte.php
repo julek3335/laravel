@@ -327,7 +327,7 @@ return [
             'icon'        => 'far fa-fw fa-file',
         ],
         [
-            'text'        => 'Uprawnienia',
+            'text'        => 'Użytkownicy',
             'url'         => 'users',
             'icon'        => 'far fa-address-card',
         ],

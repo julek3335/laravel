@@ -13,27 +13,28 @@
     </div>
 
 
-    <form>
+    <form action="/users" method="POST">
+        @csrf
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputName1">Imię</label>
-                <input type="text" class="form-control" id="exampleInputName1" placeholder="imię">
+                <input type="text" class="form-control" id="exampleInputName1" placeholder="imię" name="name">
             </div>
             <div class="form-group">
                 <label for="exampleInputSurname1">Nazwisko</label>
-                <input type="text" class="form-control" id="exampleInputSurname1" placeholder="nazwisko">
+                <input type="text" class="form-control" id="exampleInputSurname1" placeholder="nazwisko" name="last_name">
             </div>
             <div class="form-group">
-                <label for="exampleInputBirthDate1">Data urodzenia</label>
-                <input type="text" class="form-control" id="exampleInputBirthDate" placeholder="data urodzenia">
+                <label for="exampleInputInputEmail">email</label>
+                <input type="email" class="form-control" id="exampleInputEmail" placeholder="email" name="email">
             </div>
             <div class="form-group">
-                <label for="exampleInputPhoneNumber1">Numer telefonu</label>
-                <input type="number" class="form-control" id="exampleInputPhoneNuumber1" placeholder="numer telefonu">
+                <label for="exampleInputDrivingLicence">Prawo jazdy</label>
+                <input type="text" class="form-control" id="exampleInputDrivingLicence" placeholder="Prawo jazdy" name="driving_licence_category">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Adres email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="e-mail">
+                <label for="exampleInputPassword">Hasło</label>
+                <input type="text" class="form-control" id="exampleInputPassword" placeholder="e-mail" name="password">
             </div>
             <div class="form-group">
                 <label for="#">Uprawienia</label>
