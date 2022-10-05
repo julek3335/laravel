@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword">Hasło</label>
-                <input type="text" class="form-control" id="exampleInputPassword" placeholder="e-mail" name="password">
+                <input type="text" class="form-control" id="exampleInputPassword" placeholder="Hasło" name="password">
             </div>
             <div class="form-group">
                 <label for="#">Uprawienia</label>

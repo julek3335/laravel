@@ -13,6 +13,21 @@ class UserController extends Controller
         return view('user', User::findOrFail($id));
     }
 
+    public function userToEdit($id){
+        return view('edit-user', User::findOrFail($id));
+    }
+
+    public function updateUser(Request $request, $id){
+        $updateUser = User::find($id);
+        $updateUser->name = $request->input('name');
+        $updateUser->last_name = $request->input('last_name');
+        $updateUser->status = $request->input('status');
+        $updateUser->email = $request->input('email');
+        $updateUser->driving_licence_category = $request->input('driving_licence_category');
+        $updateUser->update();
+        return view('user', User::findOrFail($id));
+    }
+
     public function showAll(){
         return view('users', ['users' => User::all()->sortBy("created_at")]);
     }
