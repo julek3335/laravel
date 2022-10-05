@@ -41,6 +41,10 @@ Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/reservations', function () {
+    return view('reservations');
+})->middleware(['auth'])->name('dashboard');
+
 // Route::get('/user{id}', [UserController::class, 'show']);
 
 require __DIR__.'/auth.php';
