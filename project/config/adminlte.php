@@ -331,6 +331,11 @@ return [
             'url'         => 'users',
             'icon'        => 'far fa-address-card',
         ],
+        [
+            'text'        => 'Rezerwacje',
+            'url'         => 'reservations',
+            'icon'        => 'far fa-address-card',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
