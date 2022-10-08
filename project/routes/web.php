@@ -43,6 +43,8 @@ Route::get('/incident-create', function () {
     return view('incident.create');
 });
 
+Route::get('/incident-show{id}', [IncidentController::class, 'show']);
+
 Route::post('/incident-create', [IncidentController::class, 'store']);
 
 

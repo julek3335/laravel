@@ -14,6 +14,7 @@ class Incident extends Model
         'description',
         'photo',
         'address',
+        'status',
         'vehicle_id',
     ];
 

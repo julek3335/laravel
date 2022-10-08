@@ -1,4 +1,4 @@
-<form action="/incident-create" method="post">
+<form action="/incident-create" method="post" enctype="multipart/form-data">
     <!-- Add CSRF Token -->
     @csrf
 <div class="form-group">
@@ -18,6 +18,9 @@
 
 <label>car id</label>
 <input type="number"class="form-control" name="vehicle_id" required>
+
+<label>status</label>
+<input type="text"class="form-control" name="status" required>
 
 <button type="submit">Submit</button>
 </form>

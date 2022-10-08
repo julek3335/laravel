@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('address');
             $table->string('photo');
+            $table->string('status');
             $table->foreignIdFor(Vehicle::class)->nullable();
             $table->timestamps();
         });
