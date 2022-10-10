@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +16,13 @@ use App\Http\Controllers\VehicleController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');;
+});
 
 Route::controller(VehicleController::class)->group(function () {
     Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
-    //Route::post('/orders', 'store');
 });
 
 Route::get('/example-car', function () {
