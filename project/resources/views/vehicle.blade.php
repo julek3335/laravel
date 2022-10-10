@@ -33,15 +33,15 @@
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-6">
-                <x-adminlte-input name="name" label="Nazwa" placeholder="Nazwa"
+                <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa"
                     value="{{ $vehicle->name }}" disable-feedback/>
-                <x-adminlte-input name="mark" label="Marka" placeholder="Ford"
+                <x-adminlte-input name="mark" type="text" label="Marka" placeholder="Ford"
                     value="Ford" disable-feedback/>
-                <x-adminlte-input name="model" label="Model" placeholder="Custom"
+                <x-adminlte-input name="model" type="text" label="Model" placeholder="Custom"
                     value="Custom" disable-feedback/>
-                <x-adminlte-input name="license_plate" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
+                <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
                     value="{{ $vehicle->license_plate }}" disable-feedback/>
-                <x-adminlte-input name="vehicle_identification_number" label="Numer VIN" placeholder="Numer VIN"
+                <x-adminlte-input name="vehicle_identification_number" type="text"  label="Numer VIN" placeholder="Numer VIN"
                     value="{{ $registration_card->vehicle_identification_number	}}" disable-feedback/>   
                 <x-adminlte-select-bs name="selBsVehicle" label="Typ" 
                     data-title="Wybierz typ ..." data-live-search
@@ -103,6 +103,18 @@
                     <option>2 000 m3</option>
                     <option>5 000 m3</option>
                 </x-adminlte-select-bs>
+                <x-adminlte-input name="enginPower" type="number" label="Moc silnika (KM)" placeholder="70"
+                    value="{{ $registration_card->engine_power }}" disable-feedback/>
+                <x-adminlte-input name="maxAxleLoad" type="number" label="Maksymalne obciążanie osi (KG)" placeholder="1400"
+                    value="{{ $registration_card->max_axle_load }}" disable-feedback/>
+                <x-adminlte-input name="maxTowedLoad" type="number" label="Maksymalne ciężar holowania (KG)" placeholder="1600"
+                    value="{{ $registration_card->max_towed_load }}" disable-feedback/>
+                <x-adminlte-input name="axle" type="number" label="Ilość osi" placeholder="2"
+                    value="{{ $registration_card->axle }}" disable-feedback/>
+                <x-adminlte-input name="sitingPlaces" type="number" label="Ilość miejsc siedzących" placeholder="5"
+                    value="{{ $registration_card->siting_places }}" disable-feedback/>
+                <x-adminlte-input name="standingPlaces" type="number" label="Ilość miejsc stojących" placeholder="0"
+                    value="{{ $registration_card->standing_places }}" disable-feedback/>
 
                 <x-adminlte-button label="Zapisz" theme="success" class="float-right" icon="fas fa-save"/>
             </div>
