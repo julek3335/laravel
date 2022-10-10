@@ -25,7 +25,7 @@
     <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                <x-adminlte-button label="Podejmij pojazd" icon="fas fa-light fa-plus"/>
+                @include('partials.vehicle.pickup')
             </div>
         </div>
         
