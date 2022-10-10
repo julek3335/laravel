@@ -64,6 +64,9 @@ wejscie w wiersz poleceń w kontenerze:
 docker exec -it <laravel container id> /bin/sh
 bash
 ```
-
+## ustawienie ścieżki storage
+```bash
+docker exec -it laravel-myapp-1  php artisan storage:link
+```
 ## Wykorzystane biblioteki
 - AdminLTE - szata graficzna aplikacji - https://github.com/jeroennoten/Laravel-AdminLTE/
