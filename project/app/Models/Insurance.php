@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Insurance extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'policy_number',
+        'expiration_date',
+        'cost',
+        'phone_number',
+        'vehicle_id',
+    ];
 
     /**
      * Relation to Vehicle
