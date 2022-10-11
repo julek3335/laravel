@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DashboardController;
 
@@ -46,5 +47,17 @@ Route::get('/reservations', function () {
 })->middleware(['auth'])->name('dashboard');
 
 // Route::get('/user{id}', [UserController::class, 'show']);
+
+Route::get('/incident', [IncidentController::class, 'show']);
+
+Route::get('/incident-create', function () {
+    return view('incident.create');
+});
+
+Route::get('/incident-show{id}', [IncidentController::class, 'show']);
+
+Route::post('/incident-create', [IncidentController::class, 'store']);
+
+
 
 require __DIR__.'/auth.php';
