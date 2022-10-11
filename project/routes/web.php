@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidentController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,27 +17,36 @@ use App\Http\Controllers\IncidentController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');;
+});
 
-Route::get('/vehicles', function () {
-    return view('vehicles');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(VehicleController::class)->group(function () {
+    Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('dashboard');;
+    Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
+});
 
 Route::get('/example-car', function () {
     return view('car');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/user-rights', function () {
-    return view('user-rights');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'showAll')->middleware(['auth'])->name('dashboard');;
+    Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');;
+    Route::post('/users', [UserController::class, 'created']);
+    Route::put('/edit-user/{id}', [UserController::class, 'updateUser']);
+    Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
+});
 
 Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/user{id}', [UserController::class, 'show']);
+Route::get('/reservations', function () {
+    return view('reservations');
+})->middleware(['auth'])->name('dashboard');
+
+// Route::get('/user{id}', [UserController::class, 'show']);
 
 Route::get('/incident', [IncidentController::class, 'show']);
 
