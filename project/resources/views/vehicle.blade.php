@@ -11,6 +11,18 @@
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
     </x-adminlte-alert>
 
+     @if( $insurance_importance_in_7_days )
+            <x-adminlte-alert theme="warning" title="Ubezpieczenie straci ważność w przeciągu tygodnia!" dismissable>
+            Ubezpieczenie straci ważność dnia: <strong>{{ $insurances->expiration_date }}</strong> należy wykupić nowe.
+            </x-adminlte-alert>
+    @endif
+
+    @if( $insurance_importance_end )
+            <x-adminlte-alert theme="danger" title="Ubezpieczenie pojazdu straciło ważność!" dismissable>
+            Ubezpieczenie straciło ważność dnia: <strong>{{ $insurances->expiration_date }}</strong> należy wykupić nowe.
+            </x-adminlte-alert>
+    @endif
+
     <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
             <div class="col-sm-4">
@@ -39,14 +51,14 @@
     <x-adminlte-card title="Ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
             <div class="col-sm-6">
-                <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa"
-                    value="{{ $vehicle->name }}" disable-feedback/>
-                <x-adminlte-input name="mark" type="text" label="Marka" placeholder="Ford"
-                    value="Ford" disable-feedback/>
-                <x-adminlte-input name="model" type="text" label="Model" placeholder="Custom"
-                    value="Custom" disable-feedback/>
-                <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
-                    value="{{ $vehicle->license_plate }}" disable-feedback/>
+                <x-adminlte-input name="policy_number" type="text" label="Numer ubezpieczenia" placeholder="Numer ubezpieczenia"
+                    value="{{ $insurances->policy_number }}" disable-feedback/>
+                <x-adminlte-input name="expiration_date" type="text" label="Data wygaśnięcia" placeholder="Data wygaśnięcia"
+                    value="{{ $insurances->expiration_date }}" disable-feedback/>
+                <x-adminlte-input name="cost" type="text" label="Koszt" placeholder="Koszt"
+                    value="{{ $insurances->cost }}" disable-feedback/>
+                <x-adminlte-input name="contact_number" type="text" label="Numer kontaktowy" placeholder="Numer kontaktowy"
+                    value="{{ $insurances->phone_number }}" disable-feedback/>
                 <x-adminlte-button label="Zapisz" theme="success" class="float-right" icon="fas fa-save"/>
             </div>
         </div>
