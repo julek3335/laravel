@@ -41,7 +41,7 @@
                         <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Aktywność</a></li>
                             <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Edycja</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#edit" data-toggle="tab">Edycja</a></li>
                         </ul>
                     </div>
                     <div class="card-body">
@@ -153,51 +153,9 @@
                                 </div>
                             </div>
 
-                            <!-- ustawienia -->
-                            <div class="tab-pane" id="settings">
-                                <form class="form-horizontal">
-                                    <div class="form-group row">
-                                        <label for="inputName" class="col-sm-2 col-form-label">Imię</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputName" placeholder="Imię">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputLastname" class="col-sm-2 col-form-label">Nazwisko</label>
-                                        <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputLastname" placeholder="Nazwisko">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputExperience" class="col-sm-2 col-form-label">Uprawnienia</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" id="inputExperience" placeholder="Uprawnienia"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputStatus" class="col-sm-2 col-form-label">Status</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputStatus" placeholder="Status">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="inputAppUp" class="col-sm-2 col-form-label">Uprawnienia w aplikacji</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputAppUp" placeholder="Uprawnienia w aplikacji">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Zatwierdź</button>
-                                        </div>
-                                    </div>
-                                </form>
+                            <!-- edycja -->
+                            <div class="tab-pane" id="edit">
+                                @include('partials.user.create_user_form')
                             </div>
                         </div>
                     </div>
