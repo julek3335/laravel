@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'full_name'                   => 'Imię i nazwisko',
     'email'                       => 'Email',
     'password'                    => 'Hasło',
@@ -25,4 +24,5 @@ return [
     'verify_if_not_recieved'      => 'Jeśli nie otrzymałeś emaila',
     'verify_request_another'      => 'kliknij tutaj, aby poprosić o inny',
     'confirm_password_message'    => 'Aby kontynuować, proszę potwierdzić swoje hasło.',
+    'Close' => "Zamknij"
 ];

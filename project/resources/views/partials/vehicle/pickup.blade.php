@@ -1,6 +1,5 @@
 <x-adminlte-button label="Podejmij pojazd" icon="fas fa-light fa-plus" data-toggle="modal" data-target="#modalPickupVehicle" id="modalPickupVehicleButton"/>
-<x-adminlte-modal id="modalPickupVehicle" title="Podjęcie pojazdu" theme="light"
-    icon="fas fa-bolt">
+<x-adminlte-modal id="modalPickupVehicle" title="Podjęcie pojazdu" theme="light" icon="fas fa-bolt">
     <x-adminlte-select-bs name="carsList" label="Wybierz pojazd" 
         data-title="Wybierz pojazd ..." data-live-search
         data-live-search-placeholder="Wybierz pojazd ..." data-show-tick>
@@ -31,7 +30,10 @@
     <x-adminlte-input name="endLocalization" type="text" label="Lokalizacja końcowa" placeholder="Warszawa"
         disable-feedback/>
     <x-adminlte-input name="" type="number" label="Stan licznika" disable-feedback/>
-    <x-adminlte-button label="Podejmij pojazd" theme="success" class="float-right" icon="fas fa-arrow-alt-circle-right"/>
+    <x-slot name="footerSlot">
+        <x-adminlte-button label="Podejmij pojazd" theme="success" class="mr-auto" icon="fas fa-arrow-alt-circle-right"/>
+        <x-adminlte-button theme="danger" label="Zamknij" data-dismiss="modal"/>
+    </x-slot>
 </x-adminlte-modal>
 @section('js')
     <script>
