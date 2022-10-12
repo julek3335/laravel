@@ -10,6 +10,7 @@
     <x-adminlte-alert theme="warning" title="Przegląd olejowy" dismissable>
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
     </x-adminlte-alert>
+
     <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
             <div class="col-sm-4">
@@ -20,16 +21,37 @@
                     progress=96 progress-theme="dark" description="Pozostało: 500 km, 28 dni."/>
             </div>
         </div>
-        
     </x-adminlte-card>
+
     <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                 @include('partials.vehicle.pickup')
             </div>
+            <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                <a href="/calendar/{{ $vehicle->id }}">
+                    <x-adminlte-button label="Zarezerwuj pojazd" icon="fas fa-light fa-plus"/>
+                </a>
+            </div>
         </div>
-        
     </x-adminlte-card>
+
+    <x-adminlte-card title="Ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+        <div class="row">
+            <div class="col-sm-6">
+                <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa"
+                    value="{{ $vehicle->name }}" disable-feedback/>
+                <x-adminlte-input name="mark" type="text" label="Marka" placeholder="Ford"
+                    value="Ford" disable-feedback/>
+                <x-adminlte-input name="model" type="text" label="Model" placeholder="Custom"
+                    value="Custom" disable-feedback/>
+                <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
+                    value="{{ $vehicle->license_plate }}" disable-feedback/>
+                <x-adminlte-button label="Zapisz" theme="success" class="float-right" icon="fas fa-save"/>
+            </div>
+        </div>
+    </x-adminlte-card>
+
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-6">

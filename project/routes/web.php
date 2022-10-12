@@ -24,6 +24,8 @@ Route::controller(DashboardController::class)->group(function () {
 Route::controller(VehicleController::class)->group(function () {
     Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
+    Route::get('/calendar/{id}', 'showCalendar')->middleware(['auth'])->name('dashboard');;
+
 });
 
 Route::get('/example-car', function () {
