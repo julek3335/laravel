@@ -16,6 +16,9 @@
         'Numer rejestracyjny',
         ['label' => 'Akcja', 'width' => 20],
     ];
+    $dataTableConfig = [
+        'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+    ];
 
     $btnEdit = '<button type="button" class="btn btn-primary ml-1 mr-1" data-toggle="tooltip" title="Edytuj">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
@@ -29,11 +32,6 @@
                         </svg>
 
                     </button>';
-    
-    $config = [
-        'order' => [[1, 'asc']],
-        'columns' => [null, null, null, ['orderable' => false]],
-    ];
     @endphp
 
     <div class="card">
@@ -41,7 +39,7 @@
             <h3 class="card-title">Lista pojazdów</h3>
         </div>
         <div class="card-body">
-            <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable>
+            <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
                 @foreach ($vehicles as $vehicle)
                     <tr>
                         <td>{{ $vehicle->id }}</td>
@@ -65,5 +63,5 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
