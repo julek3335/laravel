@@ -9,6 +9,9 @@ use \App\Models\Company;
 use \App\Models\User;
 use \App\Models\Incident;
 use \App\Models\Insurance;
+use \App\Models\Reservation;
+use \App\Models\RegistrationCard;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,9 +22,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Company::factory(5)->has(User::factory()-> count(3))->create();
-        $vehicles = Vehicle::factory(25)->hasRegistrationCards()->has(Incident::factory())->has(Insurance::factory())->create();
+        
+        // Company::factory(5)
+        //     ->has(User::factory()-> count(3))
+        //     ->create();
+
+        $companys = Company::factory(5)
+            -> has($users = User::factory(10)
+                -> has($reservations = Reservation::factory(2)))
+            -> has($vehicles = Vehicle::factory(25)
+                -> has($registrationCards = RegistrationCard::factory())
+                -> has($incidents = Incident::factory() -> count(3))
+                -> has($insurances = Insurance::factory())
+                -> has($reservations = Reservation::factory(2)))
+            -> create();
 
     }
 }

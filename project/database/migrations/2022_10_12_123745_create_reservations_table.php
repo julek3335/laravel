@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Company;
-use App\Models\RegistrationCard;
+use App\Models\Vehicle;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('name',100);
-            $table->integer('status')->default(0);
-            $table->string('license_plate',20);
-            $table->foreignIdFor(Company::class)->nullable();
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->foreignIdFor(Vehicle::class)->default(1);
+            $table->foreignIdFor(User::class)->default(1);
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('reservations');
     }
 };
