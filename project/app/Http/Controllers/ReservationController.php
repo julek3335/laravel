@@ -19,6 +19,24 @@ class ReservationController extends Controller
         return view('Reservation.showAll', ['reservations' => Reservation::all()->sortBy("created_at")]);
     }
 
+    public function showUserReservations(Request $req){
+        // jezeli poziom uzytkownika edytor lub admin pobiera userId z widoku jezeli poziom uzytkownik pobiera id obecnie zalogowanego uzytkownika
+        if(Auth::user()-> auth_level == 0 || Auth::user()-> auth_level ==1)
+        {
+            $user_id = $req -> user_id;
+        }else{
+            $user_id = Auth::user() -> user_id;
+        }
+
+        return view('reservation.showUserReservations', ['reservations' => Reservation::all()->where('user_id', $user_id)]);
+
+    }
+
+    public function showVehicleReservations(Request $req)
+    {
+        return view('reservation.showVehicleReservations', ['reservations' => Reservation::all()->where('vehicle_id', $req -> vehicle_id)]);
+    }
+
     public function created(Request $req){
         
         // jezeli poziom uzytkownika edytor lub admin pobiera userId z widoku jezeli poziom uzytkownik pobiera id obecnie zalogowanego uzytkownika

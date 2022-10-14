@@ -65,8 +65,17 @@ Route::get('/reservation-create', function () {
 
 Route::post('/reservation-create', [ReservationController::class, 'created']);
 
+Route::get('/reservation-getuser', function () {
+    return view('reservation.getUserReservations');
+});
 
+Route::post('/reservation-getuser', [ReservationController::class, 'showUserReservations']);
 
+Route::get('/reservation-getvehicle', function () {
+    return view('reservation.getVehicleReservations');
+});
+
+Route::post('/reservation-getvehicle', [ReservationController::class, 'showVehicleReservations']);
 
 
 
