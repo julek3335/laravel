@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,15 @@ Route::get('/incident-create', function () {
 Route::get('/incident-show{id}', [IncidentController::class, 'show']);
 
 Route::post('/incident-create', [IncidentController::class, 'store']);
+
+Route::get('/reservation-create', function () {
+    return view('reservation.create');
+});
+
+Route::post('/reservation-create', [ReservationController::class, 'created']);
+
+
+
 
 
 
