@@ -18,7 +18,7 @@ class IncidentFactory extends Factory
     {
         return [
             'date' => fake()->date(),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
             'photo' => "photo1.jpg",
             'status' => fake()->randomElement(['resolved','in_progress','unprocessed']),
             'address' => fake()->address(),

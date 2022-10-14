@@ -18,7 +18,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'description' => fake()->paragraph(),
+            'description' => fake()->paragraph(2),
             'phone_number' => fake()->randomNumber(9, true),
             'address' => fake()->address(),
         ];
