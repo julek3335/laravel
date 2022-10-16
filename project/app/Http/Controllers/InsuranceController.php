@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class InsuranceController extends Controller
 {
@@ -17,6 +18,7 @@ class InsuranceController extends Controller
     }
 
     public function created(Request $req){
+        if(!Gate::allows('admins-editors')){abort(403);}
         $newInsurance = new Insurance;
         $newInsurance -> policy_number = $req -> policy_number;
         $newInsurance -> expiration_date = $req -> expiration_date;
@@ -29,6 +31,8 @@ class InsuranceController extends Controller
      }
 
      public function update(Request $request, $id){
+        if(!Gate::allows('admins-editors')){abort(403);}
+
         $updateInsurance = Insurance::find($id);
         $updateInsurance->policy_number = $request->input('policy_number');
         $updateInsurance->expiration_date = $request->input('expiration_date');
