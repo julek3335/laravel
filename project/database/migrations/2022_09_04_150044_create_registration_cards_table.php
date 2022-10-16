@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Vehicle;
+use App\Models\VehicleType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -33,7 +34,7 @@ return new class extends Migration
             $table->integer('siting_places')->default(5);
             $table->integer('standing_places')->default(0);
             $table->foreignIdFor(Vehicle::class)->nullable();
-            // $table->foreignIdFor(VehicleType::class)->nullable();
+            $table->foreignIdFor(VehicleType::class)->nullable();
             $table->timestamps();
         });
     }

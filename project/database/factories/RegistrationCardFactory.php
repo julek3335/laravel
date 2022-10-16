@@ -32,6 +32,7 @@ class RegistrationCardFactory extends Factory
             'production_year' => $this->faker->year(),
             'max_axle_load' => $this->faker->randomFloat(2,500,3000),
             'max_towed_load' => $this->faker->randomFloat(2,0,8000),
+            'vehicle_type_id' => $this->faker->numberBetween(1, 11),
         ];
     }
 }

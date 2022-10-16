@@ -18,4 +18,9 @@ class RegistrationCard extends Model
     {
         return $this->belongsTo(Vehicle::class);
     }
+    
+    public function vehicleType()
+    {
+        return $this->hasOne(VehicleType::class);
+    }
 }

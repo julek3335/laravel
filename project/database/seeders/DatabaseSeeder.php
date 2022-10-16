@@ -11,7 +11,9 @@ use \App\Models\Incident;
 use \App\Models\Insurance;
 use \App\Models\Reservation;
 use \App\Models\RegistrationCard;
-
+use \App\Models\VehicleType;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,6 +38,17 @@ class DatabaseSeeder extends Seeder
                 -> has($insurances = Insurance::factory())
                 -> has($reservations = Reservation::factory(2)))
             -> create();
+
+        $categories = array('am', 'a1', 'a2', 'a', 'b1', 'b', 'c', 'c1', 'd', 'd1', 't');
+        foreach ($categories as $category)
+        {
+            DB::table('vehicle_types')->insert([
+                'vehicle_type_name' => $category,
+                'created_at' => date("y-m-j G:i:s", time()),
+                'updated_at' => date("Y-m-j G:i:s", time()),
+            ]);
+
+        }
 
     }
 }
