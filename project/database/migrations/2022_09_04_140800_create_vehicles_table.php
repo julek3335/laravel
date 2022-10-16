@@ -19,7 +19,6 @@ return new class extends Migration
             $table->id();
             $table->string('name',100);
             $table->integer('status')->default(0);
-            $table->string('license_plate',20);
             $table->foreignIdFor(Company::class)->nullable();
             $table->timestamps();
         });

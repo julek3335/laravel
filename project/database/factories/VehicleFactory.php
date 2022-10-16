@@ -18,7 +18,6 @@ class VehicleFactory extends Factory
     {
         return [
             'name' => $this->faker->userName(),
-            'license_plate' => $this->faker->word()
         ];
     }
 }
