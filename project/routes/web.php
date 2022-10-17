@@ -25,8 +25,13 @@ Route::controller(DashboardController::class)->group(function () {
 Route::controller(VehicleController::class)->group(function () {
     Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
+    Route::get('/vehicle/add', function () {
+        return view('vehicle.add');
+    })->middleware(['auth'])->name('dashboard');;
+    Route::get('/vehicle/edit/{id}', [VehicleController::class, 'edit']);
+    Route::post('/vehicle/edit/{id}', [VehicleController::class, 'updateVehicle']);
+    Route::post('/vehicle/add', [VehicleController::class, 'store']);
     Route::get('/calendar/{id}', 'showCalendar')->middleware(['auth'])->name('dashboard');;
-
 });
 
 Route::get('/example-car', function () {

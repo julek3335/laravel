@@ -320,6 +320,18 @@ return [
             'text'        => 'Pojazdy',
             'url'         => 'vehicles',
             'icon'        => 'fas fa-light fa-truck',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie pojazdy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'vehicles'
+                    ],
+                    [
+                        'text'  => 'Utwórz pojazd',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'vehicle/add'
+                    ],
+                ],
         ],
         [
             'text'        => 'Utwórz użytkownika',
