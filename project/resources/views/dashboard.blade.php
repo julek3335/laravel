@@ -26,7 +26,9 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                    <x-adminlte-info-box title="Pojazdy" text="{{ $numberOfVehicles }}" icon="fas fa-light fa-car"/>
+                    <a href="/vehicles">
+                        <x-adminlte-info-box title="Pojazdy" text="{{ $numberOfVehicles }}" icon="fas fa-light fa-car"/>
+                    </a>
                 </div>
             </div>
         </div>
