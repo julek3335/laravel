@@ -27,16 +27,22 @@ Route::controller(VehicleController::class)->group(function () {
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicle/add', function () {
         return view('vehicle.add');
-    })->middleware(['auth'])->name('dashboard');;
+    })->middleware(['auth'])->name('dashboard');
+    Route::post('/vehicle/add', [VehicleController::class, 'store']);
     Route::get('/vehicle/edit/{id}', [VehicleController::class, 'edit']);
     Route::post('/vehicle/edit/{id}', [VehicleController::class, 'updateVehicle']);
-    Route::post('/vehicle/add', [VehicleController::class, 'store']);
     Route::get('/calendar/{id}', 'showCalendar')->middleware(['auth'])->name('dashboard');;
 });
 
-Route::get('/example-car', function () {
-    return view('car');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(IncidentController::class)->group(function () {
+    Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident-create', function () {
+        return view('incident.create');
+    })->middleware(['auth'])->name('dashboard');
+    Route::get('/incident-show{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident-create', 'store')->middleware(['auth'])->name('dashboard');
+});
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'showAll')->middleware(['auth'])->name('dashboard');;
@@ -55,16 +61,6 @@ Route::get('/reservations', function () {
 })->middleware(['auth'])->name('dashboard');
 
 // Route::get('/user{id}', [UserController::class, 'show']);
-
-Route::get('/incident', [IncidentController::class, 'show']);
-
-Route::get('/incident-create', function () {
-    return view('incident.create');
-});
-
-Route::get('/incident-show{id}', [IncidentController::class, 'show']);
-
-Route::post('/incident-create', [IncidentController::class, 'store']);
 
 Route::get('/reservation-create', function () {
     return view('reservation.create');

@@ -331,6 +331,11 @@ return [
                         'icon'  => 'fas fa-light fa-plus',
                         'url'   => 'vehicle/add'
                     ],
+                    [
+                        'text'  => 'Usterki',
+                        'icon'  => 'fas fa-light fa-wrench',
+                        'url'   => 'incidents'
+                    ],
                 ],
         ],
         [
