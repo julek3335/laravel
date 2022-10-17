@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vehicle;
+use App\Models\User;
+use App\Models\Incident;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +14,9 @@ class DashboardController extends Controller
     {
         return view('dashboard', [
             'availableVehicles' => Vehicle::all()->where('status', 1), 
-            'numberOfVehicles' => Vehicle::all()->count()
+            'numberOfVehicles'  => Vehicle::all()->count(),
+            'numberOfUsers'     => User::all()->count(), 
+            'numberOfIncidents' => Incident::all()->count()
         ]);
     }
 }
