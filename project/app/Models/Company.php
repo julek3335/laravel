@@ -10,7 +10,12 @@ class Company extends Model
 {
     use HasFactory;
 
-    public function users(): HasMany
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function vehicles()
     {
         return $this->hasMany(User::class);
     }

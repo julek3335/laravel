@@ -14,7 +14,7 @@
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                    <x-adminlte-button label="Podejmij pojazd" icon="fas fa-light fa-plus"/>
+                    @include('partials.vehicle.pickup')
                 </div>
             </div>
         </div>
@@ -26,7 +26,19 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                    <x-adminlte-info-box title="Pojazdy" text="15" icon="fas fa-light fa-car"/>
+                    <a href="/users">
+                        <x-adminlte-info-box title="Użytkownicy" text="{{ $numberOfUsers }}" icon="fas fa-light fa-user"/>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                    <a href="/vehicles">
+                        <x-adminlte-info-box title="Pojazdy" text="{{ $numberOfVehicles }}" icon="fas fa-light fa-car"/>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                    <a href="/incidents">
+                        <x-adminlte-info-box title="Usterki" text="{{ $numberOfIncidents }}" icon="fas fa-light fa-wrench"/>
+                    </a>
                 </div>
             </div>
         </div>
@@ -34,9 +46,9 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop

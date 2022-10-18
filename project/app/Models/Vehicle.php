@@ -20,7 +20,23 @@ class Vehicle extends Model
         return $this->hasMany(RegistrationCard::class);
     }
 
+
     protected $casts = [
         'status' => VehicleStatusEnum::class,
     ];
+
+    public function incidents(): HasMany
+    {
+        return $this->hasMany(Incident::class);
+    }
+
+    public function insurance()
+    {
+        return $this->hasOne(Insurance::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

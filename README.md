@@ -43,7 +43,7 @@ Linux & Windows
 Wykonujemy tylko za pierwszym razem (po stworzeniu kontenerów).
 
 ```bash
-docker exec -it laravel-myapp-1 bash -c "composer require jeroennoten/laravel-adminlte ; php artisan adminlte:install -n ;composer require laravel/breeze --dev;php artisan breeze:install;npm install; npm run dev"
+docker exec -it laravel-myapp-1 bash -c "composer require xvladqt/faker-lorem-flickr; composer require jeroennoten/laravel-adminlte ; php artisan adminlte:install -n ;composer require laravel/breeze --dev;php artisan breeze:install;npm install; npm run dev"
 ^C
 
 git restore . #Usuwamy z repo dodane po instalacji modułów pliki
@@ -63,6 +63,11 @@ wejscie w wiersz poleceń w kontenerze:
 ```bash
 docker exec -it <laravel container id> /bin/sh
 bash
+```
+
+## ustawienie ścieżki storage
+```bash
+docker exec -it laravel-myapp-1  php artisan storage:link
 ```
 
 ## Migracja i seed

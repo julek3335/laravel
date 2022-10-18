@@ -3,7 +3,12 @@
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\InsuranceController;
+use App\Models\Insurance;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +21,45 @@ use App\Http\Controllers\VehicleController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/', DashboardController::class)->middleware(['auth'])->name('dashboard');;
+});
 
 Route::controller(VehicleController::class)->group(function () {
     Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
-    //Route::post('/orders', 'store');
+    Route::get('/vehicle/add', function () {
+        return view('vehicle.add');
+    })->middleware(['auth'])->name('dashboard');
+    Route::post('/vehicle/add', [VehicleController::class, 'store']);
+    Route::get('/vehicle/edit/{id}', [VehicleController::class, 'edit']);
+    Route::post('/vehicle/edit/{id}', [VehicleController::class, 'updateVehicle']);
+    Route::get('/calendar/{id}', 'showCalendar')->middleware(['auth'])->name('dashboard');;
 });
+
 
 Route::controller(JobController::class)->group(function () {
     Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 
 });
-
 Route::get('/example-car', function () {
     return view('car');
 })->middleware(['auth'])->name('dashboard');
+
+Route::controller(InsuranceController::class)->group(function(){
+    Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');;
+    Route::post('/insurance/create-new/{id}', [InsuranceController::class, 'create']);
+});
+
+Route::controller(IncidentController::class)->group(function () {
+    Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident-create', function () {
+        return view('incident.create');
+    })->middleware(['auth'])->name('dashboard');
+    Route::get('/incident-show{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident-create', 'store')->middleware(['auth'])->name('dashboard');
+});
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'showAll')->middleware(['auth'])->name('dashboard');;
@@ -51,6 +77,24 @@ Route::get('/reservations', function () {
     return view('reservations');
 })->middleware(['auth'])->name('dashboard');
 
-// Route::get('/user{id}', [UserController::class, 'show']);
+Route::get('/reservation-create', function () {
+    return view('reservation.create');
+});
+
+Route::post('/reservation-create', [ReservationController::class, 'created']);
+
+Route::get('/reservation-getuser', function () {
+    return view('reservation.getUserReservations');
+});
+
+Route::post('/reservation-getuser', [ReservationController::class, 'showUserReservations']);
+
+Route::get('/reservation-getvehicle', function () {
+    return view('reservation.getVehicleReservations');
+});
+
+Route::post('/reservation-getvehicle', [ReservationController::class, 'showVehicleReservations']);
+
+
 
 require __DIR__.'/auth.php';

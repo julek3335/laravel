@@ -24,6 +24,7 @@ class UserController extends Controller
         $updateUser->status = $request->input('status');
         $updateUser->email = $request->input('email');
         $updateUser->driving_licence_category = $request->input('driving_licence_category');
+        $updateUser -> auth_level = $request -> input('auth_level');
         $updateUser->update();
         return view('user', User::findOrFail($id));
     }
@@ -39,6 +40,7 @@ class UserController extends Controller
        $newUser -> email = $req -> email;
        $newUser -> driving_licence_category = $req -> driving_licence_category;
        $newUser -> password = $req -> password;
+       $newUser -> auth_level = $req -> auth_level;
        $newUser -> save();
        $id = $newUser -> id;
        return view('user', User::findOrFail($id));
