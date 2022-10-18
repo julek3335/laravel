@@ -14,5 +14,6 @@ class VehicleController extends Controller
     public function showAll(){
         return view('vehicles', ['vehicles' => Vehicle::all()->sortBy("created_at")]);
     }
-    
+
+
 }

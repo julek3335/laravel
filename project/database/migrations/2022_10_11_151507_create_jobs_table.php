@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\RegistrationCard;
+use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +15,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('name',100);
+            $table->foreignIdFor(Vehicle::class);
+            $table->foreignIdFor(User::class);
             $table->string('status', 30);
-            $table->string('license_plate',20);
+            $table->timestamp('start_time')->default(now());
+            $table->timestamp('end_time')->nullable();
+            $table->double('distance')->default(0);
+            $table->text('description')->default('');
             $table->timestamps();
         });
     }
@@ -30,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('jobs');
     }
 };

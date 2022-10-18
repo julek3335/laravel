@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\RegistrationCard;
+use App\Models\Qualification;
+use App\Models\Vehicle;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,13 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name',100);
-            $table->string('status', 30);
-            $table->string('license_plate',20);
-            $table->timestamps();
-        });
+//        Schema::create('qualification_vehicle', function (Blueprint $table) {
+//            $table->foreignIdFor(Qualification::class)->primary();
+//            $table->foreignIdFor(Vehicle::class)->primary();
+//            $table->timestamps();
+//        });
     }
 
     /**
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('qualification_vehicle');
     }
 };
