@@ -149,5 +149,6 @@ class VehicleController extends Controller
     public function showCalendar($id){
         return view('calendar', Vehicle::findOrFail($id));
     }
-    
+
+
 }

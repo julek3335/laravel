@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidentController;
@@ -35,6 +36,15 @@ Route::controller(VehicleController::class)->group(function () {
     Route::post('/vehicle/edit/{id}', [VehicleController::class, 'updateVehicle']);
     Route::get('/calendar/{id}', 'showCalendar')->middleware(['auth'])->name('dashboard');;
 });
+
+
+Route::controller(JobController::class)->group(function () {
+    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
+
+});
+Route::get('/example-car', function () {
+    return view('car');
+})->middleware(['auth'])->name('dashboard');
 
 Route::controller(InsuranceController::class)->group(function(){
     Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');;
