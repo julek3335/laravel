@@ -18,8 +18,10 @@ class VehicleController extends Controller
         */
         $vehicle = Vehicle::findOrFail($id);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
-        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
 
+        //here must be insurance with the longest expiration date
+        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
+        
         $show_info_7_days = false;
         $show_info_end = false;
         if($insurances){
@@ -35,7 +37,7 @@ class VehicleController extends Controller
                 $show_info_end = true;
             }
         }
-        
+
         /*
         ** Passing data to view
         */
@@ -44,7 +46,8 @@ class VehicleController extends Controller
             'registration_card' => $registrationCard,
             'insurances'        => $insurances,
             'insurance_importance_in_7_days' => $show_info_7_days,
-            'insurance_importance_end' => $show_info_end
+            'insurance_importance_end' => $show_info_end,
+            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get()
         ]);
     }
 
