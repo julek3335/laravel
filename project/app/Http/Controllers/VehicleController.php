@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use App\Models\RegistrationCard;
 use App\Models\Insurance;
+use App\Models\Incident;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -18,6 +19,15 @@ class VehicleController extends Controller
         */
         $vehicle = Vehicle::findOrFail($id);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
+        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
+        $incidents_resolved = Incident::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['status', '=', 'resolved']
+        ])->get()->sortBy('created_at');
+        $incidents_others = Incident::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['status', '<>', 'resolved']
+        ])->get()->sortBy('created_at');
 
         //here must be insurance with the longest expiration date
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -45,6 +55,8 @@ class VehicleController extends Controller
             'vehicle'           => $vehicle,
             'registration_card' => $registrationCard,
             'insurances'        => $insurances,
+            'incidents_resolved' => $incidents_resolved,
+            'incidents_others' => $incidents_others,
             'insurance_importance_in_7_days' => $show_info_7_days,
             'insurance_importance_end' => $show_info_end,
             'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get()

@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function __invoke()
     {
         return view('dashboard', [
-            'availableVehicles' => Vehicle::all()->where('status', 1), 
+            'availableVehicles' => Vehicle::all()->where('status', 0), 
             'numberOfVehicles'  => Vehicle::all()->count(),
             'numberOfUsers'     => User::all()->count(), 
             'numberOfIncidents' => Incident::all()->count()

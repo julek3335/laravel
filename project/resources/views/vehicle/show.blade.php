@@ -204,6 +204,66 @@
             </div>
         </div>
     </x-adminlte-card>
+    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+        @if($incidents_others || $incidents_resolved)
+        <div id="accordion_incidents">
+            <div class="card">
+                <div class="card-header" id="accordion_incidents_others">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_incidents_others" aria-expanded="true" aria-controls="collapse_incidents_others">
+                        Wymagające uwagi
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapse_incidents_others" class="collapse show" aria-labelledby="accordion_incidents_others" data-parent="#accordion_incidents">
+                    <div class="card-body">
+                    @foreach ($incidents_others as $incident)
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @include('partials.incident.show')
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="{{asset('storage/incidents_photos/'. $incident->photo)}}" class="img-fluid p-4">
+                        </div>
+                    </div>
+                    @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="accordion_incidents_resolved">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse_incidents_resolved" aria-expanded="false" aria-controls="collapse_incidents_resolved">
+                        Rozwiązane
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapse_incidents_resolved" class="collapse" aria-labelledby="accordion_incidents_resolved" data-parent="#accordion_incidents">
+                    <div class="card-body">
+                    @foreach ($incidents_resolved as $incident)
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @include('partials.incident.show')
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="{{asset('storage/incidents_photos/'. $incident->photo)}}" class="img-fluid p-4">
+                        </div>
+                    </div>
+                    @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Brak danych o userkach</p>
+            </div>
+        </div>
+        @endif
+    </x-adminlte-card>
     <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="timeline">
             <div class="time-label">
