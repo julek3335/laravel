@@ -22,24 +22,32 @@ class IncidentController extends Controller
         if ($request->hasFile('photo')) {
 
             $request->validate([
-                'photo' => 'mimes:jpeg,bmp,png'
+                'photo' => 'mimes:jpeg,bmp,png,jpg'
             ]);
+            
             $new_file = $request->file('photo');
             $file_path = $new_file->store('incidents_photos', 'public');
  
             $incident = new Incident([
-                "date" => $request->get('date'),
+                //"date" => $request->get('date'), //Format daty z frontu do 19.10.2020 09:50
+                "date" => "2022-10-19",
                 "description" => $request->get('description'),
                 "photo" => $request->photo->hashName(),
                 "address" => $request->get('address'),
-                "status" => $request->get('status'),
+                "status" => 'unprocessed',
                 "vehicle_id" => $request->get('vehicle_id'),
             ]);
 
             $incident->save();
 
-            return view('dashboard');
+            return view('incident.show', [
+                'incident' => $incident,
+                'vehicle'  => Vehicle::findOrFail($incident->vehicle_id)
+            ]);
         }
+
+        echo "Error - probably no photo or wrong photo extension";
+        echo "Zdjecie" . $request->file('photo');
     }
 
     /*
