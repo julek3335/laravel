@@ -69,6 +69,10 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
 });
 
+Route::controller(ReservationController::class)->group(function () {
+    Route::post('/reservation', [ReservationController::class, 'create']);
+});
+
 Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');

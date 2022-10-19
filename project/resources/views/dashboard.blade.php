@@ -16,6 +16,9 @@
                 <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                     @include('partials.vehicle.pickup')
                 </div>
+                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                    @include('partials.vehicle.reservation')
+                </div>
             </div>
         </div>
     </div>
