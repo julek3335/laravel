@@ -13,10 +13,12 @@
     </div>
 
     <div class="card-footer">
+        <a href="##">
         <button type="submit" class="btn btn-primary">Dodaj nową rezerwację</button>
+        </a>
     </div>
 
-    <div style="overflow: auto; height: 500px;">
+    <div style="overflow: auto; height: 700px;">
 
         <section class="content">
             <div class="container-fluid">
@@ -27,12 +29,6 @@
                             <div class="card-header">
                                 <h3 class="card-title">Jan Kowalski (linkowanie do profilu kierowcy)</h3>
                                 <div class="card-tools">
-                                    <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button> -->
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">

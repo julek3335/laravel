@@ -16,7 +16,7 @@ class ReservationController extends Controller
 
     public function showAll(){
         // te nazwy widokow to sobie tak z dupy wymyslam, nie mam nic zsczegolnego na mysli
-        return view('Reservation.showAll', ['reservations' => Reservation::all()->sortBy("created_at")]);
+        return view('reservation.showAll', ['reservations' => Reservation::all()->sortBy("created_at")]);
     }
 
     public function showUserReservations(Request $req){
@@ -37,9 +37,10 @@ class ReservationController extends Controller
         return view('reservation.showVehicleReservations', ['reservations' => Reservation::all()->where('vehicle_id', $req -> vehicle_id)]);
     }
 
-    public function created(Request $req){
+    public function create(Request $req){
         
         // jezeli poziom uzytkownika edytor lub admin pobiera userId z widoku jezeli poziom uzytkownik pobiera id obecnie zalogowanego uzytkownika
+        
         if(Auth::user()-> auth_level == 0 || Auth::user()-> auth_level ==1)
         {
             $user_id = $req -> user_id;
@@ -83,11 +84,12 @@ class ReservationController extends Controller
             $newReservation = new Reservation;
             $newReservation -> start_date = $req -> start_date;
             $newReservation -> end_date = $req -> end_date;
-            $newReservation -> user_id = $user_id;
-            $newReservation -> vehicle_id = $req -> vehicle_id;
+            $newReservation -> user_id = 2;
+            $newReservation -> vehicle_id = 3;
             $newReservation -> save();
             $id = $newReservation -> id;
-            return view('Reservation', Reservation::findOrFail($id));
+            // return view('Reservation', Reservation::findOrFail($id));
+            return view('dashboard');
 
         }else{
             return("This vehicle is already ocupied in this time period. Please try again");
