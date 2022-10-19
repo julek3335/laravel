@@ -49,4 +49,8 @@ class IncidentController extends Controller
         return view('incident.list', ['incidents' => Incident::all()->sortBy("created_at")]);
     }
 
+    public function prepareAdd(){
+        return view('incident.add', ['vehicles' => Vehicle::all()->where('status', 0) ]);
+    }
+
 }

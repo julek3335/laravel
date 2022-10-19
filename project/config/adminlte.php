@@ -331,22 +331,41 @@ return [
                         'icon'  => 'fas fa-light fa-plus',
                         'url'   => 'vehicle/add'
                     ],
+                ],
+        ],
+        [
+            'text'        => 'Usterki',
+            'url'         => 'vehicles',
+            'icon'        => 'fas fa-light fa-wrench',
+            'submenu' => [
                     [
-                        'text'  => 'Usterki',
-                        'icon'  => 'fas fa-light fa-wrench',
+                        'text'  => 'Wszystkie usterki',
+                        'icon'  => 'fas fa-light fa-list',
                         'url'   => 'incidents'
+                    ],
+                    [
+                        'text'  => 'Utwórz usterkę',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'incident/add'
                     ],
                 ],
         ],
         [
-            'text'        => 'Utwórz użytkownika',
-            'url'         => 'create-user',
-            'icon'        => 'far fa-fw fa-file',
-        ],
-        [
-            'text'        => 'Użytkownicy',
-            'url'         => 'users',
-            'icon'        => 'far fa-address-card',
+            'text'        => 'Uzytkownicy',
+            'url'         => 'usters',
+            'icon'        => 'fas fa-light fa-user',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszyscu użytkownicy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'users'
+                    ],
+                    [
+                        'text'  => 'Utwórz użytkownika',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'create-user'
+                    ],
+                ],
         ],
         [
             'text'        => 'Rezerwacje',
@@ -363,60 +382,6 @@ return [
             'text' => 'change_password',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
         ],
     ],
 

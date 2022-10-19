@@ -36,12 +36,8 @@ Route::controller(VehicleController::class)->group(function () {
 
 Route::controller(IncidentController::class)->group(function () {
     Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
-    Route::get('/incident-create', function () {
-        return view('incident.create');
-    })->middleware(['auth'])->name('dashboard');
-    Route::get('/incident-show{id}', 'show')->middleware(['auth'])->name('dashboard');
-    Route::get('/incident-create', 'store')->middleware(['auth'])->name('dashboard');
 });
 
 Route::controller(UserController::class)->group(function () {
