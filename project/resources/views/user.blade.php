@@ -3,7 +3,7 @@
 @section('title', 'Użytkownik - ...')
 
 @section('content_header')
-<!-- <h1>Użytkownik - {{ $name }}</h1> -->
+
 @stop
 
 @section('content')
@@ -13,7 +13,7 @@
             <div class="col-md-3">
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
-                        <h3 class="profile-username text-center">{{$name}} {{$last_name}}</h3>
+                        <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
                         <p class="text-muted text-center">Kierowca</p>
                     </div>
                 </div>
@@ -24,14 +24,14 @@
                     <div class="card-body">
                         <strong><i class="far fa-address-card"></i> Kategoria prawa jazdy</strong>
                         <p class="text-muted">
-                            {{$driving_licence_category}}
+                            {{$user->driving_licence_category}}
                         </p>
                         <hr>
                         <strong><i class="far fa-envelope-open"></i> Email</strong>
-                        <p class="text-muted">{{$email}}</p>
+                        <p class="text-muted">{{$user->email}}</p>
                         <hr>
                         <strong><i class="far fa-bell"></i> Status</strong>
-                        <p class="text-muted">{{$status}}</p>
+                        <p class="text-muted">DODAC</p>
                     </div>
                 </div>
             </div>
@@ -42,6 +42,7 @@
                             <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Aktywność</a></li>
                             <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
                             <li class="nav-item"><a class="nav-link" href="#edit" data-toggle="tab">Edycja</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#reservations" data-toggle="tab">Rezerwacje</a></li>
                         </ul>
                     </div>
                     <div class="card-body">
@@ -156,6 +157,29 @@
                             <!-- edycja -->
                             <div class="tab-pane" id="edit">
                                 @include('partials.user.create_user_form')
+                            </div>
+
+                            <!-- rezerwacje -->
+                            <div class="tab-pane" id="reservations">
+                                @if($reservations)
+                                <div style="overflow-y: scroll; height: 600px;">
+                                    @foreach($reservations as $reservation)
+                                    <div class="post">
+                                        <div class="user-block">
+                                            <span class="username">
+                                                <a href="/vehicles/{{$reservation->vehicle_id}}">Nr. rejestracyjny: {{$reservation->vehicle_id}}</a>
+                                            </span>
+                                            <!-- <span class="description">Shared publicly - 7:30 PM today</span> -->
+                                        </div>
+                                        <p>Rezerwacja:</p>
+                                        <p>od: {{$reservation->start_date}}</p>
+                                        <p>do: {{$reservation->end_date}}</p>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @else
+                                <p>Brak rezerwacji</p>
+                                @endif
                             </div>
                         </div>
                     </div>

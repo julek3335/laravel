@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Reservation;
+use App\Models\Vehicle;
 
 class ReservationController extends Controller
 {
@@ -16,7 +17,12 @@ class ReservationController extends Controller
 
     public function showAll(){
         // te nazwy widokow to sobie tak z dupy wymyslam, nie mam nic zsczegolnego na mysli
-        return view('Reservation.showAll', ['reservations' => Reservation::all()->sortBy("created_at")]);
+        return view('reservation.showVehicleReservations', [
+            'reservations' => Reservation::all()->sortBy("created_at"),
+            'availableVehicles' => Vehicle::all(),
+            'entitlements' => Auth::user()-> auth_level,
+            'avaibleUsers' => User::all()
+        ]);
     }
 
     public function showUserReservations(Request $req){
@@ -87,7 +93,7 @@ class ReservationController extends Controller
             $newReservation -> vehicle_id = $req -> vehicle_id;
             $newReservation -> save();
             $id = $newReservation -> id;
-            return view('Reservation', Reservation::findOrFail($id));
+            return view('reservations', Reservation::findOrFail($id));
 
         }else{
             return("This vehicle is already ocupied in this time period. Please try again");
