@@ -110,7 +110,7 @@
                         <strong>Przebieg</strong> <span class="float-right">125 458 km</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Status</strong> <a href="#" class="float-right">{{ $vehicle->status }}</a>
+                        <strong>Status</strong> <a href="#" class="float-right">{{ $vehicle->status->name }}</a>
                     </li>
                     <li class="list-group-item">
                         <strong>Akcje serwisowe</strong> <a href="#" class="float-right">5</a>
