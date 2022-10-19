@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\VehicleStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class VehicleFactory extends Factory
     {
         return [
             'name' => $this->faker->userName(),
+            'status' => VehicleStatusEnum::READY,
             'license_plate' => $this->faker->word()
         ];
     }

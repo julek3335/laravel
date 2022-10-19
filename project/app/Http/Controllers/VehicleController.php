@@ -29,6 +29,9 @@ class VehicleController extends Controller
             ['status', '<>', 'resolved']
         ])->get()->sortBy('created_at');
 
+        //here must be insurance with the longest expiration date
+        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
+        
         $show_info_7_days = false;
         $show_info_end = false;
         if($insurances){
@@ -44,7 +47,7 @@ class VehicleController extends Controller
                 $show_info_end = true;
             }
         }
-        
+
         /*
         ** Passing data to view
         */
@@ -55,7 +58,8 @@ class VehicleController extends Controller
             'incidents_resolved' => $incidents_resolved,
             'incidents_others' => $incidents_others,
             'insurance_importance_in_7_days' => $show_info_7_days,
-            'insurance_importance_end' => $show_info_end
+            'insurance_importance_end' => $show_info_end,
+            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get()
         ]);
     }
 
@@ -157,5 +161,6 @@ class VehicleController extends Controller
     public function showCalendar($id){
         return view('calendar', Vehicle::findOrFail($id));
     }
-    
+
+
 }

@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidentController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\InsuranceController;
+use App\Models\Insurance;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +37,20 @@ Route::controller(VehicleController::class)->group(function () {
     Route::get('/calendar/{id}', 'showCalendar')->middleware(['auth'])->name('dashboard');;
 });
 
+
+Route::controller(JobController::class)->group(function () {
+    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
+
+});
+Route::get('/example-car', function () {
+    return view('car');
+})->middleware(['auth'])->name('dashboard');
+
+Route::controller(InsuranceController::class)->group(function(){
+    Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');;
+    Route::post('/insurance/create-new/{id}', [InsuranceController::class, 'create']);
+});
+
 Route::controller(IncidentController::class)->group(function () {
     Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/incident/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
@@ -49,6 +66,10 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
 });
 
+Route::controller(ReservationController::class)->group(function () {
+    Route::post('/reservation', [ReservationController::class, 'create']);
+});
+
 Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
@@ -56,8 +77,6 @@ Route::get('/create-user', function () {
 Route::get('/reservations', function () {
     return view('reservations');
 })->middleware(['auth'])->name('dashboard');
-
-// Route::get('/user{id}', [UserController::class, 'show']);
 
 Route::get('/reservation-create', function () {
     return view('reservation.create');
