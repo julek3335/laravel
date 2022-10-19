@@ -67,22 +67,21 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(ReservationController::class)->group(function () {
-    Route::post('/reservation', [ReservationController::class, 'create']);
+    Route::post('/reservation-create', [ReservationController::class, 'created']);
+    Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');;
 });
 
 Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/reservations', function () {
-    return view('reservations');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/reservations', function () {
+//     return view('reservation.showVehicleReservations');
+// })->middleware(['auth'])->name('dashboard');
 
 Route::get('/reservation-create', function () {
     return view('reservation.create');
 });
-
-Route::post('/reservation-create', [ReservationController::class, 'created']);
 
 Route::get('/reservation-getuser', function () {
     return view('reservation.getUserReservations');

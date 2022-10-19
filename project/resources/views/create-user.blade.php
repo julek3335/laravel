@@ -41,8 +41,8 @@
                 <div class="form-group">
                     <select class="form-control" id="#" name="auth_level">
                         <option value="0" >Administrator</option>
-                        <option value="1" >Użytkownik</option>
-                        <option>Value 3</option>
+                        <option value="1" >Edytor</option>
+                        <option value="2" >Użytkownik</option>
                     </select>
                 </div>
             </div>
