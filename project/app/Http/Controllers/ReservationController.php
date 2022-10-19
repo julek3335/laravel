@@ -84,8 +84,8 @@ class ReservationController extends Controller
             $newReservation = new Reservation;
             $newReservation -> start_date = $req -> start_date;
             $newReservation -> end_date = $req -> end_date;
-            $newReservation -> user_id = 2;
-            $newReservation -> vehicle_id = 3;
+            $newReservation -> user_id = $user_id;
+            $newReservation -> vehicle_id = $req -> vehicle_id;
             $newReservation -> save();
             $id = $newReservation -> id;
             // return view('Reservation', Reservation::findOrFail($id));
