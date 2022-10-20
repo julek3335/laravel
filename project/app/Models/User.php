@@ -27,7 +27,8 @@ class User extends Authenticatable
         'email',
         'password',
         'driving_licence_category',
-        'status'
+        'status',
+        'photo',
     ];
 
     /**

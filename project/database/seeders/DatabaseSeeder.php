@@ -26,7 +26,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $companys = Company::factory(5)
+            -> has($users = User::factory(10)
+                -> has($reservations = Reservation::factory(2)))
+            -> has($vehicles = Vehicle::factory(25)
+                -> has($registrationCards = RegistrationCard::factory())
+                -> has($incidents = Incident::factory() -> count(3))
+                -> has($insurances = Insurance::factory())
+                -> has($reservations = Reservation::factory(2)))
+            -> create();
+
         //create test user Login: akowalski@mail.com Password: password
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
+
         DB::table('users')->insert([
             'name' => 'Adam',
             'last_name' => 'Kowalski',
@@ -38,17 +51,8 @@ class DatabaseSeeder extends Seeder
             'status' => UserStatusEnum::FREE,
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
+            'photo' => $faker->image('storage'.public_path('users_photos'), 640, 480, ['face',],false),
         ]);
-
-        $companys = Company::factory(5)
-            -> has($users = User::factory(10)
-                -> has($reservations = Reservation::factory(2)))
-            -> has($vehicles = Vehicle::factory(25)
-                -> has($registrationCards = RegistrationCard::factory())
-                -> has($incidents = Incident::factory() -> count(3))
-                -> has($insurances = Insurance::factory())
-                -> has($reservations = Reservation::factory(2)))
-            -> create();
 
     }
 }
