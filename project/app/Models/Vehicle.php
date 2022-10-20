@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\VehicleStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vehicle extends Model
@@ -38,5 +39,10 @@ class Vehicle extends Model
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function services(): BelongsToMany
+    {
+        return $this->belongsToMany(Service::class);
     }
 }
