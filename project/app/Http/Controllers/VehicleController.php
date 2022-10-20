@@ -18,6 +18,7 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
+        $vehicle -> photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $incidents_resolved = Incident::where([
@@ -71,6 +72,7 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
+        $vehicle -> photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
 
