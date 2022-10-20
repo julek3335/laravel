@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\VehicleStatusEnum;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,10 +18,22 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
+        Storage::disk('public')->makeDirectory('cars_photos');
+
+        $photo1 = $faker->image('storage'.public_path('cars_photos'), 640, 480, ['car'],false);
+        $photo2 = $faker->image('storage'.public_path('cars_photos'), 640, 480, ['car'],false);
+        $photo3 = $faker->image('storage'.public_path('cars_photos'), 640, 480, ['car'],false);
+        
+
+        $photos = serialize([$photo1,$photo2,$photo3]);
+
         return [
             'name' => $this->faker->userName(),
             'status' => VehicleStatusEnum::READY,
-            'license_plate' => $this->faker->word()
+            'license_plate' => $this->faker->word(),
+            'photos' => $photos,
         ];
     }
 }
