@@ -52,7 +52,7 @@ class ReservationController extends Controller
             $driving_licence_category = User::findOrFail($user_id) -> driving_licence_category;
         }else{
             $driving_licence_category = Auth::user() -> driving_licence_category;
-            $user_id = Auth::user() -> user_id;
+            $user_id = Auth::user() -> id;
         }
 
         // sprawdzenie czy dany uzytkownik moze kierowac danym pojazdem 
