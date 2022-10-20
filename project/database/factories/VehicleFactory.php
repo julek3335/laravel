@@ -20,14 +20,14 @@ class VehicleFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
-        Storage::disk('public')->makeDirectory('cars_photos');
+        Storage::disk('public')->makeDirectory('vehicles_photos');
 
-        $photo1 = $faker->image('storage'.public_path('cars_photos'), 640, 480, ['car'],false);
-        $photo2 = $faker->image('storage'.public_path('cars_photos'), 640, 480, ['car'],false);
-        $photo3 = $faker->image('storage'.public_path('cars_photos'), 640, 480, ['car'],false);
+        $photo1 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
+        $photo2 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
+        $photo3 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
         
 
-        $photos = serialize([$photo1,$photo2,$photo3]);
+        $photos = json_encode([$photo1,$photo2,$photo3]);
 
         return [
             'name' => $this->faker->userName(),
