@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +17,16 @@ class CompanyFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
+        Storage::disk('public')->makeDirectory('companys_photos');
+        
         return [
             'name' => fake()->word(),
             'description' => fake()->paragraph(2),
             'phone_number' => fake()->randomNumber(9, true),
             'address' => fake()->address(),
+            'photo' => $faker->image('storage'.public_path('companys_photos'), 640, 480, ['logo',],false),
         ];
     }
 }
