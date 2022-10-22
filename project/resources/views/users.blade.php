@@ -16,7 +16,7 @@
         'Mail',
         'Rodzaj_prawojazdy',
         'status',
-        ['label' => 'Akcja', 'width' => 20],
+        ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],

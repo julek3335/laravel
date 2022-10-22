@@ -131,12 +131,14 @@
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-sm-12">
-                <a href="/vehicle/edit/{{ $vehicle->id }}">
-                    <x-adminlte-button label="Edytuj" icon="fas fa-light fa-edit"/>
-                </a>
-                <x-adminlte-button label="Edytuj - modal" icon="fas fa-light fa-edit" data-toggle="modal" data-target="#modalEditVehicle" id="modalEditVehicle"/>
-            </div>
+            @if($entitlements == 0 || $entitlements == 1)
+                <div class="col-sm-12">
+                    <a href="/vehicle/edit/{{ $vehicle->id }}">
+                        <x-adminlte-button label="Edytuj" icon="fas fa-light fa-edit"/>
+                    </a>
+                    <x-adminlte-button label="Edytuj - modal" icon="fas fa-light fa-edit" data-toggle="modal" data-target="#modalEditVehicle" id="modalEditVehicle"/>
+                </div>
+            @endif
         </div>
     </x-adminlte-card>
     <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   

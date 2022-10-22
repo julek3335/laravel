@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name',100);
             $table->string('status', 30);
             $table->string('license_plate',20);
+            $table->string('photos')->nullable();
             $table->foreignIdFor(Company::class)->nullable();
             $table->timestamps();
         });

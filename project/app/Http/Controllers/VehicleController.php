@@ -7,6 +7,7 @@ use App\Models\RegistrationCard;
 use App\Models\Insurance;
 use App\Models\Incident;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -18,6 +19,7 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
+        $vehicle -> photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $incidents_resolved = Incident::where([
@@ -59,7 +61,8 @@ class VehicleController extends Controller
             'incidents_others' => $incidents_others,
             'insurance_importance_in_7_days' => $show_info_7_days,
             'insurance_importance_end' => $show_info_end,
-            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get()
+            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get(),
+            'entitlements'  => Auth::user()-> auth_level
         ]);
     }
 
@@ -71,6 +74,7 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
+        $vehicle -> photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
 
