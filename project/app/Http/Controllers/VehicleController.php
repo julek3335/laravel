@@ -95,7 +95,7 @@ class VehicleController extends Controller
         //Add new vehicle
         $vehicle = Vehicle::findOrFail($id);
         $vehicle->name = $req->name;
-        $vehicle->status = 0;
+        $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
         $vehicle->save();
@@ -139,7 +139,7 @@ class VehicleController extends Controller
         //Add new vehicle
         $vehicle = new Vehicle;
         $vehicle->name = $req->name;
-        $vehicle->status = 0;
+        $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
         $vehicle->save();
@@ -159,7 +159,7 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        $this->show($vehicle->id);
+        return redirect('/vehicles/'. $vehicle->id);
     }
 
     public function showCalendar($id){
