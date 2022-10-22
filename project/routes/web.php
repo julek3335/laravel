@@ -40,7 +40,7 @@ Route::controller(VehicleController::class)->group(function () {
 
 Route::controller(JobController::class)->group(function () {
     Route::post('/rent', 'startJob')->name('dashboard');
-    //Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
+//    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
 Route::get('/example-car', function () {
     return view('car');

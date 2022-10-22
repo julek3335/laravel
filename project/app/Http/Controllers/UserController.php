@@ -1,21 +1,29 @@
 <?php
- 
+
 namespace App\Http\Controllers;
+use App\Services\VehicleRentalService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Reservation;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Auth;
- 
+
 class UserController extends Controller
 {
+    private VehicleRentalService $rentalService;
+
+    public function __construct(VehicleRentalService $rentalService)
+    {
+        $this->rentalService = $rentalService;
+    }
+
     public function show($id){
 
         return view('user',[
             'user' => User::findOrFail($id),
             'reservations' => Reservation::where('user_id' , '=', $id)->get(),
             'entitlements' => Auth::user()-> auth_level,
-            'avaibleUsers' => User::all(), 
+            'avaibleUsers' => User::all(),
         ]);
     }
 
@@ -53,5 +61,10 @@ class UserController extends Controller
        $newUser -> save();
        $id = $newUser -> id;
        return view('user', User::findOrFail($id));
+    }
+
+    public function isQualified(Request $request)
+    {
+        return $this->rentalService->verifyQualification(Auth::user(),Vehicle::find($request->vehicle_id));
     }
 }

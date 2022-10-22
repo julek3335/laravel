@@ -15,11 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-//        Schema::create('qualification_user', function (Blueprint $table) {
-//            $table->foreignIdFor(Qualification::class)->primary();
-//            $table->foreignIdFor(User::class)->primary();
-//            $table->timestamps();
-//        });
+        Schema::create('qualification_user', function (Blueprint $table) {
+            $table->foreignIdFor(Qualification::class);
+            $table->foreignIdFor(User::class);
+            $table->primary(['user_id', 'qualification_id']);
+            $table->timestamps();
+        });
     }
 
     /**
