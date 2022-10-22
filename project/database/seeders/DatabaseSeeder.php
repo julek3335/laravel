@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Service;
 use \App\Models\User;
 use \App\Models\Company;
 use \App\Models\Vehicle;
@@ -27,14 +28,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $companys = Company::factory(5)
-            -> has($users = User::factory(10)
-                -> has($reservations = Reservation::factory(2)))
-            -> has($vehicles = Vehicle::factory(25)
-                -> has($registrationCards = RegistrationCard::factory())
-                -> has($incidents = Incident::factory() -> count(3))
-                -> has($insurances = Insurance::factory())
-                -> has($reservations = Reservation::factory(2)))
-            -> create();
+            ->has(
+                $users = User::factory(10)
+                    ->has($reservations = Reservation::factory(2))
+            )
+            ->has(
+                $vehicles = Vehicle::factory(25)
+                    ->has($registrationCards = RegistrationCard::factory())
+                    ->has($incidents = Incident::factory()->count(3))
+                    ->has($insurances = Insurance::factory())
+                    ->has($reservations = Reservation::factory(2))
+                    ->has( Service::factory())
+            )
+            ->create();
 
         //create test user Login: akowalski@mail.com Password: password
         $faker = \Faker\Factory::create();
@@ -51,8 +57,7 @@ class DatabaseSeeder extends Seeder
             'status' => UserStatusEnum::FREE,
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
-            'photo' => $faker->image('storage'.public_path('users_photos'), 640, 480, ['face',],false),
+            'photo' => $faker->image('storage' . public_path('users_photos'), 640, 480, ['face',], false),
         ]);
-
     }
 }
