@@ -14,7 +14,7 @@
         'Nazwa',
         'Status',
         'Numer rejestracyjny',
-        ['label' => 'Akcja', 'width' => 20],
+        ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
@@ -43,7 +43,7 @@
                     <tr>
                         <td>{{ $vehicle->id }}</td>
                         <td>{{ $vehicle->name }}</td>
-                        <td>{{ $vehicle->status }}</td>
+                        <td>{{ $vehicle->status->name }}</td>
                         <td>{{ $vehicle->license_plate }}</td>
                         <td>
                             <a href="/vehicle/edit/{{ $vehicle->id }}">

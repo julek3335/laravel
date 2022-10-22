@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use App\Models\RegistrationCard;
 use App\Models\Insurance;
+use App\Models\Incident;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -17,7 +19,17 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
+        $vehicle -> photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
+        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
+        $incidents_resolved = Incident::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['status', '=', 'resolved']
+        ])->get()->sortBy('created_at');
+        $incidents_others = Incident::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['status', '<>', 'resolved']
+        ])->get()->sortBy('created_at');
 
         //here must be insurance with the longest expiration date
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -45,9 +57,12 @@ class VehicleController extends Controller
             'vehicle'           => $vehicle,
             'registration_card' => $registrationCard,
             'insurances'        => $insurances,
+            'incidents_resolved' => $incidents_resolved,
+            'incidents_others' => $incidents_others,
             'insurance_importance_in_7_days' => $show_info_7_days,
             'insurance_importance_end' => $show_info_end,
-            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get()
+            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get(),
+            'entitlements'  => Auth::user()-> auth_level
         ]);
     }
 
@@ -59,6 +74,7 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
+        $vehicle -> photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
 
@@ -79,7 +95,7 @@ class VehicleController extends Controller
         //Add new vehicle
         $vehicle = Vehicle::findOrFail($id);
         $vehicle->name = $req->name;
-        $vehicle->status = 0;
+        $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
         $vehicle->save();
@@ -123,7 +139,7 @@ class VehicleController extends Controller
         //Add new vehicle
         $vehicle = new Vehicle;
         $vehicle->name = $req->name;
-        $vehicle->status = 0;
+        $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
         $vehicle->save();
@@ -143,7 +159,7 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        $this->show($vehicle->id);
+        return redirect('/vehicles/'. $vehicle->id);
     }
 
     public function showCalendar($id){

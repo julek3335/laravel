@@ -39,8 +39,8 @@ Route::controller(VehicleController::class)->group(function () {
 
 
 Route::controller(JobController::class)->group(function () {
-    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
-
+    Route::post('/rent', 'startJob')->name('dashboard');
+    //Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
 Route::get('/example-car', function () {
     return view('car');
@@ -53,12 +53,9 @@ Route::controller(InsuranceController::class)->group(function(){
 
 Route::controller(IncidentController::class)->group(function () {
     Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
+    Route::post('/incident/add', 'store');
     Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
-    Route::get('/incident-create', function () {
-        return view('incident.create');
-    })->middleware(['auth'])->name('dashboard');
-    Route::get('/incident-show{id}', 'show')->middleware(['auth'])->name('dashboard');
-    Route::get('/incident-create', 'store')->middleware(['auth'])->name('dashboard');
 });
 
 Route::controller(UserController::class)->group(function () {
@@ -69,19 +66,22 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
 });
 
+Route::controller(ReservationController::class)->group(function () {
+    Route::post('/reservation-create', [ReservationController::class, 'created']);
+    Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');;
+});
+
 Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/reservations', function () {
-    return view('reservations');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/reservations', function () {
+//     return view('reservation.showVehicleReservations');
+// })->middleware(['auth'])->name('dashboard');
 
 Route::get('/reservation-create', function () {
     return view('reservation.create');
 });
-
-Route::post('/reservation-create', [ReservationController::class, 'created']);
 
 Route::get('/reservation-getuser', function () {
     return view('reservation.getUserReservations');

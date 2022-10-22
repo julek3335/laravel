@@ -16,7 +16,7 @@
         'Mail',
         'Rodzaj_prawojazdy',
         'status',
-        ['label' => 'Akcja', 'width' => 20],
+        ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
@@ -43,7 +43,7 @@
                         <td>{{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->driving_licence_category }}</td>
-                        <td>{{ $user->status }}</td>
+                        <td>{{ $user->status->name }}</td>
 
                         <td>
                             <a href="/edit-user/{{ $user->id }}">

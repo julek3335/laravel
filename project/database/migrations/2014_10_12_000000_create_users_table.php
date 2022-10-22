@@ -22,8 +22,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('driving_licence_category')->default('B');
-            $table->string('status',30);
+            $table->string('status',30)->nullable();
             $table->integer('auth_level')->default(0);
+            $table->string('photo')->nullable();
             $table->foreignIdFor(Company::class)->nullable();
             $table->rememberToken();
             $table->timestamps();

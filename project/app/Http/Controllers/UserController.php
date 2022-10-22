@@ -1,16 +1,22 @@
 <?php
  
 namespace App\Http\Controllers;
-// use Illuminate\Support\Facades\DB;
-// use App\Models\Post;
 use Illuminate\Http\Request;
-
 use App\Models\User;
+use App\Models\Reservation;
+use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
  
 class UserController extends Controller
 {
     public function show($id){
-        return view('user', User::findOrFail($id));
+
+        return view('user',[
+            'user' => User::findOrFail($id),
+            'reservations' => Reservation::where('user_id' , '=', $id)->get(),
+            'entitlements' => Auth::user()-> auth_level,
+            'avaibleUsers' => User::all(), 
+        ]);
     }
 
     public function userToEdit($id){
@@ -26,7 +32,10 @@ class UserController extends Controller
         $updateUser->driving_licence_category = $request->input('driving_licence_category');
         $updateUser -> auth_level = $request -> input('auth_level');
         $updateUser->update();
-        return view('user', User::findOrFail($id));
+        return view('user',[
+            'user' => User::findOrFail($id),
+            'reservations' => Reservation::where('user_id' , '=', $id)->get()
+        ]);
     }
 
     public function showAll(){

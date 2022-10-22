@@ -7,16 +7,24 @@ use App\Models\Vehicle;
 use App\Models\User;
 use App\Models\Incident;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function __invoke()
     {
         return view('dashboard', [
-            'availableVehicles' => Vehicle::all()->where('status', 1), 
+            //Trzeba zmienić żeby zwracało tylko wolne pojazdy a nie wszystkie
+            'availableVehicles' => Vehicle::all(), 
             'numberOfVehicles'  => Vehicle::all()->count(),
             'numberOfUsers'     => User::all()->count(), 
-            'numberOfIncidents' => Incident::all()->count()
+            
+            //Trzeba zmienić żeby zwracało tylko wolnych pracowników a nie wszystkich
+            'avaibleUsers'      => User::all(), 
+
+
+            'numberOfIncidents' => Incident::all()->count(),
+            'entitlements'       => Auth::user()-> auth_level
         ]);
     }
 }

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->double('cost');
             $table->integer('phone_number');
+            $table->string('type')->nullable();
+            $table->string('insurer_name')->nullable();
+            $table->string('description')->nullable();
+            $table->string('photo')->nullable();
             $table->foreignIdFor(Vehicle::class)->nullable();
             $table->timestamps();
         });
