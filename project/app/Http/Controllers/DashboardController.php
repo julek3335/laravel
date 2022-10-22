@@ -16,7 +16,6 @@ class DashboardController extends Controller
         return view('dashboard', [
             //Trzeba zmienić żeby zwracało tylko wolne pojazdy a nie wszystkie
             'availableVehicles' => Vehicle::all(), 
-
             'numberOfVehicles'  => Vehicle::all()->count(),
             'numberOfUsers'     => User::all()->count(), 
             

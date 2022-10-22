@@ -43,7 +43,7 @@
                         <td>{{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->driving_licence_category }}</td>
-                        <td>{{ $user->status }}</td>
+                        <td>{{ $user->status->name }}</td>
 
                         <td>
                             <a href="/edit-user/{{ $user->id }}">
