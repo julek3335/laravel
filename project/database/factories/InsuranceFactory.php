@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\InsuranceStatusEnum;
 use App\Enums\InsuranceTypeEnum;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -31,6 +32,7 @@ class InsuranceFactory extends Factory
             'insurer_name' => fake()->words(1, true),
             'description' => fake()->sentence(),
             'photo' => $faker->image('storage'.public_path('insurance_photos'), 640, 480, ['recipt'],false),
+            'status' => InsuranceStatusEnum::ACTIVE
         ];
     }
 }
