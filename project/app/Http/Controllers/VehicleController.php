@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\RegistrationCard;
 use App\Models\Insurance;
@@ -14,12 +15,13 @@ class VehicleController extends Controller
     /*
     ** Show single vehicle card and return view
     */
-    public function show($id){
+    public function show($id)
+    {
         /*
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
-        $vehicle -> photos = json_decode($vehicle->photos);
+        $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $incidents_resolved = Incident::where([
@@ -33,19 +35,19 @@ class VehicleController extends Controller
 
         //here must be insurance with the longest expiration date
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
-        
+
         $show_info_7_days = false;
         $show_info_end = false;
-        if($insurances){
-            $actual_date_plus_7 = date('Y-m-d', strtotime(date('Y-m-d').'+ 7 days'));
+        if ($insurances) {
+            $actual_date_plus_7 = date('Y-m-d', strtotime(date('Y-m-d') . '+ 7 days'));
             $actual_date = date('Y-m-d');
             $insurances_date = $insurances->expiration_date;
 
-            if($insurances_date <= $actual_date_plus_7 && $insurances_date > $actual_date){
+            if ($insurances_date <= $actual_date_plus_7 && $insurances_date > $actual_date) {
                 $show_info_7_days = true;
             }
 
-            if($insurances_date <= date('Y-m-d')){
+            if ($insurances_date <= date('Y-m-d')) {
                 $show_info_end = true;
             }
         }
@@ -54,27 +56,28 @@ class VehicleController extends Controller
         ** Passing data to view
         */
         return view('vehicle.show', [
-            'vehicle'           => $vehicle,
+            'vehicle' => $vehicle,
             'registration_card' => $registrationCard,
-            'insurances'        => $insurances,
+            'insurances' => $insurances,
             'incidents_resolved' => $incidents_resolved,
             'incidents_others' => $incidents_others,
             'insurance_importance_in_7_days' => $show_info_7_days,
             'insurance_importance_end' => $show_info_end,
-            'carInsurances' => Insurance::where('vehicle_id' , '=', $id)->get(),
-            'entitlements'  => Auth::user()-> auth_level
+            'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
+            'entitlements' => Auth::user()->auth_level
         ]);
     }
 
     /*
     ** Get vehicle data to edit action
     */
-    public function edit($id){
+    public function edit($id)
+    {
         /*
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::findOrFail($id);
-        $vehicle -> photos = json_decode($vehicle->photos);
+        $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
 
@@ -82,7 +85,7 @@ class VehicleController extends Controller
         ** Passing data to view
         */
         return view('vehicle.edit', [
-            'vehicle'           => $vehicle,
+            'vehicle' => $vehicle,
             'registration_card' => $registrationCard
         ]);
     }
@@ -90,8 +93,8 @@ class VehicleController extends Controller
     /*
     ** Edit vehivle from form
     */
-    public function updateVehicle(Request $req, $id){
-
+    public function updateVehicle(Request $req, $id)
+    {
         //Add new vehicle
         $vehicle = Vehicle::findOrFail($id);
         $vehicle->name = $req->name;
@@ -119,7 +122,7 @@ class VehicleController extends Controller
         ** Passing data to view
         */
         return view('vehicle.edit', [
-            'vehicle'           => $vehicle,
+            'vehicle' => $vehicle,
             'registration_card' => $registrationCard
         ]);
     }
@@ -127,15 +130,16 @@ class VehicleController extends Controller
     /*
     ** Show all vehicles and return view
     */
-    public function showAll(){
+    public function showAll()
+    {
         return view('vehicle.list', ['vehicles' => Vehicle::all()->sortBy("created_at")]);
     }
 
     /*
     ** Add new vehicle
     */
-    public function store(Request $req){
-
+    public function store(Request $req)
+    {
         //Add new vehicle
         $vehicle = new Vehicle;
         $vehicle->name = $req->name;
@@ -159,12 +163,20 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        return redirect('/vehicles/'. $vehicle->id);
+        return redirect('/vehicles/' . $vehicle->id);
     }
 
-    public function showCalendar($id){
+    public function showCalendar($id)
+    {
         return view('calendar', Vehicle::findOrFail($id));
     }
 
-
+    public function delete(Request $request)
+    {
+        if (isset($request->vehicle_id)) {
+            $user = Vehicle::find($request->vehicle_id)->first();
+            $user->delete();
+        }
+        return redirect()->route('showAllVehicles');
+    }
 }

@@ -61,6 +61,6 @@ class UserController extends Controller
             $user = User::find($request->user_id)->first();
             $user->delete();
         }
-        $this->showAll();
+        return redirect()->route('showAllUsers');
     }
 }
