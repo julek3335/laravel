@@ -63,8 +63,18 @@ class UserController extends Controller
        return view('user', User::findOrFail($id));
     }
 
+
     public function isQualified(Request $request)
     {
         return $this->rentalService->verifyQualification(Auth::user(),Vehicle::find($request->vehicle_id));
+    }
+    
+    public function delete(Request $request)
+    {
+        if( isset($request->user_id)){
+            $user = User::find($request->user_id)->first();
+            $user->delete();
+        }
+        return redirect()->route('showAllUsers');
     }
 }
