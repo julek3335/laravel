@@ -64,6 +64,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users', [UserController::class, 'created']);
     Route::put('/edit-user/{id}', [UserController::class, 'updateUser']);
     Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
+    Route::post('/delete/{user_id}', 'delete')->middleware(['auth'])->name('dashboard');;
 });
 
 Route::controller(ReservationController::class)->group(function () {
