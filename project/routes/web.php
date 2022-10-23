@@ -26,7 +26,8 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 Route::controller(VehicleController::class)->group(function () {
-    Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('dashboard');;
+    Route::post('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
+    Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('showAllVehicles');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicle/add', function () {
         return view('vehicle.add');
@@ -59,12 +60,12 @@ Route::controller(IncidentController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users', 'showAll')->middleware(['auth'])->name('dashboard');;
+    Route::post('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');;
+    Route::get('/users', 'showAll')->middleware(['auth'])->name('showAllUsers');;
     Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');;
     Route::post('/users', [UserController::class, 'created']);
     Route::put('/edit-user/{id}', [UserController::class, 'updateUser']);
     Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
-    Route::post('/delete/{user_id}', 'delete')->middleware(['auth'])->name('dashboard');;
 });
 
 Route::controller(ReservationController::class)->group(function () {
