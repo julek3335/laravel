@@ -8,19 +8,21 @@
 
 @section('content')
 @section('plugins.Leaflet', true)
+@section('plugins.Leaflet-GPX', true)
 <x-adminlte-card title="Mapa" theme="lightblue" theme-mode="outline" collapsible maximizable>
-    <div id = "map" style = "height: 700px"></div>
+    <div id="map" style="height: 700px"></div>
 </x-adminlte-card>
 @stop
 
 @section('js')
 <script>
+
     // Creating map options
     var mapOptions = {
         center: [51.948, 19.292],
         zoom: 7
     }
-    
+
     // Creating a map object
     var map = new L.map('map', mapOptions);
     
@@ -29,5 +31,21 @@
     
     // Adding layer to the map
     map.addLayer(layer);
+
+    //Add attribution
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+    //Add marker;
+    var marker = L.marker([52.41567, 16.93088]).addTo(map);
+    marker.bindPopup("<center><strong>Pojazd pierwszy</strong><br>Jan Kowalski</center>").openPopup();
+
+    var gpx = 'http://localhost:8000/temp-gpx/trasa.gpx'; // URL to your GPX file or the GPX itself
+    new L.GPX(gpx, {async: true}).on('loaded', function(e) {
+        map.fitBounds(e.target.getBounds());
+    }).addTo(map);
+
 </script>
 @stop
