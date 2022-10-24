@@ -637,6 +637,16 @@ return [
                 ],
             ],
         ],
+        'Leaflet-GPX' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-gpx/gpx.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*
