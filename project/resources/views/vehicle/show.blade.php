@@ -50,9 +50,7 @@
                 @include('partials.vehicle.pickup')
             </div>
             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                <a href="/calendar/{{ $vehicle->id }}">
-                    <x-adminlte-button label="Zarezerwuj pojazd" icon="fas fa-light fa-plus"/>
-                </a>
+                @include('partials.vehicle.reservation')
             </div>
         </div>
     </x-adminlte-card>
@@ -141,6 +139,22 @@
             @endif
         </div>
     </x-adminlte-card>
+    @section('plugins.Fullcalendar', true)
+    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
+        <div id='calendar'></div>
+    </x-adminlte-card>
+    <script>
+        var events = []
+        @foreach ($reservations as $reservation)
+            events.push({
+                title: 'Rezerwacja - Użytkownik {{$reservation->user_id}}', 
+                start: "{{$reservation->start_date}}", 
+                end: "{{$reservation->end_date}}",
+                backgroundColor: '#f39c12', //yellow
+                borderColor    : '#f39c12' //yellow
+            });
+        @endforeach
+    </script>
     <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
             <div class="col-sm-6">
@@ -306,5 +320,26 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+
+@stop
+
+@section('js')
+<script>
+    $(document).ready(function(){
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'pl',
+            headerToolbar: {
+                left  : 'prev,next today',
+                center: 'title',
+                right : 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            themeSystem: 'bootstrap',
+            selectable: true,
+            events: events
+        });
+
+        calendar.render();
+    });
+</script>
 @stop

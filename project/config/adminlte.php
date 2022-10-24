@@ -375,12 +375,12 @@ return [
                 [
                     'text'  => 'Stary widok',
                     'icon'  => 'fas fa-light fa-list',
-                    'url'   => 'users'
+                    'url'   => 'reservations'
                 ],
                 [
                     'text'  => 'Kalendarz',
                     'icon'  => 'fas fa-light fa-calendar',
-                    'url'   => 'reservations/calendar'
+                    'url'   => 'reservations/all/calendar'
                 ],
             ],
         ],
