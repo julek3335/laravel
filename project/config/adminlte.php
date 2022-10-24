@@ -384,6 +384,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text'        => 'Mapa',
+            'url'         => 'map',
+            'icon'        => 'far fa-map',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
@@ -614,6 +619,21 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/fullcalendar/locales/pl.js',
+                ],
+            ],
+        ],
+        'Leaflet' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet/leaflet.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet/leaflet.js',
                 ],
             ],
         ],

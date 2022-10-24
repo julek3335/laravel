@@ -78,6 +78,10 @@ Route::get('/create-user', function () {
     return view('create-user');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/map', function () {
+    return view('map.show');
+});
+
 // Route::get('/reservations', function () {
 //     return view('reservation.showVehicleReservations');
 // })->middleware(['auth'])->name('dashboard');
