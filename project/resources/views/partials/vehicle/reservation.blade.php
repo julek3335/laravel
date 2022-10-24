@@ -14,6 +14,8 @@
                 <option value="{{ $vehicle->id }}" data-icon="fa fa-fw fa-car">{{ $vehicle->name }}</option>
             @endforeach
             <option data-icon="fa fa-fw fa-car">Żaden pojazd nie jest dostępny</option>
+            @else
+                <option data-icon="fa fa-fw fa-car" selected>{{ $vehicle->name }}</option>
             @endif
         </x-adminlte-select-bs>
 
@@ -63,4 +65,5 @@
         $('#startDate').datetimepicker("defaultDate", new Date());
     });
 </script>
+@parent
 @stop

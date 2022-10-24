@@ -7,6 +7,7 @@ use App\Models\Vehicle;
 use App\Models\RegistrationCard;
 use App\Models\Insurance;
 use App\Models\Incident;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,7 +65,8 @@ class VehicleController extends Controller
             'insurance_importance_in_7_days' => $show_info_7_days,
             'insurance_importance_end' => $show_info_end,
             'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
-            'entitlements' => Auth::user()->auth_level
+            'entitlements' => Auth::user()->auth_level, 
+            'reservations' => Reservation::where('vehicle_id' , '=', $id)->get()
         ]);
     }
 

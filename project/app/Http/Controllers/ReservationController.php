@@ -100,4 +100,11 @@ class ReservationController extends Controller
         }
 
      }
+
+    public function showAllReservationsCalendar()
+    {
+        return view('reservation.showCalendar', ['reservations' => Reservation::all()]);
+    }
+
+     
 }

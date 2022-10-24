@@ -70,7 +70,8 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(ReservationController::class)->group(function () {
     Route::post('/reservation-create', [ReservationController::class, 'created']);
-    Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');;
+    Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('dashboard');
 });
 
 Route::get('/create-user', function () {
