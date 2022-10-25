@@ -12,11 +12,11 @@ class UserController extends Controller
 {
     public function show($id){
         $user = User::findOrFail($id);
-        if($user-> auth_level == 0)
-        {
-            $message = 'U are admin!';
-            $user -> notify(new TestNotification($message));
-        }
+        // if($user-> auth_level == 0)
+        // {
+        //     $message = 'U are admin!';
+        //     $user -> notify(new TestNotification($message));
+        // }
 
         return view('user.show',[
             'user' => User::findOrFail($id),
