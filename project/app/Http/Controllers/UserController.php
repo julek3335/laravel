@@ -1,13 +1,13 @@
 <?php
- 
+
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Reservation;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Auth;
+
 use App\Notifications\TestNotification;
- 
 class UserController extends Controller
 {
     public function show($id){
@@ -22,7 +22,7 @@ class UserController extends Controller
             'user' => User::findOrFail($id),
             'reservations' => Reservation::where('user_id' , '=', $id)->get(),
             'entitlements' => Auth::user()-> auth_level,
-            'avaibleUsers' => User::all(), 
+            'avaibleUsers' => User::all(),
         ]);
     }
 
@@ -60,5 +60,14 @@ class UserController extends Controller
        $newUser -> save();
        $id = $newUser -> id;
        return view('user', User::findOrFail($id));
+    }
+
+    public function delete(Request $request)
+    {
+        if( isset($request->user_id)){
+            $user = User::find($request->user_id)->first();
+            $user->delete();
+        }
+        return redirect()->route('showAllUsers');
     }
 }

@@ -45,4 +45,5 @@
             $('#start_time').datetimepicker("defaultDate", new Date());
         });
     </script>
+    @parent
 @stop

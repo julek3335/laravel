@@ -352,11 +352,11 @@ return [
         ],
         [
             'text'        => 'Uzytkownicy',
-            'url'         => 'usters',
+            'url'         => 'users',
             'icon'        => 'fas fa-light fa-user',
             'submenu' => [
                     [
-                        'text'  => 'Wszyscu użytkownicy',
+                        'text'  => 'Wszyscy użytkownicy',
                         'icon'  => 'fas fa-light fa-list',
                         'url'   => 'users'
                     ],
@@ -371,6 +371,23 @@ return [
             'text'        => 'Rezerwacje',
             'url'         => 'reservations',
             'icon'        => 'far fa-address-card',
+            'submenu' => [
+                [
+                    'text'  => 'Stary widok',
+                    'icon'  => 'fas fa-light fa-list',
+                    'url'   => 'reservations'
+                ],
+                [
+                    'text'  => 'Kalendarz',
+                    'icon'  => 'fas fa-light fa-calendar',
+                    'url'   => 'reservations/all/calendar'
+                ],
+            ],
+        ],
+        [
+            'text'        => 'Mapa',
+            'url'         => 'map',
+            'icon'        => 'far fa-map',
         ],
         ['header' => 'account_settings'],
         [
@@ -582,6 +599,51 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.min.js',
+                ],
+            ],
+        ],
+        'Fullcalendar' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/locales/pl.js',
+                ],
+            ],
+        ],
+        'Leaflet' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet/leaflet.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet/leaflet.js',
+                ],
+            ],
+        ],
+        'Leaflet-GPX' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-gpx/gpx.min.js',
                 ],
             ],
         ],
