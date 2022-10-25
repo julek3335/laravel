@@ -85,10 +85,6 @@ Route::get('/map', function () {
     return view('map.show');
 });
 
-// Route::get('/reservations', function () {
-//     return view('reservation.showVehicleReservations');
-// })->middleware(['auth'])->name('dashboard');
-
 Route::get('/reservation-create', function () {
     return view('reservation.create');
 });
