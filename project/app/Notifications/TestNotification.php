@@ -29,7 +29,17 @@ class TestNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database','mail'];
+        $preferences = json_decode($notifiable->notification);
+        $preferencesMail = $preferences->vehicle[0]->email;
+        $preferencesDatabase = $preferences->vehicle[1]->database;
+        $returnTable = [];
+        if($preferencesMail == true){
+            $returnTable[] = 'mail';
+        }
+        if($preferencesDatabase == true){
+            $returnTable[] = 'database';
+        }
+        return $returnTable;
     }
 
     /**
@@ -54,8 +64,12 @@ class TestNotification extends Notification
      */
     public function toDatabase($notifiable)
     {
+        // return [
+        //     'message' => $this->message
+        // ];
+        $preferences = json_decode($notifiable->notification);
         return [
-            'message' => $this->message
-        ];
+        'message' => $preferences->vehicle[0]->email
+    ];
     }
 }
