@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
 
     public function showAll(){
-        return view('services.list', ['services' => Service::all()->sortBy("created_at")]);
+        return view('service.list', ['services' => Service::all()->sortBy("created_at")]);
     }
 
 }
