@@ -390,11 +390,6 @@ return [
             'icon'        => 'far fa-address-card',
             'submenu' => [
                 [
-                    'text'  => 'Stary widok',
-                    'icon'  => 'fas fa-light fa-list',
-                    'url'   => 'reservations'
-                ],
-                [
                     'text'  => 'Kalendarz',
                     'icon'  => 'fas fa-light fa-calendar',
                     'url'   => 'reservations/all/calendar'
