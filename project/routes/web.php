@@ -8,6 +8,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\InsuranceController;
+use App\Http\Controllers\ServiceController;
 use App\Models\Insurance;
 
 /*
@@ -74,6 +75,11 @@ Route::controller(ReservationController::class)->group(function () {
     Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('dashboard');
 });
+
+Route::controller(ServiceController::class)->group(function () {
+    Route::get('/services', 'showAll')->middleware(['auth'])->name('dashboard');
+});
+
 
 Route::get('/map', function () {
     return view('map.show');
