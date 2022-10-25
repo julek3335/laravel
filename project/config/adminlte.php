@@ -336,7 +336,7 @@ return [
         [
             'text'        => 'Usterki',
             'url'         => 'incidents',
-            'icon'        => 'fas fa-light fa-wrench',
+            'icon'        => 'fas fa-light fa-triangle-exclamation',
             'submenu' => [
                     [
                         'text'  => 'Wszystkie usterki',
@@ -347,6 +347,23 @@ return [
                         'text'  => 'Utwórz usterkę',
                         'icon'  => 'fas fa-light fa-plus',
                         'url'   => 'incident/add'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Akcje serwisowe',
+            'url'         => 'services',
+            'icon'        => 'fas fa-light fa-wrench',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie akcje serwisowe',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'services'
+                    ],
+                    [
+                        'text'  => 'Utwórz akcję serwisową',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'service/add'
                     ],
                 ],
         ],
