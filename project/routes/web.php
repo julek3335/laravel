@@ -48,7 +48,7 @@ Route::get('/example-car', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::controller(InsuranceController::class)->group(function(){
-    Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');;
+    Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');
     Route::post('/insurance/create-new/{id}', [InsuranceController::class, 'create']);
 });
 
@@ -60,12 +60,13 @@ Route::controller(IncidentController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::post('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');;
-    Route::get('/users', 'showAll')->middleware(['auth'])->name('showAllUsers');;
-    Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');;
-    Route::post('/users', [UserController::class, 'created']);
-    Route::put('/edit-user/{id}', [UserController::class, 'updateUser']);
-    Route::get('/edit-user/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');;
+    Route::post('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');
+    Route::get('/user/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
+    Route::post('/user/add', 'store')->middleware(['auth'])->name('dashboard');
+    Route::get('/users', 'showAll')->middleware(['auth'])->name('showAllUsers');
+    Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::put('/user/edit/{id}', [UserController::class, 'updateUser']);
+    Route::get('/user/edit/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');
 });
 
 Route::controller(ReservationController::class)->group(function () {
@@ -73,10 +74,6 @@ Route::controller(ReservationController::class)->group(function () {
     Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('dashboard');
 });
-
-Route::get('/create-user', function () {
-    return view('create-user');
-})->middleware(['auth'])->name('dashboard');
 
 Route::get('/map', function () {
     return view('map.show');

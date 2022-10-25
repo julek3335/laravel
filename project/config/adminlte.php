@@ -335,7 +335,7 @@ return [
         ],
         [
             'text'        => 'Usterki',
-            'url'         => 'vehicles',
+            'url'         => 'incidents',
             'icon'        => 'fas fa-light fa-wrench',
             'submenu' => [
                     [
@@ -363,7 +363,7 @@ return [
                     [
                         'text'  => 'Utwórz użytkownika',
                         'icon'  => 'fas fa-light fa-plus',
-                        'url'   => 'create-user'
+                        'url'   => 'user/add'
                     ],
                 ],
         ],
@@ -593,7 +593,7 @@ return [
             ],
         ],
         'BsCustomFileInput' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

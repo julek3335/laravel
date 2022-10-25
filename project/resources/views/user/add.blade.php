@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Tworzenie nowego użytkownika')
 
 @section('content_header')
 <h1>Tworzenie nowego użytkownika</h1>
@@ -13,28 +13,35 @@
     </div>
 
 
-    <form action="/users" method="POST">
+    <form action="/user/add" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputName1">Imię</label>
-                <input type="text" class="form-control" id="exampleInputName1" placeholder="imię" name="name">
+                <input type="text" class="form-control" id="exampleInputName1" placeholder="Imię" name="name" required>
             </div>
             <div class="form-group">
                 <label for="exampleInputSurname1">Nazwisko</label>
-                <input type="text" class="form-control" id="exampleInputSurname1" placeholder="nazwisko" name="last_name">
+                <input type="text" class="form-control" id="exampleInputSurname1" placeholder="Nazwisko" name="last_name" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputInputEmail">email</label>
-                <input type="email" class="form-control" id="exampleInputEmail" placeholder="email" name="email">
+                <label for="exampleInputInputEmail">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="exampleInputDrivingLicence">Prawo jazdy</label>
                 <input type="text" class="form-control" id="exampleInputDrivingLicence" placeholder="Prawo jazdy" name="driving_licence_category">
             </div>
+            <x-adminlte-input-file name="photo" label="Zdjęcie profilowe" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcie">
+                <x-slot name="prependSlot">
+                    <div class="input-group-text bg-lightblue">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                </x-slot>
+            </x-adminlte-input-file>
             <div class="form-group">
                 <label for="exampleInputPassword">Hasło</label>
-                <input type="text" class="form-control" id="exampleInputPassword" placeholder="Hasło" name="password">
+                <input type="text" class="form-control" id="exampleInputPassword" placeholder="Hasło" name="password" required>
             </div>
             <div class="form-group">
                 <label for="#">Uprawienia</label>
