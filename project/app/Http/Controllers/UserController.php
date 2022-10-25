@@ -18,7 +18,7 @@ class UserController extends Controller
             $user -> notify(new TestNotification($message));
         }
 
-        return view('user',[
+        return view('user.show',[
             'user' => User::findOrFail($id),
             'reservations' => Reservation::where('user_id' , '=', $id)->get(),
             'entitlements' => Auth::user()-> auth_level,
@@ -27,10 +27,15 @@ class UserController extends Controller
     }
 
     public function userToEdit($id){
-        return view('edit-user', User::findOrFail($id));
+        return view('user.edit', ['user' => User::findOrFail($id)]);
+    }
+
+    public function prepareAdd(){
+        return view('user.add', []);
     }
 
     public function updateUser(Request $request, $id){
+
         $updateUser = User::find($id);
         $updateUser->name = $request->input('name');
         $updateUser->last_name = $request->input('last_name');
@@ -38,28 +43,56 @@ class UserController extends Controller
         $updateUser->email = $request->input('email');
         $updateUser->driving_licence_category = $request->input('driving_licence_category');
         $updateUser -> auth_level = $request -> input('auth_level');
+
+        if ($request->hasFile('photo')) {
+
+            $request->validate([
+                'photo' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+            
+            $new_file = $request->file('photo');
+            $file_path = $new_file->store('users_photos', 'public');
+ 
+            $updateUser->photo = $request->photo->hashName();
+        }
+
         $updateUser->update();
-        return view('user',[
-            'user' => User::findOrFail($id),
-            'reservations' => Reservation::where('user_id' , '=', $id)->get()
-        ]);
+
+        return redirect('/user/' . $updateUser->id);
     }
 
     public function showAll(){
-        return view('users', ['users' => User::all()->sortBy("created_at")]);
+        return view('user.list', ['users' => User::all()->sortBy("created_at")]);
     }
 
-    public function created(Request $req){
-       $newUser = new User;
-       $newUser -> name = $req -> name;
-       $newUser -> last_name = $req -> last_name;
-       $newUser -> email = $req -> email;
-       $newUser -> driving_licence_category = $req -> driving_licence_category;
-       $newUser -> password = $req -> password;
-       $newUser -> auth_level = $req -> auth_level;
-       $newUser -> save();
-       $id = $newUser -> id;
-       return view('user', User::findOrFail($id));
+    public function store(Request $request){
+
+        $newUser = new User;
+
+        $photo_value = null;
+        if ($request->hasFile('photo')) {
+
+            $request->validate([
+                'photo' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+            
+            $new_file = $request->file('photo');
+            $file_path = $new_file->store('users_photos', 'public');
+ 
+            $photo_value = $request->photo->hashName();
+        }
+       
+        $newUser->name = $request -> name;
+        $newUser->last_name = $request -> last_name;
+        $newUser->email = $request -> email;
+        $newUser->driving_licence_category = $request -> driving_licence_category;
+        $newUser->photo = $photo_value;
+        $newUser->status = 'free';
+        $newUser->password = $request -> password;
+        $newUser->auth_level = $request -> auth_level;
+        $newUser->save();
+
+        return redirect('/user/' . $newUser->id);
     }
 
     public function delete(Request $request)

@@ -13,6 +13,11 @@
             <div class="col-md-3">
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
+                        @if (isset($user->photo))
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/users_photos/'. $user->photo)}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
+                        </div>
+                        @endif
                         <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
                         <p class="text-muted text-center">Kierowca</p>
                     </div>
@@ -31,8 +36,7 @@
                         <p class="text-muted">{{$user->email}}</p>
                         <hr>
                         <strong><i class="far fa-bell"></i> Status</strong>
-                        <p class="text-muted">{{ $status }}</p>
-                        
+                        <p class="text-muted">{{ $user->status->name  }}</p>
                     </div>
                 </div>
             </div>
@@ -162,7 +166,7 @@
 
                             <!-- rezerwacje -->
                             <div class="tab-pane" id="reservations">
-                                @if($reservations)
+                                @if(isset($reservations) && $reservations)
                                 <div style="overflow-y: scroll; height: 600px;">
                                     @foreach($reservations as $reservation)
                                     <div class="post">
