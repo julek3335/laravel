@@ -158,63 +158,49 @@
     <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="row">
             <div class="col-sm-6">
-                @if($insurances)
-                    <p>aktualne</p>
-                    @foreach($carInsurances as $insurance)
-                        @if( !$insurance_importance_end )
-                        <div class="card" style="padding: 20px;">
-                            <ul class="mt-4 list-group list-group-unbordered">
-                                <li class="list-group-item">
-                                    <strong>Numer ubezpieczenia</strong> <span class="float-right">{{ !$insurance_importance_end  }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Data wygaśnięcia</strong> <a href="#" class="float-right">{{ $insurance->expiration_date }}</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Koszt</strong> <a href="#" class="float-right">{{ $insurance->cost }}</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Numer kontaktowy</strong> <a href="#" class="float-right">{{ $insurance->phone_number }}</a>
-                                </li>
-                            </ul>
-                        </div>
+                @if($activeInsurance)
+                    @foreach($activeInsurance as $insurance)
+                        @if( $insurance->status->name == 'ACTIVE')
+                            <div class="row">
+                                <div class="col-sm-6">
+                                <ul class="mt-4 list-group list-group-unbordered">
+                                    <li class="list-group-item">
+                                        <strong>Numer ubezpieczenia</strong> <span class="float-right">{{ $insurance->policy_number }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Data wygaśnięcia</strong> <span class="float-right">{{ $insurance->expiration_date }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Koszt</strong> <span class="float-right">{{ $insurance->cost }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Numer Kontaktowy</strong> <span class="float-right">{{ $insurance->phone_number }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Typ</strong> <span class="float-right">{{ $insurance->type }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Nazwa ubezpieczyciela</strong> <span class="float-right">{{ $insurance->insurer_name }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Opis</strong> <span class="float-right">{{ $insurance->description }}</span>
+                                    </li>
+                                </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <img src="{{asset('storage/incidents_photos/'. $insurance->photo)}}" class="img-fluid p-4">
+                                </div>
+                            </div>
                         @endif
                     @endforeach
-                    <p>nieaktualne</p>
-                    <div style="overflow: auto; height: 500px;">
-                        @foreach($carInsurances as $insurance)
-                            @if( $insurance_importance_end )
-                                <div class="card" style="padding: 20px;">
-                                    <ul class="mt-4 list-group list-group-unbordered">
-                                        <li class="list-group-item">
-                                            <strong>Numer ubezpieczenia</strong> <span class="float-right">{{ $insurance -> policy_number }}</span>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Data wygaśnięcia</strong> <a href="#" class="float-right">{{ $insurance->expiration_date }}</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Koszt</strong> <a href="#" class="float-right">{{ $insurance->cost }}</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <strong>Numer kontaktowy</strong> <a href="#" class="float-right">{{ $insurance->phone_number }}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
                 @else
                 <p>Brak danych o ubezpieczeniach</p>
                 @endif
                 <div class="row mt-4">
                     <div class="col-sm-12">
-                        <a href="/insurance/create/{{ $vehicle->id }}">
-                            <x-adminlte-button label="Dodaj nowe ubezpieczenie" icon="fas fa-light fa-edit"/>
-                        </a>
-                        <!-- @if($insurances)
-                            <x-adminlte-button label="Edytuj - modal" icon="fas fa-light fa-edit" data-toggle="modal" data-target="#modalEditVehicle" id="modalEditVehicle"/>
-                        @endif -->
-                        
+                        <div class="col-6 col-sm-5 col-md-4 col-xl-3">
+                            @include('partials.vehicle.createInsurance')
+                        </div>
                     </div>
                  </div>
             </div>

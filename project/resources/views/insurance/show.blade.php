@@ -23,7 +23,19 @@
                 <li class="list-group-item">
                     <strong>Numer kontaktowy</strong> <a href="#" class="float-right">{{ $phone_number }}</a>
                 </li>
+                <li class="list-group-item">
+                    <strong>Typ</strong> <span class="float-right">{{ $type }}</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Nazwa ubezpieczyciela</strong> <span class="float-right">{{ $insurer_name }}</span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Opis</strong> <span class="float-right">{{ $description }}</span>
+                </li>
             </ul>
+            <div class="col-sm-6">
+                <img src="{{asset('storage/incidents_photos/'. $photo)}}" class="img-fluid p-4">
+            </div>
             <div class="row mt-4">
                 <div class="col-sm-12">
                     <a href="{{'/vehicles/' .$vehicle_id}}">
