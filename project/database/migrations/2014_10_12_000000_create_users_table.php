@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('status',30)->nullable();
             $table->integer('auth_level')->default(0);
             $table->string('photo')->nullable();
+            $table->string('notification')->nullable();
             $table->foreignIdFor(Company::class)->nullable();
             $table->rememberToken();
             $table->timestamps();

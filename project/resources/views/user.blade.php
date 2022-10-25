@@ -32,6 +32,7 @@
                         <hr>
                         <strong><i class="far fa-bell"></i> Status</strong>
                         <p class="text-muted">{{ $status }}</p>
+                        
                     </div>
                 </div>
             </div>
