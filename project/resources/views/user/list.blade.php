@@ -14,7 +14,7 @@
         'Imię',
         'Nazwisko',
         'Mail',
-        'Rodzaj_prawojazdy',
+        'Kwalifikacje',
         'status',
         ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
