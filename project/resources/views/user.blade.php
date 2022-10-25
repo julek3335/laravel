@@ -31,9 +31,7 @@
                         <p class="text-muted">{{$user->email}}</p>
                         <hr>
                         <strong><i class="far fa-bell"></i> Status</strong>
-                        {{-- <p class="text-muted">{{ $status }}</p> --}}
-                        {{$user->unreadNotifications}}
-                        {{$user->unreadNotifications->markAsRead()}}
+                        <p class="text-muted">{{ $status }}</p>
                         
                     </div>
                 </div>
