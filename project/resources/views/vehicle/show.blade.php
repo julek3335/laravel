@@ -54,7 +54,7 @@
             </div>
         </div>
     </x-adminlte-card>
-    <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible maximizable>
+    <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         <div class="row">
             <div class="col-sm-6">
                 <ul class="mt-4 list-group list-group-unbordered">
@@ -140,7 +140,7 @@
         </div>
     </x-adminlte-card>
     @section('plugins.Fullcalendar', true)
-    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
+    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         <div id='calendar'></div>
     </x-adminlte-card>
     <script>
@@ -155,7 +155,7 @@
             });
         @endforeach
     </script>
-    <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+    <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="row">
             <div class="col-sm-6">
                 @if($insurances)
@@ -220,7 +220,7 @@
             </div>
         </div>
     </x-adminlte-card>
-    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         @if($incidents_others || $incidents_resolved)
         <div id="accordion_incidents">
             <div class="card">
