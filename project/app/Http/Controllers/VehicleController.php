@@ -53,6 +53,11 @@ class VehicleController extends Controller
             }
         }
 
+        $insuranceActive = Insurance::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['status', '=', 'active']
+        ])->get()->sortBy('created_at');
+
         /*
         ** Passing data to view
         */
@@ -66,7 +71,8 @@ class VehicleController extends Controller
             'insurance_importance_end' => $show_info_end,
             'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
             'entitlements' => Auth::user()->auth_level, 
-            'reservations' => Reservation::where('vehicle_id' , '=', $id)->get()
+            'reservations' => Reservation::where('vehicle_id' , '=', $id)->get(),
+            'activeInsurance' => $insuranceActive
         ]);
     }
 
