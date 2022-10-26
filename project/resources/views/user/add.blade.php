@@ -28,6 +28,18 @@
                 <label for="exampleInputInputEmail">Email</label>
                 <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" name="email" required>
             </div>
+            <x-adminlte-select-bs name="status" label="Status" 
+                data-title="Wybierz status ..." data-live-search
+                data-live-search-placeholder="Wybierz status ..." data-show-tick required>
+                <x-slot name="prependSlot">
+                    <div class="input-group-text bg-gradient-info">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </x-slot>
+                @foreach(App\Enums\UserStatusEnum::cases() as $status_option)
+                <option value="{{ $status_option->value }}">{{ $status_option->name }}</option>
+                @endforeach>
+        </x-adminlte-select-bs>
             <div class="form-group">
                 <label for="exampleInputDrivingLicence">Prawo jazdy</label>
                 <input type="text" class="form-control" id="exampleInputDrivingLicence" placeholder="Prawo jazdy" name="driving_licence_category">

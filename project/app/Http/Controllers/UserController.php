@@ -95,7 +95,7 @@ class UserController extends Controller
         $newUser->email = $request -> email;
         $newUser->driving_licence_category = $request -> driving_licence_category;
         $newUser->photo = $photo_value;
-        $newUser->status = 'free';
+        $newUser->status = $request->status;
         $newUser->password = $request -> password;
         $newUser->auth_level = $request -> auth_level;
         $newUser->save();
