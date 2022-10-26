@@ -15,11 +15,12 @@ return new class extends Migration
      */
     public function up()
     {
-//        Schema::create('qualification_vehicle', function (Blueprint $table) {
-//            $table->foreignIdFor(Qualification::class)->primary();
-//            $table->foreignIdFor(Vehicle::class)->primary();
-//            $table->timestamps();
-//        });
+        Schema::create('qualification_vehicle', function (Blueprint $table) {
+            $table->foreignIdFor(Qualification::class);
+            $table->foreignIdFor(Vehicle::class);
+            $table->primary(['vehicle_id', 'qualification_id']);
+            $table->timestamps();
+        });
     }
 
     /**

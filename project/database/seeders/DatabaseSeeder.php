@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $companys = Company::factory(5)
             ->has(
                 $users = User::factory(10)
@@ -41,6 +42,8 @@ class DatabaseSeeder extends Seeder
                     ->has( Service::factory())
             )
             ->create();
+
+
 
         //create test user Login: akowalski@mail.com Password: password
         $faker = \Faker\Factory::create();
@@ -59,5 +62,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'photo' => $faker->image('storage' . public_path('users_photos'), 640, 480, ['face',], false),
         ]);
+
+        $this->call(QualificationSeeder::class);
     }
 }

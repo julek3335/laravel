@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Services\VehicleRentalService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Reservation;
@@ -10,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\TestNotification;
 class UserController extends Controller
 {
+    private VehicleRentalService $rentalService;
+
+    public function __construct(VehicleRentalService $rentalService)
+    {
+        $this->rentalService = $rentalService;
+    }
+
     public function show($id){
         $user = User::findOrFail($id);
         // if($user-> auth_level == 0)
@@ -95,6 +103,12 @@ class UserController extends Controller
         return redirect('/user/' . $newUser->id);
     }
 
+
+    public function isQualified(Request $request)
+    {
+        return $this->rentalService->verifyQualification(Auth::user(),Vehicle::find($request->vehicle_id));
+    }
+    
     public function delete(Request $request)
     {
         if( isset($request->user_id)){
