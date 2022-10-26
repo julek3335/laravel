@@ -78,6 +78,11 @@ Route::controller(ReservationController::class)->group(function () {
 
 Route::controller(ServiceController::class)->group(function () {
     Route::get('/services', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/service/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
+    Route::post('/service/add', 'store')->middleware(['auth'])->name('dashboard');
+    Route::get('/service/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/service/edit/{id}', 'prepareEdit')->middleware(['auth'])->name('dashboard');
+    Route::put('/service/edit/{id}', 'update')->middleware(['auth'])->name('dashboard');
 });
 
 
