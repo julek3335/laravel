@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $vehicle_type = $this->call(VehicleTypeSeeder::class);
 
         $companys = Company::factory(5)
             ->has(
