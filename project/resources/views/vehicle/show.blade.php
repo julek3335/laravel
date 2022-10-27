@@ -52,6 +52,9 @@
             <div class="col-6 col-sm-4 col-md-3 col-xl-2">
                 @include('partials.vehicle.reservation')
             </div>
+            <div class="col-6 col-sm-4 col-md-4 col-xl-2">
+                @include('partials.vehicle.createInsurance')
+            </div>
         </div>
     </x-adminlte-card>
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
@@ -156,55 +159,46 @@
         @endforeach
     </script>
     <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
-        <div class="row">
-            <div class="col-sm-6">
-                @if($activeInsurance)
-                    @foreach($activeInsurance as $insurance)
-                        @if( $insurance->status->name == 'ACTIVE')
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <ul class="mt-4 list-group list-group-unbordered">
-                                    <li class="list-group-item">
-                                        <strong>Numer ubezpieczenia</strong> <span class="float-right">{{ $insurance->policy_number }}</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Data wygaśnięcia</strong> <span class="float-right">{{ $insurance->expiration_date }}</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Koszt</strong> <span class="float-right">{{ $insurance->cost }}</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Numer Kontaktowy</strong> <span class="float-right">{{ $insurance->phone_number }}</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Typ</strong> <span class="float-right">{{ $insurance->type }}</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Nazwa ubezpieczyciela</strong> <span class="float-right">{{ $insurance->insurer_name }}</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <strong>Opis</strong> <span class="float-right">{{ $insurance->description }}</span>
-                                    </li>
-                                </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="{{asset('storage/incidents_photos/'. $insurance->photo)}}" class="img-fluid p-4">
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                @else
-                <p>Brak danych o ubezpieczeniach</p>
-                @endif
-                <div class="row mt-4">
-                    <div class="col-sm-12">
-                        <div class="col-6 col-sm-5 col-md-4 col-xl-3">
-                            @include('partials.vehicle.createInsurance')
+        @if($activeInsurance)
+            @foreach($activeInsurance as $insurance)
+                @if( $insurance->status->name == 'ACTIVE')
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="mt-4 list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <strong>Numer ubezpieczenia</strong> <span class="float-right">{{ $insurance->policy_number }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Data wygaśnięcia</strong> <span class="float-right">{{ $insurance->expiration_date }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Koszt</strong> <span class="float-right">{{ $insurance->cost }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Numer Kontaktowy</strong> <span class="float-right">{{ $insurance->phone_number }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Typ</strong> <span class="float-right">{{ $insurance->type }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Nazwa ubezpieczyciela</strong> <span class="float-right">{{ $insurance->insurer_name }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Opis</strong> <span class="float-right">{{ $insurance->description }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-5 offset-sm-1">
+                            <ul class="mt-4 list-group list-group-unbordered">
+                                <img src="{{asset('storage/insurance_photos/'. $insurance->photo)}}" class="img-fluid p-4">
+                            </ul>
                         </div>
                     </div>
-                 </div>
-            </div>
-        </div>
+                @endif
+            @endforeach
+        @else
+        <p>Brak danych o ubezpieczeniach</p>
+        @endif
     </x-adminlte-card>
     <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         @if($incidents_others || $incidents_resolved)
