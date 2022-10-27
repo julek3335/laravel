@@ -7,7 +7,6 @@
     <x-adminlte-input name="expiration_date" type="text" label="Data wygaśnięcia" placeholder="Data wygaśnięcia" value="" disable-feedback required/>
     <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" value="" disable-feedback />
     <x-adminlte-input name="phone_number" type="number" label="Numer kontaktowy" placeholder="Numer kontaktowy" value="" disable-feedback required/>
-    <x-adminlte-input name="vehicle_id" type="number" label="id pojazdu" placeholder="id pojazdu" value="{{$vehicle->id}}" disable-feedback disabled />
     <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="" disable-feedback />
     <x-adminlte-input name="description" type="text" label="Opis" placeholder="Opis" value="" disable-feedback required/>
     <x-adminlte-input-file name="photo" label="Zdjęcie" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcie" required>
@@ -23,10 +22,9 @@
           <i class="fas fa-car-side"></i>
         </div>
       </x-slot>
-      <option data-icon="fa fa-fw fa-car">AC</option>
-      <option data-icon="fa fa-fw fa-truck" selected>OC</option>
-      <option data-icon="fa fa-fw fa-truck-moving">AC+OC</option>
-      <option data-icon="fa fa-fw fa-motorcycle">Assistance</option>
+      @foreach(App\Enums\InsuranceTypeEnum::cases() as $status_option)
+        <option value="{{ $status_option->value }}" {{ $status_option->value === $vehicle->status->value ? "selected" : ""}}>{{ $status_option->name }}</option>
+      @endforeach>
     </x-adminlte-select-bs>
     <x-adminlte-button label="Zapisz" theme="success" type="submit" class="float-right" icon="fas fa-save" />
   </form>
