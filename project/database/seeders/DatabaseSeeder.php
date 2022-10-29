@@ -32,14 +32,14 @@ class DatabaseSeeder extends Seeder
         $companys = Company::factory(5)
             ->has(
                 $users = User::factory(10)
-                    ->has($reservations = Reservation::factory(1))
+                    // ->has($reservations = Reservation::factory(1))
             )
             ->has(
                 $vehicles = Vehicle::factory(25)
                     ->has($registrationCards = RegistrationCard::factory())
                     ->has($incidents = Incident::factory()->count(3))
                     ->has($insurances = Insurance::factory())
-                    // ->has($reservations = Reservation::factory(1))
+                    ->has($reservations = Reservation::factory(2))
                     ->has( Service::factory())
             )
             ->create();
