@@ -9,6 +9,7 @@ use App\Models\Insurance;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\RegistrationCard;
+use App\Models\VehicleType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,13 +95,14 @@ class VehicleController extends Controller
         $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
-
+        $vehicleTypes = VehicleType::all();
         /*
         ** Passing data to view
         */
         return view('vehicle.edit', [
             'vehicle' => $vehicle,
-            'registration_card' => $registrationCard
+            'registration_card' => $registrationCard,
+            'vehicle_type' => $vehicleTypes
         ]);
     }
 
