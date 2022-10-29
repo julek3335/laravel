@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('incidents', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->dateTime('date');
             $table->string('description');
             $table->string('address');
             $table->string('photo');
