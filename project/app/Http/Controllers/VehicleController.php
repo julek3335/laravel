@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Vehicle;
-use App\Models\RegistrationCard;
-use App\Models\Insurance;
 use App\Models\Incident;
+use App\Models\Insurance;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Models\RegistrationCard;
+use App\Models\VehicleType;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
@@ -21,7 +23,10 @@ class VehicleController extends Controller
         /*
         ** Get main and additional vehicle data
         */
-        $vehicle = Vehicle::findOrFail($id);
+        $vehicle = Vehicle::where('vehicles.id', $id)
+        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->first();
+
         $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -84,17 +89,20 @@ class VehicleController extends Controller
         /*
         ** Get main and additional vehicle data
         */
-        $vehicle = Vehicle::findOrFail($id);
+        $vehicle = Vehicle::where('vehicles.id', $id)
+        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->first();
         $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
-
+        $vehicleTypes = VehicleType::all();
         /*
         ** Passing data to view
         */
         return view('vehicle.edit', [
             'vehicle' => $vehicle,
-            'registration_card' => $registrationCard
+            'registration_card' => $registrationCard,
+            'vehicle_type' => $vehicleTypes
         ]);
     }
 
@@ -104,7 +112,9 @@ class VehicleController extends Controller
     public function updateVehicle(Request $req, $id)
     {
         //Add new vehicle
-        $vehicle = Vehicle::findOrFail($id);
+        $vehicle = Vehicle::where('vehicles.id', $id)
+        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->first();
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
@@ -140,7 +150,9 @@ class VehicleController extends Controller
     */
     public function showAll()
     {
-        return view('vehicle.list', ['vehicles' => Vehicle::all()->sortBy("created_at")]);
+        $vehicles = DB::table('vehicles')->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')->get();
+
+        return view('vehicle.list', ['vehicles' => $vehicles]);
     }
 
     /*

@@ -2,6 +2,7 @@
 
 use App\Models\Company;
 use App\Models\RegistrationCard;
+use App\Models\VehicleType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('license_plate',20);
             $table->string('photos')->nullable();
             $table->foreignIdFor(Company::class)->nullable();
+            $table->foreignIdFor(VehicleType::class)->nullable();
             $table->timestamps();
         });
     }

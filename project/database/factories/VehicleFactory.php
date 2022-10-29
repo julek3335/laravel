@@ -34,6 +34,7 @@ class VehicleFactory extends Factory
             'status' => VehicleStatusEnum::READY,
             'license_plate' => $this->faker->word(),
             'photos' => $photos,
+            'vehicle_type_id'=>fake()->numberBetween(1, 4),
         ];
     }
 }
