@@ -51,12 +51,5 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
+    <button id="install_pwa" class="btn" style="display:none">Zainstaluj PWA</button>
 @stop
