@@ -15,7 +15,7 @@ class ReservationFactory extends Factory
         return [
             'start_date' => $start_date,
             'end_date' => date_add($start_date,date_interval_create_from_date_string("2 days")),
-            'vehicle_id' => fake()->numberBetween(1, 125),
+            'user_id' => fake()->numberBetween(1, 125),
         ];
     }
 }
