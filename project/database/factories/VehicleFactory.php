@@ -29,10 +29,13 @@ class VehicleFactory extends Factory
 
         $photos = json_encode([$photo1,$photo2,$photo3]);
 
+        $faker = (new \Faker\Factory())::create();
+        $faker->addProvider(new \Faker\Provider\Fakecar($faker));
+
         return [
             'name' => $this->faker->userName(),
             'status' => VehicleStatusEnum::READY,
-            'license_plate' => $this->faker->word(),
+            'license_plate' => $faker->vehicleRegistration('[A-Z]{2}-[0-9]{5}'),
             'photos' => $photos,
             'vehicle_type_id'=>fake()->numberBetween(1, 4),
         ];

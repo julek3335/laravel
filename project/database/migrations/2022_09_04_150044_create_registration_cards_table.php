@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('registration_cards', function (Blueprint $table) {
             $table->id();
             $table->string('vehicle_identification_number',50);
+            $table->string('brand',50)->nullable();
+            $table->string('model',50)->nullable();
             $table->double('max_total_weight')->nullable();
             $table->double('engine_capacity')->nullable();
             $table->integer('engine_power')->nullable();
