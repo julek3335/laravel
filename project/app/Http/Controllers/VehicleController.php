@@ -130,6 +130,7 @@ class VehicleController extends Controller
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+
         if ($req->hasFile('photos')) {
             $req->validate([
                 'photos.*' => 'mimes:jpeg,bmp,png,jpg'
@@ -215,17 +216,6 @@ class VehicleController extends Controller
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
         $vehicle->vehicle_type_id = $vehicle_type_id;
-        $vehicle->vehicle_type_id = $vehicle_type_id;
-        $vehicle->save();
-
-        //Add registration card
-
-        //Add new vehicle
-        $vehicle = new Vehicle;
-        $vehicle->name = $req->name;
-        $vehicle->status = 'ready';
-        $vehicle->license_plate = $req->license_plate;
-        $vehicle->company_id = 1;
         if ($req->hasFile('photos')) {
             $req->validate([
                 'photos.*' => 'mimes:jpeg,bmp,png,jpg'
@@ -243,7 +233,7 @@ class VehicleController extends Controller
 
             $vehicle->photos = json_encode($image_arr);
         }
-
+        
         $vehicle->save();
 
         //Add registration card
