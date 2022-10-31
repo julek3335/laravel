@@ -12,6 +12,7 @@ use App\Models\RegistrationCard;
 use App\Models\VehicleType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class VehicleController extends Controller
 {
@@ -24,10 +25,14 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->first();
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        >join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->firstOrFail();
 
-        $vehicle->photos = json_decode($vehicle->photos);
+        if(isset($vehicle->photos)){
+            $vehicle->photos = json_decode($vehicle->photos);
+        }
+       
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $incidents_resolved = Incident::where([
@@ -90,8 +95,10 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->first();
+        ->firstOrFail();
+
         $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -112,13 +119,34 @@ class VehicleController extends Controller
     public function updateVehicle(Request $req, $id)
     {
         //Add new vehicle
+        $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
         $vehicle = Vehicle::where('vehicles.id', $id)
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->first();
+        ->firstOrFail();
+
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
+        $vehicle->vehicle_type_id = $vehicle_type_id;
+        if ($req->hasFile('photos')) {
+            $req->validate([
+                'photos.*' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+
+            $image_arr = json_decode($vehicle->photos);
+
+            foreach($req->file('photos') as $image)
+            {
+                $file_path = $image->store('vehicles_photos', 'public'); 
+                
+                $image_name_hash = $image->hashName();
+                array_push($image_arr, $image_name_hash);
+            }
+
+            $vehicle->photos = json_encode($image_arr);
+        }
         $vehicle->save();
 
         //Add registration card
@@ -136,13 +164,29 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        /*
-        ** Passing data to view
-        */
-        return view('vehicle.edit', [
-            'vehicle' => $vehicle,
-            'registration_card' => $registrationCard
-        ]);
+        return redirect('/vehicle/edit/' . $vehicle->id);
+    }
+
+    /*
+    **  Delete vehicle photo
+    */
+    public function deleteVehiclePhoto($id, $photo_name){
+
+        $vehicle = Vehicle::where('vehicles.id', $id)->firstOrFail();
+
+        $vehicle_photos = json_decode($vehicle->photos);
+
+        $key = array_search($photo_name, $vehicle_photos);
+        if ($key !== false) {
+            unset($vehicle_photos[$key]);
+        }
+        
+        $vehicle->photos = json_encode(array_values($vehicle_photos));
+        $vehicle->save();
+
+        Storage::disk('public')->delete('vehicles_photos/'.$photo_name);
+
+        return redirect('/vehicle/edit/' . $vehicle->id);
     }
 
     /*
@@ -150,7 +194,10 @@ class VehicleController extends Controller
     */
     public function showAll()
     {
-        $vehicles = DB::table('vehicles')->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')->get();
+        $vehicles = DB::table('vehicles')
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->get();
 
         return view('vehicle.list', ['vehicles' => $vehicles]);
     }
@@ -160,12 +207,43 @@ class VehicleController extends Controller
     */
     public function store(Request $req)
     {
+        $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
         //Add new vehicle
         $vehicle = new Vehicle;
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
+        $vehicle->vehicle_type_id = $vehicle_type_id;
+        $vehicle->vehicle_type_id = $vehicle_type_id;
+        $vehicle->save();
+
+        //Add registration card
+
+        //Add new vehicle
+        $vehicle = new Vehicle;
+        $vehicle->name = $req->name;
+        $vehicle->status = 'ready';
+        $vehicle->license_plate = $req->license_plate;
+        $vehicle->company_id = 1;
+        if ($req->hasFile('photos')) {
+            $req->validate([
+                'photos.*' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+
+            $image_arr = [];
+
+            foreach($req->file('photos') as $image)
+            {
+                $file_path = $image->store('vehicles_photos', 'public'); 
+                
+                $image_name_hash = $image->hashName();
+                array_push($image_arr, $image_name_hash);
+            }
+
+            $vehicle->photos = json_encode($image_arr);
+        }
+
         $vehicle->save();
 
         //Add registration card

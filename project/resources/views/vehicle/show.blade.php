@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+@section('plugins.PhotoSwipe', true)
     <x-adminlte-modal id="modalEditVehicle" title="Edycja danych pojazdu" theme="light" icon="fas fa-bolt">
         <form action="{{ url('vehicle/edit/'. $vehicle->id) }}" method="POST">
             @csrf
@@ -46,14 +47,25 @@
     </x-adminlte-card>
     <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>   
         <div class="row">
-            <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                @include('partials.vehicle.pickup')
+            <div clas="col-sm-12">
+                <div class="float-left m-1">
+                    @include('partials.vehicle.pickup')
+                </div>
+                <div class="float-left m-1">
+                    @include('partials.vehicle.reservation')
+                </div>
+                <div class="float-left m-1">
+                    @include('partials.vehicle.createInsurance')
+                </div>
             </div>
-            <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                @include('partials.vehicle.reservation')
-            </div>
-            <div class="col-6 col-sm-4 col-md-4 col-xl-2">
-                @include('partials.vehicle.createInsurance')
+        </div>
+        <div class="row mt-2">
+            <div clas="col-sm-12">
+                <div class="float-left m-1">
+                    <a href="/vehicle/edit/{{$vehicle->id}}">
+                        <x-adminlte-button label="Edytuj pojazd" icon="fas fa-edit" class="float-right mr-2"/>
+                    </a>
+                </div>
             </div>
         </div>
     </x-adminlte-card>
@@ -140,6 +152,22 @@
                     <x-adminlte-button label="Edytuj - modal" icon="fas fa-light fa-edit" data-toggle="modal" data-target="#modalEditVehicle" id="modalEditVehicle"/>
                 </div>
             @endif
+        </div>
+    </x-adminlte-card>
+    <x-adminlte-card title="Galeria zdjęć" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
+        <div class="vehicle-gallery">
+            <div class="row">
+                @foreach($vehicle->photos as $photo)
+                @php
+                    $photo_size = getimagesize( 'storage/vehicles_photos/'. $photo);          
+                @endphp
+                <div class="col-sm-4 p-2">
+                    <a href="{{asset('storage/vehicles_photos/'. $photo)}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
+                        <img src="{{asset('storage/vehicles_photos/'. $photo)}}" alt="" class="img-fluid"/>
+                    </a>
+                </div>
+                @endforeach
+            </div>
         </div>
     </x-adminlte-card>
     @section('plugins.Fullcalendar', true)
@@ -305,6 +333,9 @@
 
 @section('js')
 <script>
+    /*
+    ** Calendar
+    */
     $(document).ready(function(){
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -321,5 +352,16 @@
 
         calendar.render();
     });
+
+    /*
+    ** PhotoSwipe
+    */
+    var lightbox = new PhotoSwipeLightbox({
+        gallery: '.vehicle-gallery',
+        children: 'a',
+        // dynamic import is not supported in UMD version
+        pswpModule: PhotoSwipe 
+      });
+      lightbox.init();
 </script>
 @stop

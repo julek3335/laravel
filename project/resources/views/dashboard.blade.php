@@ -13,10 +13,10 @@
         </div>
         <div class="card-body">
             <div class="row mb-2">
-                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                <div class="float-left m-1">
                     @include('partials.vehicle.pickup')
                 </div>
-                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                <div class="float-left m-1">
                     @include('partials.vehicle.reservation')
                 </div>
             </div>

@@ -44,8 +44,40 @@
                 value="{{ $registration_card->siting_places }}" disable-feedback/>
             <x-adminlte-input name="standing_places" type="number" label="Ilość miejsc stojących" placeholder="0"
                 value="{{ $registration_card->standing_places }}" disable-feedback/>
-
+            <x-adminlte-input-file name="photos[]" label="Zdjęcia" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcia" multiple>
+                <x-slot name="prependSlot">
+                    <div class="input-group-text bg-lightblue">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                </x-slot>
+            </x-adminlte-input-file>
+            @isset($vehicle->photos)
+                <div class="row">
+                @foreach($vehicle->photos as $photo)
+                    <div class="col-sm-2">
+                        <img src="{{asset('storage/vehicles_photos/'. $photo)}}" alt="" class="img-fluid"/>
+                        <x-adminlte-button label="Usuń" theme="danger" icon="fas fa-trash" class="mt-2 modalDeleteVehiclePhoto" data-toggle="modal" data-target="#modalDeleteVehiclePhoto" id="modalDeleteVehiclePhoto-{{$photo}}" data-photo="{{$photo}}"/>
+                    </div>
+                @endforeach
+                </div>
+            @endisset
+            
             <x-adminlte-button label="Zapisz" type="submit" theme="success" class="float-right" icon="fas fa-save"/>
+            <a href="/vehicles/{{$vehicle->id}}">
+                <x-adminlte-button label="Karta pojazdu" icon="fas fa-arrow-left" class="float-right mr-2"/>
+            </a>
         </div>
     </div>
 </x-adminlte-card>
+@section('js')
+    <script>
+        //Set delete photo form after form opened
+        $(".modalDeleteVehiclePhoto").click(function(evt){
+            let storage_url = '{{asset('storage/vehicles_photos')}}';
+            let photo_name = $(this).data("photo");
+            $("#photo_to_delete").attr("src", storage_url + '/' + photo_name);
+            $("#form_delete_photo").attr("action", '/vehicle/{{$vehicle->id}}/delete/photo/' + photo_name)
+        });
+    </script>
+    @parent
+@stop
