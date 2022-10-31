@@ -150,8 +150,10 @@ class VehicleController extends Controller
     */
     public function showAll()
     {
-        $vehicles = DB::table('vehicles')->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')->get();
-
+        $vehicles = DB::table('vehicles')
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->get();
         return view('vehicle.list', ['vehicles' => $vehicles]);
     }
 
