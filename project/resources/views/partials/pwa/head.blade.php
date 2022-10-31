@@ -4,7 +4,7 @@
     /* PWA - TEST'S */
     @media all and (display-mode: standalone) {
         body {
-            background-color: yellow;
+            background-color: #f4f6f9;
         }
     }
 </style>

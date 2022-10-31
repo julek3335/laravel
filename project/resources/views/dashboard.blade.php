@@ -51,5 +51,5 @@
             </div>
         </div>
     </div>
-    <button id="install_pwa" class="btn" style="display:none">Zainstaluj PWA</button>
+    @include('partials.pwa.alertInstall')
 @stop

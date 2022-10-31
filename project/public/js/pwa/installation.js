@@ -8,13 +8,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
   // Stash the event so it can be triggered later.
   deferredPrompt = e;
   // Update UI notify the user they can install the PWA
+
   showInstallPromotion();
-  // Optionally, send analytics event that PWA install promo was shown.
-  console.log(`'beforeinstallprompt' event was fired.`);
 });
 
 // In-app installation flow
 let buttonInstall = document.querySelector("#install_pwa");
+let alertInstall = document.querySelector("#install_pwa_alert")
 
 buttonInstall.addEventListener('click', async () => {
     // Hide the app provided install promotion
@@ -23,8 +23,6 @@ buttonInstall.addEventListener('click', async () => {
     deferredPrompt.prompt();
     // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
-    // Optionally, send analytics event with outcome of user choice
-    console.log(`User response to the install prompt: ${outcome}`);
     // We've used the prompt, and can't use it again, throw it away
     deferredPrompt = null;
 });
@@ -35,8 +33,6 @@ window.addEventListener('appinstalled', () => {
     hideInstallPromotion();
     // Clear the deferredPrompt so it can be garbage collected
     deferredPrompt = null;
-    // Optionally, send analytics event to indicate successful install
-    console.log('PWA was installed');
 });
 
 // Track how the PWA was launched
@@ -56,14 +52,12 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt)
     if (evt.matches) {
       displayMode = 'standalone';
     }
-    // Log display mode change to analytics
-    console.log('DISPLAY_MODE_CHANGED', displayMode);
 });
 
 function hideInstallPromotion(){
-    buttonInstall.style.display = "none";
+  alertInstall.style.display = "none";
 }
 
 function showInstallPromotion(){
-    buttonInstall.style.display = "block";
+  alertInstall.style.display = "block";
 }

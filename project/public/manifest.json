@@ -1,6 +1,6 @@
 {
-    "short_name": "Pojazdy",
-    "name": "Zarządzanie pojazdami",
+    "short_name": "iPojazd",
+    "name": "iPojazd",
     "icons": [
       {
         "src": "/img/pwa/icon-192x192.png",
@@ -15,7 +15,7 @@
     ],
     "id": "/?source=pwa",
     "start_url": "/?source=pwa",
-    "background_color": "#3367D6",
+    "background_color": "#f4f6f9",
     "display": "fullscreen",
-    "theme_color": "#3367D6"
+    "theme_color": "#f4f6f9"
   }
