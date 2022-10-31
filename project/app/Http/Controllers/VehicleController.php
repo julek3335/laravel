@@ -24,9 +24,10 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
         ->first();
-
+        // dd($vehicle);
         $vehicle->photos = json_decode($vehicle->photos);
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -90,6 +91,7 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
         ->first();
         $vehicle->photos = json_decode($vehicle->photos);
@@ -112,13 +114,16 @@ class VehicleController extends Controller
     public function updateVehicle(Request $req, $id)
     {
         //Add new vehicle
+        $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
         $vehicle = Vehicle::where('vehicles.id', $id)
+        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
         ->first();
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
+        $vehicle->vehicle_type_id = $vehicle_type_id;
         $vehicle->save();
 
         //Add registration card
@@ -162,12 +167,14 @@ class VehicleController extends Controller
     */
     public function store(Request $req)
     {
+        $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
         //Add new vehicle
         $vehicle = new Vehicle;
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
         $vehicle->company_id = 1;
+        $vehicle->vehicle_type_id = $vehicle_type_id;
         $vehicle->save();
 
         //Add registration card
