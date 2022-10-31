@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form action="/vehicle/add" method="POST">
+<form action="/vehicle/add" method="POST" enctype="multipart/form-data">
     @csrf
     <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
@@ -37,6 +37,13 @@
                 <x-adminlte-input name="axle" type="number" label="Ilość osi" placeholder="2" disable-feedback />
                 <x-adminlte-input name="siting_places" type="number" label="Ilość miejsc siedzących" placeholder="5" disable-feedback />
                 <x-adminlte-input name="standing_places" type="number" label="Ilość miejsc stojących" placeholder="0" disable-feedback />
+                <x-adminlte-input-file name="photos[]" label="Zdjęcia" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcia" multiple>
+                    <x-slot name="prependSlot">
+                        <div class="input-group-text bg-lightblue">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                    </x-slot>
+                </x-adminlte-input-file>
                 <x-adminlte-button label="Zapisz" type="submit" theme="success" class="float-right" icon="fas fa-save" />
             </div>
         </div>

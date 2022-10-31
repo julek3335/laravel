@@ -659,6 +659,26 @@ return [
                 ],
             ],
         ],
+        'PhotoSwipe' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/photoswipe/css/photoswipe.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/photoswipe/js/photoswipe.umd.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/photoswipe/js/photoswipe-lightbox.umd.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*
