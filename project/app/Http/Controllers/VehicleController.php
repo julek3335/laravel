@@ -26,7 +26,7 @@ class VehicleController extends Controller
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
         ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
-        >join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
         ->firstOrFail();
 
         if(isset($vehicle->photos)){
