@@ -51,12 +51,5 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
+    @include('partials.pwa.alertInstall')
 @stop
