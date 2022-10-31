@@ -58,7 +58,7 @@ class IncidentController extends Controller
     }
 
     public function prepareAdd(){
-        return view('incident.add', ['vehicles' => Vehicle::all()->where('status', 0) ]);
+        return view('incident.add', ['vehicles' => Vehicle::all()]);
     }
 
 }
