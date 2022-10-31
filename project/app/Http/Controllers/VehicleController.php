@@ -148,7 +148,14 @@ class VehicleController extends Controller
 
             $vehicle->photos = json_encode($image_arr);
         }
-        $vehicle->save();
+        try {
+            $vehicle->save();
+            $code = 200;
+            $message = 'Pojazd został zaktalizowany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
         //Add registration card
         $registrationCard = RegistrationCard::where('vehicle_id', $id)->firstOrFail();
@@ -163,9 +170,19 @@ class VehicleController extends Controller
         $registrationCard->siting_places = $req->siting_places;
         $registrationCard->standing_places = $req->standing_places;
         $registrationCard->vehicle_id = $vehicle->id;
-        $registrationCard->save();
+        
+        try {
+            $registrationCard->save();
+            $code = 200;
+            $message = 'Karta została zaktalizowany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
-        return redirect('/vehicle/edit/' . $vehicle->id);
+        return redirect('/vehicle/edit/' . $vehicle->id)
+        ->header('return_code', $code)
+        ->header('return_message', $message);
     }
 
     /*
@@ -187,7 +204,9 @@ class VehicleController extends Controller
 
         Storage::disk('public')->delete('vehicles_photos/'.$photo_name);
 
-        return redirect('/vehicle/edit/' . $vehicle->id);
+        return redirect('/vehicle/edit/' . $vehicle->id)        
+        ->header('return_code', '200')
+        ->header('return_message', 'Zdjęcie zostało usunięte');
     }
 
     /*
@@ -233,8 +252,15 @@ class VehicleController extends Controller
 
             $vehicle->photos = json_encode($image_arr);
         }
-        
-        $vehicle->save();
+
+        try {
+            $vehicle->save();
+            $code = 200;
+            $message = 'Pojazd został zaktalizowany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
         //Add registration card
         $registrationCard = new RegistrationCard;
@@ -251,7 +277,9 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        return redirect('/vehicles/' . $vehicle->id);
+        return redirect('/vehicles/' . $vehicle->id)        
+        ->header('return_code', $code)
+        ->header('return_message', $message);
     }
 
     public function showCalendar($id)
@@ -263,8 +291,17 @@ class VehicleController extends Controller
     {
         if (isset($request->vehicle_id)) {
             $user = Vehicle::find($request->vehicle_id)->first();
-            $user->delete();
+            try {
+                $user->delete();
+                $code = 200;
+                $message = 'Pojazd został usunięty';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+            }
         }
-        return redirect()->route('showAllVehicles');
+        return redirect()->route('showAllVehicles')        
+        ->header('return_code', $code)
+        ->header('return_message', $message);
     }
 }
