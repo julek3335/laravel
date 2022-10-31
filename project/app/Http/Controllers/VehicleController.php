@@ -31,7 +31,7 @@ class VehicleController extends Controller
 
         if(isset($vehicle->photos)){
             $vehicle->photos = json_decode($vehicle->photos);
-        }
+        }else{$vehicle->photos = [];}
        
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
