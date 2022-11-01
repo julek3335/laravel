@@ -10,7 +10,7 @@ use App\Models\Vehicle;
 
 class VehicleRentalService
 {
-    public function rentVehicle(int $vehicleId,int $userId)
+    public function rentVehicle(int $vehicleId, int $userId, array $jobData)
     {
         $vehicle = $this->vehicleIsFree($vehicleId);
         if (is_null($vehicle)) {
@@ -23,15 +23,20 @@ class VehicleRentalService
             return;
         }
 
-        if(!$this->verifyQualification($user, $vehicle)){
+        if (! $this->verifyQualification($user, $vehicle)) {
             return;
         }
 
-        $job = Job::create([
-            'vehicle_id' => $vehicle->id,
-            'user_id' => $user->id,
-            'status' => JobStatusEnum::IN_PROGRESS,
-        ]);
+        $job = Job::create(
+            array_merge(
+                [
+                    'vehicle_id' => $vehicle->id,
+                    'user_id' => $user->id,
+                    'status' => JobStatusEnum::IN_PROGRESS,
+                ],
+                $jobData
+            )
+        );
 
         return $job;
     }
@@ -46,16 +51,15 @@ class VehicleRentalService
         return User::find($id);
     }
 
-    public function verifyQualification(User $user,Vehicle $vehicle): bool
+    public function verifyQualification(User $user, Vehicle $vehicle): bool
     {
-
         $vehicleRequirements = $vehicle->qualifications()->allRelatedIds()->all();
         $userQualifications = $user->qualifications()->allRelatedIds()->all();
 
-        foreach ($vehicleRequirements as $requirement){
-             if(!in_array($requirement,$userQualifications)){
-                 return false;
-             }
+        foreach ($vehicleRequirements as $requirement) {
+            if (! in_array($requirement, $userQualifications)) {
+                return false;
+            }
         }
         return true;
     }
