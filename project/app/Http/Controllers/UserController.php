@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Services\VehicleRentalService;
-use Illuminate\Http\Request;
+use App\Models\Job;
 use App\Models\User;
-use App\Models\Reservation;
 use App\Models\Vehicle;
+use App\Models\Reservation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Services\VehicleRentalService;
 use App\Notifications\TestNotification;
+
 class UserController extends Controller
 {
     private VehicleRentalService $rentalService;
@@ -31,6 +33,10 @@ class UserController extends Controller
             'reservations' => Reservation::where('user_id' , '=', $id)->get(),
             'entitlements' => Auth::user()-> auth_level,
             'avaibleUsers' => User::all(),
+            'userJobs'     => Job::where('jobs.user_id' , $id)
+                                ->join('vehicles', 'vehicles.id', '=', 'jobs.vehicle_id')
+                                ->select('jobs.*', 'vehicles.id as vehicle_id', 'vehicles.name')
+                                ->get(),
         ]);
     }
 
