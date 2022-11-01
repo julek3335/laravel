@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\VehicleRentalService;
+use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Services\VehicleRentalService;
 
 class JobController extends Controller
 {
@@ -20,5 +21,10 @@ class JobController extends Controller
     public function startJob(Request $req)
     {
         $this->rentalService->rentVehicle(Auth::user()->id, $req->vehicle_id);
+    }
+
+    public function showAll()
+    {
+        return view('jobs.list',  ['jobs' => Job::all()->sortBy("created_at")]);
     }
 }
