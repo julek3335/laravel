@@ -54,4 +54,9 @@ class Vehicle extends Model
     {
         return $this->belongsToMany(Qualification::class);
     }
+
+    public function jobs():BelongsToMany
+    {
+        return  $this->belongsToMany(Job::class);
+    }
 }

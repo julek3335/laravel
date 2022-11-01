@@ -24,7 +24,11 @@ class Job extends Model
         'start_time',
         'end_time',
         'distance',
-        'description'
+        'description',
+        'start_point',
+        'end_point',
+        'start_odometer',
+        'end_odometer',
     ];
 
     /**
