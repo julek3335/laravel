@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\Incident;
 use App\Models\Insurance;
 use App\Models\Reservation;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use App\Models\RegistrationCard;
-use App\Models\VehicleType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -68,6 +69,9 @@ class VehicleController extends Controller
             ['status', '=', 'active']
         ])->get()->sortBy('created_at');
 
+        //jobs list
+        $jobs = Job::where('jobs.vehicle_id' , $id)->get();
+
         /*
         ** Passing data to view
         */
@@ -82,7 +86,8 @@ class VehicleController extends Controller
             'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
             'entitlements' => Auth::user()->auth_level, 
             'reservations' => Reservation::where('vehicle_id' , '=', $id)->get(),
-            'activeInsurance' => $insuranceActive
+            'activeInsurance' => $insuranceActive,
+            'jobs' => $jobs,
         ]);
     }
 

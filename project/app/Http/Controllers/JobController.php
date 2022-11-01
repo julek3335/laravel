@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\Vehicle;
 use App\Services\VehicleRentalService;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Services\VehicleRentalService;
 
 class JobController extends Controller
 {
@@ -33,6 +34,11 @@ class JobController extends Controller
 
     public function listVehicleJobs(Request $request)
     {
-        dd(Job::where('vehicle_id', 51)->get());
+        return Job::where('vehicle_id', 51)->get();
+    }
+
+    public function showAll()
+    {
+        return view('jobs.list',  ['jobs' => Job::all()->sortBy("created_at")]);
     }
 }
