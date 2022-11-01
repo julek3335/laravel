@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Hash;
 use App\Services\VehicleRentalService;
 use App\Notifications\TestNotification;
 
@@ -102,7 +103,7 @@ class UserController extends Controller
         $newUser->driving_licence_category = $request -> driving_licence_category;
         $newUser->photo = $photo_value;
         $newUser->status = $request->status;
-        $newUser->password = $request -> password;
+        $newUser->password = Hash::make($request->password);
         $newUser->auth_level = $request -> auth_level;
         $newUser->save();
 
