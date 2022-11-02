@@ -193,8 +193,6 @@ class VehicleController extends Controller
         return redirect('/vehicle/edit/' . $vehicle->id)
         ->with('return_code', $code)
         ->with('return_message', $message);
-        //->header('return_code', $code)
-        //->header('return_message', $message);
     }
 
     /*
@@ -217,8 +215,8 @@ class VehicleController extends Controller
         Storage::disk('public')->delete('vehicles_photos/'.$photo_name);
 
         return redirect('/vehicle/edit/' . $vehicle->id)        
-        ->header('return_code', '200')
-        ->header('return_message', 'Zdjęcie zostało usunięte');
+        ->with('return_code', '200')
+        ->with('return_message', 'Zdjęcie zostało usunięte');
     }
 
     /*
@@ -292,8 +290,8 @@ class VehicleController extends Controller
         $registrationCard->save();
 
         return redirect('/vehicles/' . $vehicle->id)        
-        ->header('return_code', $code)
-        ->header('return_message', $message);
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     public function showCalendar($id)
@@ -315,7 +313,7 @@ class VehicleController extends Controller
             }
         }
         return redirect()->route('showAllVehicles')        
-        ->header('return_code', $code)
-        ->header('return_message', $message);
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 }
