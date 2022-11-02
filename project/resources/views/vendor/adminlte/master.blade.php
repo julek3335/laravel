@@ -84,6 +84,8 @@
     {{-- Body Content --}}
     @yield('body')
 
+    @include('partials.pwa.alertInstall')
+
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -112,6 +114,9 @@
 
     {{-- PWA Scripts --}}
     @include('partials.pwa.scripts')
+
+    {{-- Toasts Scripts --}}
+    @include('partials.toasts.toasts')
 </body>
 
 </html>
