@@ -5,17 +5,15 @@
     </x-adminlte-alert>
 </div>
 
-@section('css')
-<style>
+<style type="text/css">
 .install-pwa-alert{
     position: fixed;
     bottom:0;
     left:0;
     width:100%;
+    z-index: 10000;
 }
 .install-pwa-alert .alert{
     margin:0;
 }
 </style>
-@parent
-@stop
