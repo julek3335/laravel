@@ -58,5 +58,9 @@ class Vehicle extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+
+    public function jobs():BelongsToMany
+    {
+        return  $this->belongsToMany(Job::class);
     }
 }

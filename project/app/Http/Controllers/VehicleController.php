@@ -184,15 +184,17 @@ class VehicleController extends Controller
         try {
             $registrationCard->save();
             $code = 200;
-            $message = 'Karta została zaktalizowany';
+            $message = 'Karta została zaktalizowana.';
         } catch (\Throwable $th) {
             $code = 400;
             $message = $th->getMessage();
         }
 
         return redirect('/vehicle/edit/' . $vehicle->id)
-        ->header('return_code', $code)
-        ->header('return_message', $message);
+        ->with('return_code', $code)
+        ->with('return_message', $message);
+        //->header('return_code', $code)
+        //->header('return_message', $message);
     }
 
     /*

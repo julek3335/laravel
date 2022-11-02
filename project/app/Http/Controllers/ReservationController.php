@@ -45,7 +45,7 @@ class ReservationController extends Controller
     }
 
     public function created(Request $req){
-        
+
         // jezeli poziom uzytkownika edytor lub admin pobiera userId z widoku jezeli poziom uzytkownik pobiera id obecnie zalogowanego uzytkownika
         if(Auth::user()-> auth_level == 0 || Auth::user()-> auth_level ==1)
         {
@@ -56,7 +56,7 @@ class ReservationController extends Controller
             $user_id = Auth::user() -> id;
         }
 
-        // sprawdzenie czy dany uzytkownik moze kierowac danym pojazdem 
+        // sprawdzenie czy dany uzytkownik moze kierowac danym pojazdem
         // na razie nie aktywne brak kategoi pojazdu w bd
         // if($driving_licence_category != Vehicle::findOrFail($req -> vehicle_id) -> category)
         // {
@@ -105,13 +105,23 @@ class ReservationController extends Controller
     public function showAllReservationsCalendar()
     {
         $reservations = DB::select('
-        select  r.start_date AS start_date, r.end_date AS end_date, u.name AS user_name, u.last_name AS user_last_name, r.user_id AS user_id, r.vehicle_id AS vehicle_id, v.name AS vehicle_name  
-        from reservations r 
+        select  r.start_date AS start_date, r.end_date AS end_date, u.name AS user_name, u.last_name AS user_last_name, r.user_id AS user_id, r.vehicle_id AS vehicle_id, v.name AS vehicle_name
+        from reservations r
         inner join users u ON r.user_id = u.id
-        inner join vehicles v ON r.vehicle_id = v.id         
+        inner join vehicles v ON r.vehicle_id = v.id
         ');
         return view('reservation.showCalendar', ['reservations' => $reservations]);
     }
 
-     
+    public function getAvailableCars(Request $request)
+    {
+        $startTime = new \DateTimeImmutable($request->start_time);
+
+        $reservedIds = Reservation::whereDate('start_date', '<=', $startTime)
+            ->whereDate('end_date', '>=', $startTime)
+            ->get('vehicle_id')
+            ->pluck('vehicle_id');
+        $cars = Vehicle::whereNotIn('id',$reservedIds->all())->get();
+        return response()->json($cars->all());
+    }
 }

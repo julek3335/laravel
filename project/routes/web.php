@@ -43,6 +43,7 @@ Route::controller(VehicleController::class)->group(function () {
 
 Route::controller(JobController::class)->group(function () {
     Route::post('/rent', 'startJob')->name('dashboard');
+    Route::get('/jobs/vehicle', 'listVehicleJobs')->name('dashboard');
 //    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
 Route::get('/example-car', function () {
@@ -72,6 +73,7 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(ReservationController::class)->group(function () {
+    Route::get('/reservation/available-cars', 'getAvailableCars')->middleware(['auth']);
     Route::post('/reservation-create', [ReservationController::class, 'created']);
     Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('dashboard');
