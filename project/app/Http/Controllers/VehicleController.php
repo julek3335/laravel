@@ -146,7 +146,10 @@ class VehicleController extends Controller
                 'photos.*' => 'mimes:jpeg,bmp,png,jpg'
             ]);
 
-            $image_arr = json_decode($vehicle->photos);
+            if($vehicle->photos)
+                $image_arr = json_decode($vehicle->photos);
+            else
+                $image_arr = [];
 
             foreach($req->file('photos') as $image)
             {
@@ -170,6 +173,8 @@ class VehicleController extends Controller
         //Add registration card
         $registrationCard = RegistrationCard::where('vehicle_id', $id)->firstOrFail();
         $registrationCard->vehicle_identification_number = $req->vehicle_identification_number;
+        $registrationCard->brand = $req->brand;
+        $registrationCard->model = $req->model;
         $registrationCard->max_total_weight = $req->max_total_weight;
         $registrationCard->engine_capacity = $req->engine_capacity;
         $registrationCard->engine_power = $req->engine_power;
@@ -277,6 +282,8 @@ class VehicleController extends Controller
         //Add registration card
         $registrationCard = new RegistrationCard;
         $registrationCard->vehicle_identification_number = $req->vehicle_identification_number;
+        $registrationCard->brand = $req->brand;
+        $registrationCard->model = $req->model;
         $registrationCard->max_total_weight = $req->max_total_weight;
         $registrationCard->engine_capacity = $req->engine_capacity;
         $registrationCard->engine_power = $req->engine_power;
