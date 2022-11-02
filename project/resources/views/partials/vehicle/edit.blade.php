@@ -3,10 +3,10 @@
         <div class="col-sm-12">
             <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa"
                 value="{{ $vehicle->name }}" disable-feedback/>
-            <x-adminlte-input name="mark" type="text" label="Marka" placeholder="Ford"
-                value="Ford" disable-feedback/>
-            <x-adminlte-input name="model" type="text" label="Model" placeholder="Custom"
-                value="Custom" disable-feedback/>
+            <x-adminlte-input name="brand" type="text" label="Marka" placeholder="Marka"
+                value="{{ $registration_card->brand }}" disable-feedback/>
+            <x-adminlte-input name="model" type="text" label="Model" placeholder="Model"
+                value="{{ $registration_card->model }}" disable-feedback/>
             <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
                 value="{{ $vehicle->license_plate }}" disable-feedback/>
             <x-adminlte-input name="vehicle_identification_number" type="text"  label="Numer VIN" placeholder="Numer VIN"
