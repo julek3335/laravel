@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Qualification::class);
     }
+
+    public function vehicles()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
 }

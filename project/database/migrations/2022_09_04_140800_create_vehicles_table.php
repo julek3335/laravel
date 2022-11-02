@@ -3,6 +3,7 @@
 use App\Models\Company;
 use App\Models\RegistrationCard;
 use App\Models\VehicleType;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('photos')->nullable();
             $table->foreignIdFor(Company::class)->nullable();
             $table->foreignIdFor(VehicleType::class)->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->timestamps();
         });
     }
