@@ -38,6 +38,7 @@ class VehicleFactory extends Factory
             'license_plate' => $faker->vehicleRegistration('[A-Z]{2}-[0-9]{5}'),
             'photos' => $photos,
             'vehicle_type_id'=>fake()->numberBetween(1, 4),
+            'user_id'=>fake()->numberBetween(1, 50),
         ];
     }
 }

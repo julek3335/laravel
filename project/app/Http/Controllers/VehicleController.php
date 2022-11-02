@@ -26,8 +26,9 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->join('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         if(isset($vehicle->photos)){
@@ -100,8 +101,9 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->join('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         $vehicle->photos = json_decode($vehicle->photos);
@@ -125,16 +127,19 @@ class VehicleController extends Controller
     {
         //Add new vehicle
         $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
+        
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->join('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
-        $vehicle->company_id = 1;
+        // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+        // $vehicle->user_id = $req->user_id;
 
         if ($req->hasFile('photos')) {
             $req->validate([
@@ -220,8 +225,9 @@ class VehicleController extends Controller
     public function showAll()
     {
         $vehicles = DB::table('vehicles')
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->join('users', 'users.id', '=', 'vehicles.user_id')
         ->get();
 
         return view('vehicle.list', ['vehicles' => $vehicles]);
@@ -238,8 +244,9 @@ class VehicleController extends Controller
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
-        $vehicle->company_id = 1;
+        // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+        // $vehicle->user_id = $req->vehicle_user_id;
         if ($req->hasFile('photos')) {
             $req->validate([
                 'photos.*' => 'mimes:jpeg,bmp,png,jpg'
