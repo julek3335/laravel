@@ -28,7 +28,7 @@ class VehicleController extends Controller
         $vehicle = Vehicle::where('vehicles.id', $id)
         ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->join('users', 'users.id', '=', 'vehicles.user_id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         if(isset($vehicle->photos)){
@@ -103,7 +103,7 @@ class VehicleController extends Controller
         $vehicle = Vehicle::where('vehicles.id', $id)
         ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->join('users', 'users.id', '=', 'vehicles.user_id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         $vehicle->photos = json_decode($vehicle->photos);
@@ -131,7 +131,7 @@ class VehicleController extends Controller
         $vehicle = Vehicle::where('vehicles.id', $id)
         ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->join('users', 'users.id', '=', 'vehicles.user_id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         $vehicle->name = $req->name;
@@ -232,7 +232,7 @@ class VehicleController extends Controller
         $vehicles = DB::table('vehicles')
         ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->join('users', 'users.id', '=', 'vehicles.user_id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->get();
 
         return view('vehicle.list', ['vehicles' => $vehicles]);
