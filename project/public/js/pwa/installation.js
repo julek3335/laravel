@@ -9,12 +9,14 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   // Update UI notify the user they can install the PWA
 
-  showInstallPromotion();
+  if(!(Cookies.get('pwa-prompt-closed')))
+    showInstallPromotion();
 });
 
 // In-app installation flow
 let buttonInstall = document.querySelector("#install_pwa");
 let alertInstall = document.querySelector("#install_pwa_alert")
+let buttonCloseInstallPrompt = document.querySelector("#install_pwa_alert .close")
 
 buttonInstall.addEventListener('click', async () => {
     // Hide the app provided install promotion
@@ -52,6 +54,10 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt)
     if (evt.matches) {
       displayMode = 'standalone';
     }
+});
+
+buttonCloseInstallPrompt.addEventListener('click', async () => {
+  Cookies.set('pwa-prompt-closed', true)
 });
 
 function hideInstallPromotion(){

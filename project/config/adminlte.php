@@ -679,6 +679,16 @@ return [
                 ],
             ],
         ],
+        'JS-Cookie' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/js-cookie/js.cookie.min.js',
+                ],
+            ],
+        ],
     ],
 
     /*
