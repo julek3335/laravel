@@ -3,7 +3,7 @@
 @section('title', 'Dodane ubezpieczenie')
 
 @section('content_header')
-<h1>Dodane ubezpieczenie</h1>
+<h1>Ubezpieczenie</h1>
 @stop
 
 @section('content')
@@ -12,36 +12,32 @@
         <div class="col-sm-6">
             <ul class="mt-4 list-group list-group-unbordered">
                 <li class="list-group-item">
-                    <strong>Numer ubezpieczenia</strong> <span class="float-right">{{ $policy_number }}</span>
+                    <strong>Numer ubezpieczenia</strong> <span class="float-right">{{$insurance -> policy_number }}</span>
                 </li>
                 <li class="list-group-item">
-                    <strong>Data wygaśnięcia</strong> <a href="#" class="float-right">{{ $expiration_date }}</a>
+                    <strong>Data wygaśnięcia</strong> <a href="#" class="float-right">{{ $insurance -> expiration_date }}</a>
                 </li>
                 <li class="list-group-item">
-                    <strong>Koszt</strong> <a href="#" class="float-right">{{ $cost }}</a>
+                    <strong>Koszt</strong> <a href="#" class="float-right">{{ $insurance -> cost }}</a>
                 </li>
                 <li class="list-group-item">
-                    <strong>Numer kontaktowy</strong> <a href="#" class="float-right">{{ $phone_number }}</a>
+                    <strong>Numer kontaktowy</strong> <a href="#" class="float-right">{{$insurance -> phone_number }}</a>
                 </li>
                 <li class="list-group-item">
-                    <strong>Typ</strong> <span class="float-right">{{ $type }}</span>
+                    <strong>Typ</strong> <span class="float-right">{{ $insurance -> type }}</span>
                 </li>
                 <li class="list-group-item">
-                    <strong>Nazwa ubezpieczyciela</strong> <span class="float-right">{{ $insurer_name }}</span>
+                    <strong>Nazwa ubezpieczyciela</strong> <span class="float-right">{{$insurance -> insurer_name }}</span>
                 </li>
                 <li class="list-group-item">
-                    <strong>Opis</strong> <span class="float-right">{{ $description }}</span>
+                    <strong>Opis</strong> <span class="float-right">{{ $insurance -> description }}</span>
                 </li>
             </ul>
             <div class="col-sm-6">
-                <img src="{{asset('storage/incidents_photos/'. $photo)}}" class="img-fluid p-4">
+                <img src="{{asset('storage/insurances_photos/'. $insurance -> photo)}}" class="img-fluid p-4">
             </div>
             <div class="row mt-4">
-                <div class="col-sm-12">
-                    <a href="{{'/vehicles/' .$vehicle_id}}">
-                        <x-adminlte-button label="Powrót do widoku pojazdu" icon="fas fa-light fa-edit" />
-                    </a>
-                </div>
+                @include('partials.insurance.delete')
             </div>
         </div>
     </div>

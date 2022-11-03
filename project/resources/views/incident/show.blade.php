@@ -16,5 +16,6 @@
                 <img src="{{asset('storage/incidents_photos/'. $incident->photo)}}" class="img-fluid p-4">
             </div>
         </div>
+        @include('partials.incident.delete')
     </x-adminlte-card>
 @stop

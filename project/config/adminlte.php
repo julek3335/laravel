@@ -351,6 +351,23 @@ return [
                 ],
         ],
         [
+            'text'        => 'Ubezpieczenia',
+            'url'         => 'insurance',
+            'icon'        => 'fas fa-light fa-triangle-exclamation',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie ubezpieczenia',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'insurance'
+                    ],
+                    [
+                        'text'  => 'Utwórz ubezpieczenie',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'incident/add'
+                    ],
+                ],
+        ],
+        [
             'text'        => 'Akcje serwisowe',
             'url'         => 'services',
             'icon'        => 'fas fa-light fa-wrench',

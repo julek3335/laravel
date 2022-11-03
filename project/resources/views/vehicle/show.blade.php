@@ -225,6 +225,7 @@
                                 <img src="{{asset('storage/insurance_photos/'. $insurance->photo)}}" class="img-fluid p-4">
                             </ul>
                         </div>
+                        @include('partials.insurance.delete')
                     </div>
                 @endif
             @endforeach

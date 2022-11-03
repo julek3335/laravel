@@ -9,6 +9,7 @@
     <x-adminlte-input name="phone_number" type="number" label="Numer kontaktowy" placeholder="Numer kontaktowy" value="" disable-feedback required/>
     <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="" disable-feedback />
     <x-adminlte-input name="description" type="text" label="Opis" placeholder="Opis" value="" disable-feedback required/>
+    <x-adminlte-input name="status" type="text" label="Status" placeholder="Status ubezpieczenia" value="" disable-feedback required/>
     <x-adminlte-input-file name="photo" label="Zdjęcie" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcie" required>
       <x-slot name="prependSlot">
         <div class="input-group-text bg-lightblue">

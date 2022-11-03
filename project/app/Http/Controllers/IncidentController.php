@@ -61,4 +61,13 @@ class IncidentController extends Controller
         return view('incident.add', ['vehicles' => Vehicle::all()]);
     }
 
+    public function delete(Request $request)
+    {
+        if( isset($request->incydent_id)){
+            $incydent = Incident::find($request->incydent_id);
+            $incydent->delete();
+        }
+        return redirect()->route('showAllIncidents');
+    }
+
 }

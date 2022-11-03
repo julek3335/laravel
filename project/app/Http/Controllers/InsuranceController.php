@@ -11,18 +11,24 @@ use App\Models\Vehicle;
 
 class InsuranceController extends Controller
 {
-    public function show($id)
+    public function showNew($id)
     {
-        return view('insurance.show', Insurance::findOrFail($id));
+        return view('insurance.showNew', Insurance::findOrFail($id));
     }
 
-    public function insuranceToEdit($id)
+    public function show($id)
     {
-        return view('insurance.edit', Insurance::findOrFail($id));
+        return view('insurance.show',[
+            'insurance' => Insurance::findOrFail($id)]);
+    }
+
+    public function edit($id)
+    {
+        return view('insurance.edit', ['insurance' => Insurance::findOrFail($id)]);
     }
 
     public function showAll(){
-        return view('insurance', ['insurances' => Insurance::all()->sortBy("created_at")]);
+        return view('insurance.list', ['insurances' => Insurance::all()->sortBy("created_at")]);
     }
 
     public function create(Request $req, $id){
@@ -35,19 +41,28 @@ class InsuranceController extends Controller
         $newInsurance -> vehicle_id = $id;
         $newInsurance -> save();
         $id = $newInsurance -> id;
-        return view('insurance.show', Insurance::findOrFail($id));
+        return view('insurance.showNew', Insurance::findOrFail($id));
      }
 
-     public function update(Request $request, $id){
+     public function updateInsurance(Request $request, $id){
         if(!Gate::allows('admins-editors')){abort(403);}
 
         $updateInsurance = Insurance::find($id);
         $updateInsurance->policy_number = $request->input('policy_number');
-        $updateInsurance->expiration_date = $request->input('expiration_date');
+        // $updateInsurance->expiration_date = $request->input('expiration_date');
         $updateInsurance->cost = $request->input('cost');
         $updateInsurance->phone_number = $request->input('phone_number');
         $updateInsurance->vehicle_id = $request->input('vehicle_id');
         $updateInsurance->update();
-        return view('Insurance', Insurance::findOrFail($id));
+        return redirect('/insurance/' . $updateInsurance->id);
+    }
+
+    public function delete(Request $request)
+    {
+        if( isset($request->insurance_id)){
+            $insurance = Insurance::find($request->insurance_id);
+            $insurance->delete();
+        }
+        return redirect()->route('showAllInsurances');
     }
 }
