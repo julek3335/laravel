@@ -68,10 +68,10 @@ class ServiceController extends Controller
     public function delete(Request $request)
     {
         if( isset($request->service_id)){
-            $service = Service::find($request->service_id)->first();
+            $service = Service::find($request->service_id);
             $service->delete();
         }
-        return redirect()->route('showAll');
+        return redirect()->route('showAllServices');
     }
 
 }

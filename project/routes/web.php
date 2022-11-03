@@ -51,12 +51,17 @@ Route::get('/example-car', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::controller(InsuranceController::class)->group(function(){
-    Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');
+    Route::get('/insurance/delete/{insurance_id}', 'delete')->middleware(['auth'])->name('deleteInsurance');
+    Route::get('/insurance', 'showAll')->middleware(['auth'])->name('showAllInsurances');
+    Route::get('/insurance/{insurance_id}', 'show')->middleware(['auth'])->name('show');
+    Route::get('/insurance/edit/{id}', 'edit');
+    Route::post('/insurance/edit/{id}', 'updateInsurance');
     Route::post('/insurance/create-new/{id}', [InsuranceController::class, 'create']);
 });
 
 Route::controller(IncidentController::class)->group(function () {
-    Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/incidents/delete/{incident_id}', 'delete')->middleware(['auth'])->name('deleteIncident');
+    Route::get('/incidents', 'showAll')->middleware(['auth'])->name('showAllIncidents');
     Route::get('/incident/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/incident/add', 'store');
     Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
@@ -80,7 +85,8 @@ Route::controller(ReservationController::class)->group(function () {
 });
 
 Route::controller(ServiceController::class)->group(function () {
-    Route::get('/services', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/services/delete/{service_id}', 'delete')->middleware(['auth'])->name('deleteService');
+    Route::get('/services', 'showAll')->middleware(['auth'])->name('showAllServices');
     Route::get('/service/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/service/add', 'store')->middleware(['auth'])->name('dashboard');
     Route::get('/service/{id}', 'show')->middleware(['auth'])->name('dashboard');
