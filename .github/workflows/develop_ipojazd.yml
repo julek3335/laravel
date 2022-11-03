@@ -56,5 +56,5 @@ jobs:
         with:
           app-name: 'iPojazd'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_44203510544F4274917E83BD972C6A57 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5E4BD9E66536477A9E0A2A55E5A51881 }}
           package: .
