@@ -290,9 +290,9 @@ class VehicleController extends Controller
     public function delete(Request $request)
     {
         if (isset($request->vehicle_id)) {
-            $user = Vehicle::find($request->vehicle_id)->first();
+            $vehicle = Vehicle::find($request->vehicle_id);
             try {
-                $user->delete();
+                $vehicle->delete();
                 $code = 200;
                 $message = 'Pojazd został usunięty';
             } catch (\Throwable $th) {

@@ -58,25 +58,31 @@
                             </a>
                         </td>
                     </tr>
-                    <div class="modal fade" id="modal-danger" style="display: none;" aria-modal="true" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content bg-danger">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Potwierdź usunięcie</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Czy na pewno chcesz usunąć akcję serwisową: <br> <strong>{{ $service->name }}</strong></p>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Zamknij</button>
-                                    <button type="button" class="btn btn-outline-light">Potwierdź</button>
+                    <form action="{{ url('/users/delete/'. $user->id ) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('GET')
+                        <div class="modal fade" id="modal-danger-{{ $key }}" style="display: none;" aria-modal="true" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-danger">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Potwierdź usunięcie</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Czy na pewno chcesz usunąć akcję serwisową: <br> <strong>{{ $service->name }}</strong></p>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Anuluj</button>
+                                        <a href="/users/delete/{{$user->id}}">
+                                            <button type="button" class="btn btn-outline-light">Potwierdź</button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 @endforeach
             </x-adminlte-datatable>
         </div>

@@ -27,7 +27,7 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 Route::controller(VehicleController::class)->group(function () {
-    Route::post('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
+    Route::get('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
     Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('showAllVehicles');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicle/add', function () {
