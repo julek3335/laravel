@@ -116,10 +116,12 @@ class UserController extends Controller
         return $this->rentalService->verifyQualification(Auth::user(),Vehicle::find($request->vehicle_id));
     }
     
-    public function delete($id)
+    public function delete(Request $request)
     {
-            $user = User::where('id',$id);
+        if( isset($request->user_id)){
+            $user = User::find($request->user_id);
             $user->delete();
+        }
         return redirect()->route('showAllUsers');
     }
 }

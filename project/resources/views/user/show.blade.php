@@ -37,6 +37,10 @@
                         <hr>
                         <strong><i class="far fa-bell"></i> Status</strong>
                         <p class="text-muted">{{ $user->status->name  }}</p>
+                        <p>
+                        <div>
+                        @include('partials.user.deleteUser')
+                        </div>
                     </div>
                 </div>
             </div>
