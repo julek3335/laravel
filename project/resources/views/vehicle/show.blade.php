@@ -182,7 +182,7 @@
         var events = []
         @foreach ($reservations as $reservation)
             events.push({
-                title: 'Rezerwacja - Użytkownik {{$reservation->user_id}}', 
+                title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
                 start: "{{$reservation->start_date}}", 
                 end: "{{$reservation->end_date}}",
                 backgroundColor: '#f39c12', //yellow
