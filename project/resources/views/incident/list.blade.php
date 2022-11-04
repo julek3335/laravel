@@ -13,7 +13,7 @@
         'ID',
         'Data',
         'Status',
-        'Id pojazdu',
+        'Nr rejestracyjny pojazdu',
         ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
     $dataTableConfig = [

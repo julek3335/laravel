@@ -9,6 +9,7 @@ use App\Models\Insurance;
 use App\Models\Vehicle;
 
 
+
 class InsuranceController extends Controller
 {
     public function showNew($id)
@@ -24,26 +25,42 @@ class InsuranceController extends Controller
 
     public function edit($id)
     {
-        return view('insurance.edit', ['insurance' => Insurance::findOrFail($id)]);
+        return view('insurance.edit', [
+            'insurance' => Insurance::findOrFail($id),
+            'vehicles' => Vehicle::all(),
+            'currentVehicle' => Vehicle::where('id', $id)->firstOrFail()
+        ]);
     }
 
     public function showAll(){
-        return view('insurance.list', ['insurances' => Insurance::all()->sortBy("created_at")]);
+        return view('insurance.list', [
+            'insurances' => Insurance::all()->sortBy("created_at"),
+        ]);
     }
 
-    public function create(Request $req, $id){
+    public function prepareAdd(){
+        return view('insurance.add', [
+            'insurance' => Insurance::all(),
+            'vehicles' => Vehicle::all()
+        ]);
+    }
+
+    public function create(Request $req){
         if(!Gate::allows('admins-editors')){abort(403);}
         $newInsurance = new Insurance;
         $newInsurance -> policy_number = $req -> policy_number;
         $newInsurance -> expiration_date = $req -> expiration_date;
         $newInsurance -> cost = $req -> cost;
         $newInsurance -> phone_number = $req -> phone_number;
-        $newInsurance -> vehicle_id = $id;
+        $newInsurance -> status -> name = 'ACTIVE';
+        // $newInsurance -> vehicle_id = $id;
+        $newInsurance -> status = $req -> status;
         $newInsurance -> save();
         $id = $newInsurance -> id;
         return view('insurance.showNew', Insurance::findOrFail($id));
      }
 
+    
      public function updateInsurance(Request $request, $id){
         if(!Gate::allows('admins-editors')){abort(403);}
 

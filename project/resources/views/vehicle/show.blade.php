@@ -55,7 +55,7 @@
                     @include('partials.vehicle.reservation')
                 </div>
                 <div class="float-left m-1">
-                    @include('partials.vehicle.createInsurance')
+                    @include('partials.insurance.add')
                 </div>
             </div>
         </div>
