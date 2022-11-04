@@ -1,4 +1,4 @@
-<x-adminlte-button label="Dodaj nowe ubezpieczenie" icon="fas fa-light fa-plus" data-toggle="modal" data-target="#modalInsuranceVehicle" id="modalInsuranceVehicleButton" />
+<!-- <x-adminlte-button label="Dodaj nowe ubezpieczenie" icon="fas fa-light fa-plus" data-toggle="modal" data-target="#modalInsuranceVehicle" id="modalInsuranceVehicleButton" />
 
 <x-adminlte-modal id="modalInsuranceVehicle" title="Dodaj nowe ubezpieczenie" theme="light" icon="fas fa-bolt">
   <form action="{{ url('insurance/create-new/'.$vehicle->id) }}" method="POST">
@@ -30,4 +30,4 @@
     <x-adminlte-button label="Zapisz" theme="success" type="submit" class="float-right" icon="fas fa-save" />
   </form>
 
-</x-adminlte-modal>
+</x-adminlte-modal> -->

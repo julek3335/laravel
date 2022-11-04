@@ -363,7 +363,7 @@ return [
                     [
                         'text'  => 'Utwórz ubezpieczenie',
                         'icon'  => 'fas fa-light fa-plus',
-                        'url'   => 'incident/add'
+                        'url'   => 'add-new'
                     ],
                 ],
         ],

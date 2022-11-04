@@ -56,7 +56,8 @@ Route::controller(InsuranceController::class)->group(function(){
     Route::get('/insurance/{insurance_id}', 'show')->middleware(['auth'])->name('show');
     Route::get('/insurance/edit/{id}', 'edit');
     Route::post('/insurance/edit/{id}', 'updateInsurance');
-    Route::post('/insurance/create-new/{id}', [InsuranceController::class, 'create']);
+    Route::get('/add-new', 'prepareAdd')->middleware(['auth'])->name('dashboard');
+    Route::post('/add-new', 'create')->middleware(['auth'])->name('dashboard');
 });
 
 Route::controller(IncidentController::class)->group(function () {
