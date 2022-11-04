@@ -16,7 +16,7 @@
     var reservations = []
     @foreach ($reservations as $reservation)
         reservations.push({
-         title: 'Rezerwacja - Użytkownik {{$reservation->user_id}}, Pojazd {{$reservation->vehicle_id}}', 
+         title: 'Rezerwacja: {{$reservation->user_name}} {{$reservation->user_last_name}}, Pojazd: {{$reservation->vehicle_name}}', 
          start: "{{$reservation->start_date}}", 
          end: "{{$reservation->end_date}}",
          backgroundColor: '#f39c12', //yellow
