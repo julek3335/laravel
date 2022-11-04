@@ -68,6 +68,7 @@ Route::controller(IncidentController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
+    Route::get(' /user/showProfile', 'showCurrentProfile')->middleware(['auth'])->name('dashboard');
     Route::get('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');
     Route::get('/user/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/user/add', 'store')->middleware(['auth'])->name('dashboard');
