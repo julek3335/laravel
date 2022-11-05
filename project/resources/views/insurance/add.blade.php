@@ -58,7 +58,6 @@
 
 @section('js')
 <script>
-    console.log('adads')
     $("#addInsuranceForm").validate({
         rules: {
             policy_number: {
