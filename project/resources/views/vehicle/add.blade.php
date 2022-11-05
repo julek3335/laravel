@@ -7,7 +7,9 @@
 @stop
 
 @section('content')
-<form action="/vehicle/add" method="POST" enctype="multipart/form-data">
+@section('plugins.Jquery-validation', true)
+
+<form id="addVehicleForm" action="/vehicle/add" method="POST" enctype="multipart/form-data">
     @csrf
     <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
@@ -53,4 +55,76 @@
 
 @section('css')
 
+@stop
+
+@section('js')
+<script>
+    $("#addVehicleForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                brand: {
+                    required: true,
+                },
+                model: {
+                    required: true,
+                },
+                license_plate: {
+                    required: true,
+                    maxlength: 7,
+                    minlength: 7
+                },
+                vehicle_identification_number: {
+                    required: true,
+                    maxlength: 17,
+                    minlength: 17
+                },
+                selBsVehicle: {
+                    required: true,
+                },
+                production_year: {
+                    required: true,
+                    digits: true
+                },
+                engine_capacity: {
+                    required: true,
+                    number: true
+                },
+                engine_power: {
+                    required: true,
+                    number: true
+                },
+                max_axle_load: {
+                    required: true,
+                    number: true
+                },
+                max_total_weight: {
+                    required: true,
+                    number: true,
+                    minlength: 3
+                },
+                max_towed_load: {
+                    required: true,
+                    number: true,
+                },
+                siting_places: {
+                    required: true,
+                    number: true,
+                },
+                axle: {
+                    required: true,
+                    number: true,
+                },
+                standing_places: {
+                    required: true,
+                    number: true,
+                },
+            },
+            highlight: function (element) {
+                $(element).parent().css('color', 'red')
+            },
+            
+        });
+</script>
 @stop

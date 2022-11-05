@@ -1,4 +1,6 @@
-<form action="{{ url('user/edit/'.$user->id) }}" method="POST" enctype="multipart/form-data">
+@section('plugins.Jquery-validation', true)
+
+<form id="createUserForm" action="{{ url('user/edit/'.$user->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="card-body">
@@ -52,3 +54,36 @@
         <button type="submit" class="btn btn-primary">Zatwierdź</button>
     </div>
 </form>
+
+@section('js')
+<script>
+    $("#createUserForm").validate({
+    rules: {
+        name: {
+            required: true,
+            minlength: 4,
+            maxlength: 10
+        },
+        last_name: {
+            required: true,
+            minlength: 4,
+            maxlength: 10
+        },
+        email: {
+            required: true,
+            email: true
+        },
+        status: "required",
+        driving_licence_category: "required",
+        password: {
+            required: true,
+            minlength: 8,
+        },
+        photo: "required",
+    },
+    highlight: function (element) {
+        $(element).parent().css('color', 'red')
+    },
+});
+</script>
+@stop

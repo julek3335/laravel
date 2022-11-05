@@ -7,8 +7,5 @@
 @stop
 
 @section('content')
-<form action="{{ url('insurance/edit/'. $insurance->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
     @include('partials.insurance.edit')
-</form>
 @stop
