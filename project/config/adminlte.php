@@ -651,6 +651,26 @@ return [
                 ],
             ],
         ],
+        'Jquery-validation' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/additional-methods.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/jquery.validate.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/localization/messages_pl.js',
+                ],
+            ],
+        ],
         'Leaflet' => [
             'active' => false,
             'files' => [

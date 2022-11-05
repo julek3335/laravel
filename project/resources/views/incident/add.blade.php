@@ -8,7 +8,9 @@
 @stop
 
 @section('content')
-<form action="/incident/add" method="POST" enctype="multipart/form-data">
+@section('plugins.Jquery-validation', true)
+
+<form id="addIncidentForm" action="/incident/add" method="POST" enctype="multipart/form-data">
     @csrf
     <x-adminlte-card title="Dane usterki" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
@@ -55,5 +57,29 @@
         $(document).ready(function(){
             $('#date').datetimepicker("defaultDate", new Date());
         });
-    </script>
+
+        $("#addIncidentForm").validate({
+        rules: {
+            date: {
+                required: true,
+            },
+            address: {
+                required: true,
+            },
+            vehicle_id: {
+                required: true,
+            },
+            description: {
+                required: true,
+            },
+            photo: {
+                require: true
+            },
+        },
+        highlight: function (element) {
+            $(element).parent().css('color', 'red')
+        },
+    });
+</script>
+
 @stop

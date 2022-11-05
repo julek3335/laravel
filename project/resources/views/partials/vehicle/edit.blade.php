@@ -1,3 +1,5 @@
+@section('plugins.Jquery-validation', true)
+
 <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
     <div class="row">
         <div class="col-sm-12">
@@ -26,8 +28,8 @@
             </x-adminlte-select-bs>
             <x-adminlte-input name="production_year" type="number" label="Rok produkcji" placeholder="2022"
                 value="{{ $registration_card->production_year }}" disable-feedback/>
-            <x-adminlte-input name="engine_capacity" type="number" label="Pojemność silnika (cm3)" placeholder="3000"
-                value="{{ $registration_card->engine_capacity }}" disable-feedback/>
+            <!-- <x-adminlte-input name="engine_capacity" type="number" label="Pojemność silnika (cm3)" placeholder="3000"
+                value="{{ $registration_card->engine_capacity }}" disable-feedback/> -->
             <x-adminlte-input name="engine_capacity" type="number" label="Pojemność silnika (cm3)" placeholder="3000"
                 value="{{ $registration_card->engine_capacity }}" disable-feedback/>
             <x-adminlte-input name="engine_power" type="number" label="Moc silnika (KM)" placeholder="70"
@@ -78,6 +80,74 @@
             $("#photo_to_delete").attr("src", storage_url + '/' + photo_name);
             $("#form_delete_photo").attr("action", '/vehicle/{{$vehicle->id}}/delete/photo/' + photo_name)
         });
+
+        //Form validation
+        $("#editVehicleForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                brand: {
+                    required: true,
+                },
+                model: {
+                    required: true,
+                },
+                license_plate: {
+                    required: true,
+                    maxlength: 7,
+                    minlength: 7
+                },
+                vehicle_identification_number: {
+                    required: true,
+                    maxlength: 17,
+                    minlength: 17
+                },
+                selBsVehicle: {
+                    required: true,
+                },
+                production_year: {
+                    required: true,
+                    digits: true
+                },
+                engine_capacity: {
+                    required: true,
+                    number: true
+                },
+                engine_power: {
+                    required: true,
+                    number: true
+                },
+                max_axle_load: {
+                    required: true,
+                    number: true
+                },
+                max_total_weight: {
+                    required: true,
+                    number: true,
+                    minlength: 3
+                },
+                max_towed_load: {
+                    required: true,
+                    number: true,
+                },
+                siting_places: {
+                    required: true,
+                    number: true,
+                },
+                axle: {
+                    required: true,
+                    number: true,
+                },
+                standing_places: {
+                    required: true,
+                    number: true,
+                },
+            },
+            highlight: function (element) {
+                $(element).parent().css('color', 'red')
+            },
+            
+        });
     </script>
-    @parent
 @stop

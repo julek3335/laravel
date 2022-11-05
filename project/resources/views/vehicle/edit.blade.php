@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form action="{{ url('vehicle/edit/'. $vehicle->id) }}" method="POST" enctype="multipart/form-data">
+<form id="editVehicleForm" action="{{ url('vehicle/edit/'. $vehicle->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @include('partials.vehicle.edit')
 </form>
