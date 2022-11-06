@@ -23,28 +23,31 @@ class ServiceController extends Controller
     public function show($id)
     {
         return view('service.show', [
-            'service'           => Service::findOrFail($id),
+            'service' => Service::findOrFail($id),
             'services_vehicles' => DB::table('service_vehicle')
                 ->join('vehicles', 'service_vehicle.vehicle_id', '=', 'vehicles.id')
                 ->where('service_id', $id)->get()
         ]);
     }
 
-    public function showAll(){
+    public function showAll()
+    {
         return view('service.list', ['services' => Service::all()->sortBy("created_at")]);
     }
 
-    public function prepareAdd(){
+    public function prepareAdd()
+    {
         return view('service.add', [
-            'service'           => [],
+            'service' => [],
             'availableVehicles' => Vehicle::all(),
         ]);
     }
 
-    public function prepareEdit($id){
+    public function prepareEdit($id)
+    {
         return view('service.edit', [
-            'service'           => Service::findOrFail($id),
-            'selectedVehicles'  => DB::table('service_vehicle')->where('service_id', $id)->get(),
+            'service' => Service::findOrFail($id),
+            'selectedVehicles' => DB::table('service_vehicle')->where('service_id', $id)->get(),
             'availableVehicles' => Vehicle::all(),
         ]);
     }
@@ -70,7 +73,7 @@ class ServiceController extends Controller
 
     public function delete(Request $request)
     {
-        if( isset($request->service_id)){
+        if (isset($request->service_id)) {
             $service = Service::find($request->service_id);
             $service->delete();
         }
