@@ -32,6 +32,7 @@ class ServiceActionStartCommand extends Command
         $services = Service::whereDate('next_time', '=',now())->get();
         $services->load('vehicles');
         foreach ($services as $service){
+            $this->changeDates($service);
             $cars = $service->vehicles;
             $cars->load('user');
             foreach ($cars as $car){
@@ -39,5 +40,14 @@ class ServiceActionStartCommand extends Command
             }
         }
         return 0;
+    }
+
+    private function changeDates(Service $service){
+
+        $currentAction = new \DateTimeImmutable($service->next_time);
+        $service->last_time = $currentAction;
+        $interval = $service->interval;
+        $service->next_time  = $currentAction->add(new \DateInterval('P'.$interval.'D'));
+        $service->save();
     }
 }
