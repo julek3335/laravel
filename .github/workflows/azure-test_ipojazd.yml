@@ -65,7 +65,7 @@ jobs:
         with:
           app-name: 'iPojazd'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_041A6484D17F4A0FBDE4D4FBA14C2915 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A94FE00B0D5346EF8356452013CACEBA }}
           package: .
 #      - name: Migrate
 #        run: php artisan migrate:fresh
