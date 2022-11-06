@@ -16,14 +16,21 @@ class RegistrationCardFactory extends Factory
      */
     public function definition()
     {
+        $faker = (new \Faker\Factory())::create();
+        $faker->addProvider(new \Faker\Provider\Fakecar($faker));
+
+        $car = $faker->vehicleArray;
+
         return [
-            'vehicle_identification_number' => $this->faker->uuid(),
+            'vehicle_identification_number' => $faker->vin(),
             'max_total_weight' => $this->faker->randomFloat(2,500,3500),
             'engine_capacity' => $this->faker->randomFloat(2,500,3000),
             'engine_power' => $this->faker->randomFloat(0,15,1500),
             'production_year' => $this->faker->year(),
             'max_axle_load' => $this->faker->randomFloat(2,500,3000),
             'max_towed_load' => $this->faker->randomFloat(2,0,8000),
+            'brand' => $car['brand'],
+            'model' =>$car['model'],
         ];
     }
 }

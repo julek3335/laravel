@@ -77,10 +77,10 @@
                         <strong>Nazwa</strong> <span class="float-right">{{ $vehicle->name }}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Marka</strong> <span class="float-right">Ford</span>
+                        <strong>Marka</strong> <span class="float-right">{{ $registration_card->brand }}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Model</strong> <span class="float-right">Custom</span>
+                        <strong>Model</strong> <span class="float-right">{{ $registration_card->model }}</span>
                     </li>
                     <li class="list-group-item">
                         <strong>Numer rejestracyjny</strong> <span class="float-right">{{ $vehicle->license_plate }}</span>
@@ -155,21 +155,24 @@
         </div>
     </x-adminlte-card>
     <x-adminlte-card title="Galeria zdjęć" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
+        @if(isset($vehicle->photos) && !empty($vehicle->photos))
         <div class="vehicle-gallery">
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    // dd('storage/vehicles_photos/'. $photo);
-                    $photo_size = getimagesize( 'https://ipojazdstorage.blob.core.windows.net/storage/vehicles_photos/'.$photo);             
+                    $photo_size = getimagesize( 'storage/vehicles_photos/'. $photo);          
                 @endphp
                 <div class="col-sm-4 p-2">
-                    <a href="{{asset('azure/vehicles_photos/'. $photo)}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
-                        <img src="{{asset('azure/vehicles_photos/'.$photo)}}" alt="" class="img-fluid"/>
+                    <a href="{{asset('storage/vehicles_photos/'. $photo)}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
+                        <img src="{{asset('storage/vehicles_photos/'. $photo)}}" alt="" class="img-fluid"/>
                     </a>
                 </div>
                 @endforeach
             </div>
         </div>
+        @else
+        <p>Brak zdjęć pojazdu</p>
+        @endif
     </x-adminlte-card>
     @section('plugins.Fullcalendar', true)
     <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>

@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
             'status' => UserStatusEnum::FREE,
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
-            // 'photo' => $faker->image('storage' . public_path('users_photos'), 640, 480, ['face',], false),
+            'photo' => $faker->image('storage' . public_path('users_photos'), 640, 480, ['face',], false),
         ]);
 
         $this->call(QualificationSeeder::class);

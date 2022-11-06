@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -676,6 +676,16 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/photoswipe/js/photoswipe-lightbox.umd.min.js',
+                ],
+            ],
+        ],
+        'JS-Cookie' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/js-cookie/js.cookie.min.js',
                 ],
             ],
         ],

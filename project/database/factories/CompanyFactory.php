@@ -27,7 +27,6 @@ class CompanyFactory extends Factory
             'phone_number' => fake()->randomNumber(9, true),
             'address' => fake()->address(),
             // 'photo' => $faker->image('storage'.public_path('companys_photos'), 640, 480, ['logo',],false),
-            // 'photo' => $faker->image('companys_photos', 640, 480, ['logo',],false),
         ];
     }
 }

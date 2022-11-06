@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-sm-6">
                 <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa" disable-feedback />
-                <x-adminlte-input name="mark" type="text" label="Marka" placeholder="Ford" value="Ford" disable-feedback />
-                <x-adminlte-input name="model" type="text" label="Model" placeholder="Custom" value="Custom" disable-feedback />
+                <x-adminlte-input name="brand" type="text" label="Marka" placeholder="Marka" disable-feedback />
+                <x-adminlte-input name="model" type="text" label="Model" placeholder="Model" disable-feedback />
                 <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny" disable-feedback />
                 <x-adminlte-input name="vehicle_identification_number" type="text" label="Numer VIN" placeholder="Numer VIN" disable-feedback />
                 <x-adminlte-select-bs name="selBsVehicle" label="Typ" data-title="Wybierz typ ..." data-live-search data-live-search-placeholder="Wybierz typ ..." data-show-tick>

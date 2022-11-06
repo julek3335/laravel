@@ -33,7 +33,6 @@ class UserFactory extends Factory
             'status' => UserStatusEnum::FREE,
             'auth_level' => fake()->numberBetween(0, 2),
             // 'photo' => $faker->image('storage'.public_path('users_photos'), 640, 480, ['face',],false),
-            // 'photo' => $faker->image('users_photos', 640, 480, ['face',],false),
             'remember_token' => Str::random(10),
             'notification' => '{"vehicle":[{"email": true},{"database": true}],"user":[{"email": false}, {"database": true}]}'
         ];

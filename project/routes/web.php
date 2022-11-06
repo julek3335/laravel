@@ -28,7 +28,7 @@ Route::controller(DashboardController::class)->group(function () {
 
 Route::controller(VehicleController::class)->group(function () {
     Route::post('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
-    Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('showAllVehicles');;
+    Route::get('/vehicles', 'showAll')->name('showAllVehicles');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
     Route::get('/vehicle/add', function () {
         return view('vehicle.add');
@@ -43,6 +43,7 @@ Route::controller(VehicleController::class)->group(function () {
 
 Route::controller(JobController::class)->group(function () {
     Route::post('/rent', 'startJob')->name('dashboard');
+    Route::get('/jobs/vehicle', 'listVehicleJobs')->name('dashboard');
 //    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
 Route::get('/example-car', function () {
@@ -65,13 +66,14 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');
     Route::get('/user/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/user/add', 'store')->middleware(['auth'])->name('dashboard');
-    Route::get('/users', 'showAll')->middleware(['auth'])->name('showAllUsers');
+    Route::get('/users', 'showAll')->name('showAllUsers');
     Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');
     Route::put('/user/edit/{id}', [UserController::class, 'updateUser']);
     Route::get('/user/edit/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');
 });
 
 Route::controller(ReservationController::class)->group(function () {
+    Route::get('/reservation/available-cars', 'getAvailableCars')->middleware(['auth']);
     Route::post('/reservation-create', [ReservationController::class, 'created']);
     Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('dashboard');

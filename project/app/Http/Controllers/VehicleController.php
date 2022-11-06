@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\Incident;
 use App\Models\Insurance;
 use App\Models\Reservation;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use App\Models\RegistrationCard;
-use App\Models\VehicleType;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -25,19 +26,14 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         if(isset($vehicle->photos)){
             $vehicle->photos = json_decode($vehicle->photos);
-            $url=[];
-            foreach($vehicle->photos as $photo){
-            $url[] = Storage::url('vehicles_photos/'.$photo);
-            }
-            $vehicle->photos = $url;
-            dd($vehicle);
-        }
+        }else{$vehicle->photos = [];}
        
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -74,6 +70,9 @@ class VehicleController extends Controller
             ['status', '=', 'active']
         ])->get()->sortBy('created_at');
 
+        //jobs list
+        $jobs = Job::where('jobs.vehicle_id' , $id)->get();
+
         /*
         ** Passing data to view
         */
@@ -88,7 +87,8 @@ class VehicleController extends Controller
             'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
             'entitlements' => Auth::user()->auth_level, 
             'reservations' => Reservation::where('vehicle_id' , '=', $id)->get(),
-            'activeInsurance' => $insuranceActive
+            'activeInsurance' => $insuranceActive,
+            'jobs' => $jobs,
         ]);
     }
 
@@ -101,8 +101,9 @@ class VehicleController extends Controller
         ** Get main and additional vehicle data
         */
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         $vehicle->photos = json_decode($vehicle->photos);
@@ -126,23 +127,29 @@ class VehicleController extends Controller
     {
         //Add new vehicle
         $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
+        
         $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
-        $vehicle->company_id = 1;
+        // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+        // $vehicle->user_id = $req->user_id;
 
         if ($req->hasFile('photos')) {
             $req->validate([
                 'photos.*' => 'mimes:jpeg,bmp,png,jpg'
             ]);
 
-            $image_arr = json_decode($vehicle->photos);
+            if($vehicle->photos)
+                $image_arr = json_decode($vehicle->photos);
+            else
+                $image_arr = [];
 
             foreach($req->file('photos') as $image)
             {
@@ -154,11 +161,20 @@ class VehicleController extends Controller
 
             $vehicle->photos = json_encode($image_arr);
         }
-        $vehicle->save();
+        try {
+            $vehicle->save();
+            $code = 200;
+            $message = 'Pojazd został zaktalizowany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
         //Add registration card
         $registrationCard = RegistrationCard::where('vehicle_id', $id)->firstOrFail();
         $registrationCard->vehicle_identification_number = $req->vehicle_identification_number;
+        $registrationCard->brand = $req->brand;
+        $registrationCard->model = $req->model;
         $registrationCard->max_total_weight = $req->max_total_weight;
         $registrationCard->engine_capacity = $req->engine_capacity;
         $registrationCard->engine_power = $req->engine_power;
@@ -169,9 +185,19 @@ class VehicleController extends Controller
         $registrationCard->siting_places = $req->siting_places;
         $registrationCard->standing_places = $req->standing_places;
         $registrationCard->vehicle_id = $vehicle->id;
-        $registrationCard->save();
+        
+        try {
+            $registrationCard->save();
+            $code = 200;
+            $message = 'Karta została zaktalizowana.';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
-        return redirect('/vehicle/edit/' . $vehicle->id);
+        return redirect('/vehicle/edit/' . $vehicle->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     /*
@@ -193,7 +219,9 @@ class VehicleController extends Controller
 
         Storage::disk('public')->delete('vehicles_photos/'.$photo_name);
 
-        return redirect('/vehicle/edit/' . $vehicle->id);
+        return redirect('/vehicle/edit/' . $vehicle->id)        
+        ->with('return_code', '200')
+        ->with('return_message', 'Zdjęcie zostało usunięte');
     }
 
     /*
@@ -202,8 +230,9 @@ class VehicleController extends Controller
     public function showAll()
     {
         $vehicles = DB::table('vehicles')
-        ->select('vehicles.id as id','vehicles.name','vehicles.status','vehicles.license_plate','vehicles.photos','vehicles.company_id','vehicles.created_at','vehicles.updated_at','vehicle_types.id as vehicle_type_id','vehicle_types.type')
+        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
+        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->get();
 
         return view('vehicle.list', ['vehicles' => $vehicles]);
@@ -220,8 +249,9 @@ class VehicleController extends Controller
         $vehicle->name = $req->name;
         $vehicle->status = 'ready';
         $vehicle->license_plate = $req->license_plate;
-        $vehicle->company_id = 1;
+        // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+        // $vehicle->user_id = $req->vehicle_user_id;
         if ($req->hasFile('photos')) {
             $req->validate([
                 'photos.*' => 'mimes:jpeg,bmp,png,jpg'
@@ -231,7 +261,7 @@ class VehicleController extends Controller
 
             foreach($req->file('photos') as $image)
             {
-                $file_path = $image->store('vehicles_photos'); 
+                $file_path = $image->store('vehicles_photos', 'public'); 
                 
                 $image_name_hash = $image->hashName();
                 array_push($image_arr, $image_name_hash);
@@ -239,12 +269,21 @@ class VehicleController extends Controller
 
             $vehicle->photos = json_encode($image_arr);
         }
-        
-        $vehicle->save();
+
+        try {
+            $vehicle->save();
+            $code = 200;
+            $message = 'Pojazd został zaktalizowany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
         //Add registration card
         $registrationCard = new RegistrationCard;
         $registrationCard->vehicle_identification_number = $req->vehicle_identification_number;
+        $registrationCard->brand = $req->brand;
+        $registrationCard->model = $req->model;
         $registrationCard->max_total_weight = $req->max_total_weight;
         $registrationCard->engine_capacity = $req->engine_capacity;
         $registrationCard->engine_power = $req->engine_power;
@@ -257,7 +296,9 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        return redirect('/vehicles/' . $vehicle->id);
+        return redirect('/vehicles/' . $vehicle->id)        
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     public function showCalendar($id)
@@ -269,8 +310,17 @@ class VehicleController extends Controller
     {
         if (isset($request->vehicle_id)) {
             $user = Vehicle::find($request->vehicle_id)->first();
-            $user->delete();
+            try {
+                $user->delete();
+                $code = 200;
+                $message = 'Pojazd został usunięty';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+            }
         }
-        return redirect()->route('showAllVehicles');
+        return redirect()->route('showAllVehicles')        
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 }

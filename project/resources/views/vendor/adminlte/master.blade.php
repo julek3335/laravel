@@ -74,12 +74,17 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
 
+
+    {{-- PWA head assets  --}}
+    @include('partials.pwa.head')
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
 
     {{-- Body Content --}}
     @yield('body')
+
+    @include('partials.pwa.alertInstall')
 
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
@@ -107,6 +112,11 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 
+    {{-- PWA Scripts --}}
+    @include('partials.pwa.scripts')
+
+    {{-- Toasts Scripts --}}
+    @include('partials.toasts.toasts')
 </body>
 
 </html>
