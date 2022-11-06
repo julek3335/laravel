@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./project
 
     steps:
       - uses: actions/checkout@v2
@@ -25,12 +28,18 @@ jobs:
         id: check_files
         uses: andstor/file-existence-action@v1
         with:
-          files: 'composer.json'
+          files: 'project/composer.json'
 
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
-
+        
+      - name: npm install, build
+        run: |
+          pwd
+          ls
+          npm install
+          npm run build
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -56,5 +65,7 @@ jobs:
         with:
           app-name: 'iPojazd'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A94FE00B0D5346EF8356452013CACEBA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_041A6484D17F4A0FBDE4D4FBA14C2915 }}
           package: .
+#      - name: Migrate
+#        run: php artisan migrate:fresh
