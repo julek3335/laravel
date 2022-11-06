@@ -159,11 +159,12 @@
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    $photo_size = getimagesize( 'storage/vehicles_photos/'. $photo);          
+                    // dd('storage/vehicles_photos/'. $photo);
+                    $photo_size = getimagesize( 'https://ipojazdstorage.blob.core.windows.net/storage/vehicles_photos/'.$photo);             
                 @endphp
                 <div class="col-sm-4 p-2">
-                    <a href="{{asset('storage/vehicles_photos/'. $photo)}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
-                        <img src="{{asset('storage/vehicles_photos/'. $photo)}}" alt="" class="img-fluid"/>
+                    <a href="{{asset('azure/vehicles_photos/'. $photo)}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
+                        <img src="{{asset('azure/vehicles_photos/'.$photo)}}" alt="" class="img-fluid"/>
                     </a>
                 </div>
                 @endforeach

@@ -31,6 +31,12 @@ class VehicleController extends Controller
 
         if(isset($vehicle->photos)){
             $vehicle->photos = json_decode($vehicle->photos);
+            $url=[];
+            foreach($vehicle->photos as $photo){
+            $url[] = Storage::url('vehicles_photos/'.$photo);
+            }
+            $vehicle->photos = $url;
+            dd($vehicle);
         }
        
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
@@ -140,7 +146,7 @@ class VehicleController extends Controller
 
             foreach($req->file('photos') as $image)
             {
-                $file_path = $image->store('vehicles_photos', 'public'); 
+                $file_path = $image->store('vehicles_photos'); 
                 
                 $image_name_hash = $image->hashName();
                 array_push($image_arr, $image_name_hash);
@@ -225,7 +231,7 @@ class VehicleController extends Controller
 
             foreach($req->file('photos') as $image)
             {
-                $file_path = $image->store('vehicles_photos', 'public'); 
+                $file_path = $image->store('vehicles_photos'); 
                 
                 $image_name_hash = $image->hashName();
                 array_push($image_arr, $image_name_hash);

@@ -21,7 +21,7 @@ class InsuranceFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
-        Storage::disk('public')->makeDirectory('insurance_photos');
+        // Storage::disk('public')->makeDirectory('insurance_photos');
 
         return [
             'policy_number' => fake()->randomNumber(5, true),
@@ -31,7 +31,7 @@ class InsuranceFactory extends Factory
             'type' => fake()->randomElement([InsuranceTypeEnum::AC, InsuranceTypeEnum::ASSISTANCE, InsuranceTypeEnum::OC, InsuranceTypeEnum::OC_AC, InsuranceTypeEnum::NNW]),
             'insurer_name' => fake()->words(1, true),
             'description' => fake()->sentence(),
-            'photo' => $faker->image('storage'.public_path('insurance_photos'), 640, 480, ['recipt'],false),
+            // 'photo' => $faker->image('storage'.public_path('insurance_photos'), 640, 480, ['recipt'],false),
             'status' => InsuranceStatusEnum::ACTIVE
         ];
     }

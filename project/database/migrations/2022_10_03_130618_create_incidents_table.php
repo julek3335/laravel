@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('description');
             $table->string('address');
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('status');
             $table->foreignIdFor(Vehicle::class)->nullable();
             $table->timestamps();

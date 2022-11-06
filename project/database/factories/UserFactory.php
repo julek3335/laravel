@@ -21,7 +21,7 @@ class UserFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
-        Storage::disk('public')->makeDirectory('users_photos');
+        // Storage::disk('public')->makeDirectory('users_photos');
 
         return [
             'name' => fake()->firstName(),
@@ -32,7 +32,8 @@ class UserFactory extends Factory
             'driving_licence_category' => fake()->randomElement(['AM', 'A1', 'A2', 'A', 'B1', 'B','B+E','C','C1','C1+E','D','D1','D1+E','D+E','T','Tramwaj']),
             'status' => UserStatusEnum::FREE,
             'auth_level' => fake()->numberBetween(0, 2),
-            'photo' => $faker->image('storage'.public_path('users_photos'), 640, 480, ['face',],false),
+            // 'photo' => $faker->image('storage'.public_path('users_photos'), 640, 480, ['face',],false),
+            // 'photo' => $faker->image('users_photos', 640, 480, ['face',],false),
             'remember_token' => Str::random(10),
             'notification' => '{"vehicle":[{"email": true},{"database": true}],"user":[{"email": false}, {"database": true}]}'
         ];

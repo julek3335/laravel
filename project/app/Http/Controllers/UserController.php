@@ -59,7 +59,7 @@ class UserController extends Controller
             ]);
             
             $new_file = $request->file('photo');
-            $file_path = $new_file->store('users_photos', 'public');
+            $file_path = $new_file->store('users_photos');
  
             $updateUser->photo = $request->photo->hashName();
         }
@@ -85,7 +85,7 @@ class UserController extends Controller
             ]);
             
             $new_file = $request->file('photo');
-            $file_path = $new_file->store('users_photos', 'public');
+            $file_path = $new_file->store('users_photos');
  
             $photo_value = $request->photo->hashName();
         }

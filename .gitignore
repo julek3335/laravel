@@ -11,6 +11,7 @@ project/Homestead.yaml
 project/auth.json
 project/npm-debug.log
 project/yarn-error.log
+project/.env
 /.idea
 /.vscode
 project/.gitattributes
