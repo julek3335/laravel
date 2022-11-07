@@ -693,6 +693,21 @@ return [
                 ],
             ],
         ],
+        'Leaflet-Control-Geocoder' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-control-geocoder/css/Control.Geocoder.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-control-geocoder/js/Control.Geocoder.js',
+                ],
+            ],
+        ],
         'Leaflet-GPX' => [
             'active' => false,
             'files' => [
