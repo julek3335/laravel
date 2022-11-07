@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
+use App\Models\Insurance;
 use Illuminate\Http\Request;
+use App\Enums\InsuranceStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use App\Models\Insurance;
-use App\Models\Vehicle;
 
 
 
@@ -52,9 +53,25 @@ class InsuranceController extends Controller
         $newInsurance -> expiration_date = $req -> expiration_date;
         $newInsurance -> cost = $req -> cost;
         $newInsurance -> phone_number = $req -> phone_number;
-        $newInsurance -> status -> name = 'ACTIVE';
-        // $newInsurance -> vehicle_id = $id;
-        $newInsurance -> status = $req -> status;
+        $newInsurance -> status = InsuranceStatusEnum::ACTIVE;
+        $newInsurance -> insurer_name = $req -> insurer_name;
+        $newInsurance -> description = $req -> description;
+        $newInsurance -> type = $req -> selBsVehicle;
+        $vehicle_id = Vehicle::where('vehicles.license_plate', $req -> license_plate)->select('vehicles.id')->firstOrFail();
+        $newInsurance -> vehicle_id = $vehicle_id -> id;
+
+        if ($req->hasFile('photo')) {
+
+            $req->validate([
+                'photo' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+            
+            $new_file = $req->file('photo');
+            $file_path = $new_file->store('insurance_photos');
+ 
+            $newInsurance->photo = $req->photo->hashName();
+        }
+
         $newInsurance -> save();
         $id = $newInsurance -> id;
         return view('insurance.showNew', Insurance::findOrFail($id));
@@ -65,11 +82,28 @@ class InsuranceController extends Controller
         if(!Gate::allows('admins-editors')){abort(403);}
 
         $updateInsurance = Insurance::find($id);
-        $updateInsurance->policy_number = $request->input('policy_number');
-        // $updateInsurance->expiration_date = $request->input('expiration_date');
-        $updateInsurance->cost = $request->input('cost');
-        $updateInsurance->phone_number = $request->input('phone_number');
-        $updateInsurance->vehicle_id = $request->input('vehicle_id');
+        $updateInsurance-> policy_number = $request -> policy_number;
+        $updateInsurance-> expiration_date = $request -> expiration_date;
+        $updateInsurance-> cost = $request -> cost;
+        $updateInsurance-> phone_number = $request -> phone_number;
+        $updateInsurance-> insurer_name = $request -> insurer_name;
+        $updateInsurance-> description = $request -> description;
+        $updateInsurance-> type = $request -> selBsVehicle;
+        $vehicle_id = Vehicle::where('vehicles.license_plate', $request -> selBsVehicle)->select('vehicles.id')->firstOrFail();
+        $updateInsurance-> vehicle_id = $vehicle_id -> id;
+
+        if ($request->hasFile('photo')) {
+             //chyba w widoku zle jest przekazywane zdjecie nwm
+            $request->validate([
+                'photo' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+            
+            $new_file = $request->file('photo');
+            $file_path = $new_file->store('insurance_photos');
+ 
+            $updateInsurance->photo = $request->photo->hashName();
+        }
+
         $updateInsurance->update();
         return redirect('/insurance/' . $updateInsurance->id);
     }
