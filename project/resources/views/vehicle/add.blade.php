@@ -25,10 +25,9 @@
                             <i class="fas fa-car-side"></i>
                         </div>
                     </x-slot>
-                    <option data-icon="fa fa-fw fa-car">Osobowy</option>
-                    <option data-icon="fa fa-fw fa-truck" selected>Dostawczy</option>
-                    <option data-icon="fa fa-fw fa-truck-moving">Ciężarowy</option>
-                    <option data-icon="fa fa-fw fa-motorcycle">Motocykl</option>
+                    @foreach($vehicle_types as $vehicle_type)
+                        <option data-icon="{{$vehicle_type->icon}}">{{$vehicle_type->type}}</option>
+                    @endforeach
                 </x-adminlte-select-bs>
                 <x-adminlte-input name="production_year" type="number" label="Rok produkcji" placeholder="2022" disable-feedback />
                 <x-adminlte-input name="engine_capacity" type="number" label="Pojemność silnika (cm3)" placeholder="3000" disable-feedback />

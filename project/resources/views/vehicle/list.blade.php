@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Pojazdy')
 
 @section('content_header')
     <h1>Pojazdy</h1>
@@ -12,6 +12,7 @@
     $heads = [
         'ID',
         'Nazwa',
+        'Typ',
         'Status',
         'Numer rejestracyjny',
         ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
@@ -32,6 +33,7 @@
                     <tr>
                         <td>{{ $vehicle->id }}</td>
                         <td>{{ $vehicle->name }}</td>
+                        <td>{{ $vehicle->type }}</td>
                         <td>{{__('status.'.$vehicle->status)}}</td>
                         <td>{{ $vehicle->license_plate }}</td>
                         <td>

@@ -93,6 +93,18 @@ class VehicleController extends Controller
     }
 
     /*
+    ** Prepare vehicle data for add
+    */
+    public function prepareAdd(){
+
+        $vehicleTypes = VehicleType::all();
+        
+        return view('vehicle.add', [
+            'vehicle_types' => $vehicleTypes
+        ]);
+    }
+
+    /*
     ** Get vehicle data to edit action
     */
     public function edit($id)
@@ -116,7 +128,7 @@ class VehicleController extends Controller
         return view('vehicle.edit', [
             'vehicle' => $vehicle,
             'registration_card' => $registrationCard,
-            'vehicle_type' => $vehicleTypes
+            'vehicle_types' => $vehicleTypes
         ]);
     }
 
