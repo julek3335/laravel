@@ -91,6 +91,19 @@ class InsuranceController extends Controller
         $updateInsurance-> type = $request -> selBsVehicle;
         $vehicle_id = Vehicle::where('vehicles.license_plate', $request -> selBsVehicle)->select('vehicles.id')->firstOrFail();
         $updateInsurance-> vehicle_id = $vehicle_id -> id;
+
+        if ($request->hasFile('photo')) {
+             //chyba w widoku zle jest przekazywane zdjecie nwm
+            $request->validate([
+                'photo' => 'mimes:jpeg,bmp,png,jpg'
+            ]);
+            
+            $new_file = $request->file('photo');
+            $file_path = $new_file->store('insurance_photos');
+ 
+            $updateInsurance->photo = $request->photo->hashName();
+        }
+
         $updateInsurance->update();
         return redirect('/insurance/' . $updateInsurance->id);
     }
