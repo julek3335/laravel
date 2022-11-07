@@ -42,7 +42,9 @@ Route::controller(VehicleController::class)->group(function () {
 
 
 Route::controller(JobController::class)->group(function () {
-    Route::post('/rent', 'startJob')->name('dashboard');
+    Route::post('/rent', 'startJob')->middleware(['auth'])->name('dashboard');
+    Route::get('/jobs/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/jobs/{id}/end', 'endJob')->middleware(['auth'])->name('dashboard');
     Route::get('/jobs/vehicle', 'listVehicleJobs')->name('dashboard');
 //    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
