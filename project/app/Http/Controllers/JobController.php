@@ -24,7 +24,7 @@ class JobController extends Controller
         $jobData = [
             'start_point' => $request->start_localization??'',
             'end_point' => $request->end_localization??'',
-            'start_odometer' => $request->meter_status??'',
+            'start_odometer' => $request->start_odometer??null,
             'start_time' => new \DateTimeImmutable($request->start_time??now()),
         ];
 
@@ -37,8 +37,13 @@ class JobController extends Controller
         return Job::where('vehicle_id', $request->vehicle_id)->get();
     }
 
+    public function show($id)
+    {
+        return view('job.show',  ['job' => Job::findOrFail($id)]);
+    }
+
     public function showAll()
     {
-        return view('jobs.list',  ['jobs' => Job::all()->sortBy("created_at")]);
+        return view('job.list',  ['job' => Job::all()->sortBy("created_at")]);
     }
 }
