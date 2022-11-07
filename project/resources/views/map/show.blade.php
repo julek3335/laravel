@@ -39,11 +39,19 @@
       }).addTo(map);
 
     //Add marker;
-    var marker = L.marker([52.41567, 16.93088]).addTo(map);
-    marker.bindPopup("<center><strong>Pojazd pierwszy</strong><br>Jan Kowalski</center>").openPopup();
+    //var marker = L.marker([52.41567, 16.93088]).addTo(map);
+    //marker.bindPopup("<center><strong>Pojazd pierwszy</strong><br>Jan Kowalski</center>").openPopup();
 
-    var gpx = 'http://localhost:8000/temp-gpx/trasa.gpx'; // URL to your GPX file or the GPX itself
-    new L.GPX(gpx, {async: true}).on('loaded', function(e) {
+    //var gpxURL = 'http://localhost:8000/temp-gpx/trasa.gpx'; // URL to your GPX file or the GPX itself
+    var gpxURL = 'http://localhost:8000/temp-gpx/trasa-min.gpx'; // URL to your GPX file or the GPX itself
+    new L.GPX(gpxURL, {
+        async: true,
+        marker_options: {
+            startIconUrl: '/vendor/leaflet-gpx/img/pin-icon-start.png',
+            endIconUrl: '/vendor/leaflet-gpx/img/pin-icon-end.png',
+            shadowUrl: '/vendor/leaflet-gpx/img/pin-shadow.png'
+        }
+    }).on('loaded', function(e) {
         map.fitBounds(e.target.getBounds());
     }).addTo(map);
 
