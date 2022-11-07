@@ -1,7 +1,7 @@
-<x-adminlte-button label="Zakończ trasę" icon="fas fa-forward-step" data-toggle="modal" data-target="#modalEndJob" id="modalEndJobButton"/>
+<x-adminlte-button label="Zakończ trasę" icon="fas fa-forward-step" data-toggle="modal" data-target="#modalEndJobId{{$job->id}}" id="modalEndJobButtonId{{$job->id}}"/>
 <form action="/jobs/{{$job->id}}/end" method="POST">
     @csrf
-    <x-adminlte-modal id="modalEndJob" title="Zakończenie trasy" theme="light" icon="fas fa-bolt">
+    <x-adminlte-modal id="modalEndJobId{{$job->id}}" title="Zakończenie trasy" theme="light" icon="fas fa-bolt">
         @php
         $config = ['format' => 'DD.MM.YYYY HH:mm'];
         @endphp
@@ -22,7 +22,7 @@
 @section('js')
     <script>
         //Set datetime of start date when Button Pickup Vehicle clicked
-        $("#modalEndJobButton").click(function(){
+        $("#modalEndJobButtonId{{$job->id}}").click(function(){
             $('#end_time').datetimepicker("defaultDate", new Date());
         });
     </script>
