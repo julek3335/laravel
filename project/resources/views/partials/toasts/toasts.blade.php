@@ -34,10 +34,11 @@ switch($return_code){
         $(document).Toasts('create', {
             title: backend_message.title,
             body: backend_message.message,
-            autohide: true,
+            autohide: backend_message.code != 200 ? false : true,
             delay: 5000,
             class: 'm-2 ' + backend_message.event_type_color
         });
+
     }
 </script>
 @endisset

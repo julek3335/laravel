@@ -31,7 +31,7 @@
             disable-feedback required/>
         <x-adminlte-input name="end_localization" type="text" label="Lokalizacja końcowa" placeholder="Warszawa"
             disable-feedback required/>
-        <x-adminlte-input name="meter_status" type="number" label="Stan licznika" disable-feedback required/>
+        <x-adminlte-input name="start_odometer" type="number" label="Stan licznika" disable-feedback required/>
         <x-slot name="footerSlot">
             <x-adminlte-button label="Podejmij pojazd" type="submit" theme="success" class="mr-auto" icon="fas fa-arrow-alt-circle-right"/>
             <x-adminlte-button theme="danger" label="Zamknij" data-dismiss="modal"/>
