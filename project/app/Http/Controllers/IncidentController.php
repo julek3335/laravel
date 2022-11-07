@@ -29,8 +29,7 @@ class IncidentController extends Controller
             $file_path = $new_file->store('incidents_photos', 'public');
  
             $incident = new Incident([
-                //"date" => $request->get('date'), //Format daty z frontu do 19.10.2020 09:50
-                "date" => "2022-10-19",
+                "date" =>  new \DateTimeImmutable($request->date??now()),
                 "description" => $request->get('description'),
                 "photo" => $request->photo->hashName(),
                 "address" => $request->get('address'),
@@ -39,15 +38,11 @@ class IncidentController extends Controller
             ]);
 
             $incident->save();
-
-            return view('incident.show', [
-                'incident' => $incident,
-                'vehicle'  => Vehicle::findOrFail($incident->vehicle_id)
-            ]);
+            
+            return redirect('/incident/' . $incident->id);
         }
 
         echo "Error - probably no photo or wrong photo extension";
-        echo "Zdjecie" . $request->file('photo');
     }
 
     /*
