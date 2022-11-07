@@ -334,9 +334,21 @@ return [
                 ],
         ],
         [
+            'text'        => 'Trasy',
+            'url'         => 'jobs',
+            'icon'        => 'fas fa-light fa-route',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie trasy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'jobs'
+                    ],
+                ],
+        ],
+        [
             'text'        => 'Usterki',
             'url'         => 'incidents',
-            'icon'        => 'fas fa-light fa-triangle-exclamation',
+            'icon'        => 'fas fa-light fa-car-burst',
             'submenu' => [
                     [
                         'text'  => 'Wszystkie usterki',
@@ -353,7 +365,7 @@ return [
         [
             'text'        => 'Ubezpieczenia',
             'url'         => 'insurance',
-            'icon'        => 'fas fa-light fa-triangle-exclamation',
+            'icon'        => 'fas fa-light fa-file-lines',
             'submenu' => [
                     [
                         'text'  => 'Wszystkie ubezpieczenia',
@@ -404,7 +416,7 @@ return [
         [
             'text'        => 'Rezerwacje',
             'url'         => 'reservations',
-            'icon'        => 'far fa-address-card',
+            'icon'        => 'far fa-calendar',
             'submenu' => [
                 [
                     'text'  => 'Kalendarz',
@@ -421,13 +433,8 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'user/showProfile',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
         ],
     ],
 

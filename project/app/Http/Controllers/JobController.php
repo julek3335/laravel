@@ -28,8 +28,9 @@ class JobController extends Controller
             'start_time' => new \DateTimeImmutable($request->start_time??now()),
         ];
 
-        $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id , $jobData);
+        $job = $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id , $jobData);
 
+        return redirect('/jobs/' . $job->id);
     }
 
     public function listVehicleJobs(Request $request)
@@ -44,6 +45,6 @@ class JobController extends Controller
 
     public function showAll()
     {
-        return view('job.list',  ['job' => Job::all()->sortBy("created_at")]);
+        return view('job.list',  ['jobs' => Job::all()->sortBy("created_at")]);
     }
 }
