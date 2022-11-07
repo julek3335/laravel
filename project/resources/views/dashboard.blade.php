@@ -51,4 +51,15 @@
             </div>
         </div>
     </div>
+    @if($userJobs && (count($userJobs)>0))
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Aktywne trasy</h3>
+        </div>
+        <div class="card-body">
+            <p>Posiadasz aktywne trasy</p>
+            @include('partials.job.sectionList')
+        </div>
+    </div>
+    @endif
 @stop
