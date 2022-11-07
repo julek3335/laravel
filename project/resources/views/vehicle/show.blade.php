@@ -8,15 +8,6 @@
 
 @section('content')
 @section('plugins.PhotoSwipe', true)
-    <x-adminlte-modal id="modalEditVehicle" title="Edycja danych pojazdu" theme="light" icon="fas fa-bolt">
-        <form action="{{ url('vehicle/edit/'. $vehicle->id) }}" method="POST">
-            @csrf
-            @include('partials.vehicle.edit')
-            <x-slot name="footerSlot">
-                <x-adminlte-button theme="danger" label="Zamknij" data-dismiss="modal"/>
-            </x-slot>
-        </form>
-    </x-adminlte-modal>
 
     <x-adminlte-alert theme="warning" title="Przegląd olejowy" dismissable>
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
@@ -89,7 +80,7 @@
                         <strong>Numer VIN</strong> <span class="float-right">{{ $registration_card->vehicle_identification_number	}}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Typ</strong> <span class="float-right">Osobowy</span>
+                        <strong>Typ</strong> <span class="float-right">{{$vehicle->type}}</span>
                     </li>
                     <li class="list-group-item">
                         <strong>Rok produkcji</strong> <span class="float-right">{{ $registration_card->production_year }}</span>
@@ -123,7 +114,7 @@
                         <strong>Przebieg</strong> <span class="float-right">125 458 km</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Status</strong> <a href="#" class="float-right">{{ $vehicle->status->name }}</a>
+                        <strong>Status</strong> <a href="#" class="float-right">{{__('status.'.$vehicle->status->name)}}</a>
                     </li>
                     <li class="list-group-item">
                         <strong>Akcje serwisowe</strong> <a href="#" class="float-right">5</a>
@@ -135,10 +126,7 @@
                         <strong>Zarejestrowane trasy</strong> <a href="#" class="float-right">254</a>
                     </li>
                     <li class="list-group-item">
-                        <strong>Data utworzenia</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->updated_at)) }}</span>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Ostatnia aktualizacja</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->updated_at)) }}</span>
+                        <strong>Data utworzenia</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->created_at)) }}</span>
                     </li>
                 </ul>
             </div>
@@ -149,7 +137,6 @@
                     <a href="/vehicle/edit/{{ $vehicle->id }}">
                         <x-adminlte-button label="Edytuj" icon="fas fa-light fa-edit"/>
                     </a>
-                    <x-adminlte-button label="Edytuj - modal" icon="fas fa-light fa-edit" data-toggle="modal" data-target="#modalEditVehicle" id="modalEditVehicle"/>
                 </div>
             @endif
         </div>

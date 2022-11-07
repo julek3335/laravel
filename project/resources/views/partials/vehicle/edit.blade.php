@@ -21,10 +21,13 @@
                         <i class="fas fa-car-side"></i>
                     </div>
                 </x-slot>
-                <option data-icon="fa fa-fw fa-car">Osobowy</option>
-                <option data-icon="fa fa-fw fa-truck" selected>Dostawczy</option>
-                <option data-icon="fa fa-fw fa-truck-moving">Ciężarowy</option>
-                <option data-icon="fa fa-fw fa-motorcycle">Motocykl</option>
+                @foreach($vehicle_types as $vehicle_type)
+                    <option data-icon="{{$vehicle_type->icon}}" 
+                    @if($vehicle->vehicle_type_id == $vehicle_type->id)
+                        selected
+                    @endif
+                    >{{$vehicle_type->type}}</option>
+                @endforeach
             </x-adminlte-select-bs>
             <x-adminlte-input name="production_year" type="number" label="Rok produkcji" placeholder="2022"
                 value="{{ $registration_card->production_year }}" disable-feedback/>

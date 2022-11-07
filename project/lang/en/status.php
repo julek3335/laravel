@@ -1,8 +1,7 @@
 <?php
 return [
-    'ready' => 'Ready',
-    'in_use' => 'In use',
-    'reserved' => 'Reserved',
-    'maintenance' => 'Maintenance',
-
+    'READY' => 'Gotowy',
+    'IN_USE' => 'W użyciu',
+    'RESERVED' => 'Rezerwacja',
+    'MAINTENANCE' => 'W trakcie serwisu',
 ];

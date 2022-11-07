@@ -30,9 +30,7 @@ Route::controller(VehicleController::class)->group(function () {
     Route::get('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
     Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('showAllVehicles');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
-    Route::get('/vehicle/add', function () {
-        return view('vehicle.add');
-    })->middleware(['auth'])->name('dashboard');
+    Route::get('/vehicle/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/vehicle/add', 'store');
     Route::get('/vehicle/edit/{id}', 'edit');
     Route::post('/vehicle/edit/{id}', 'updateVehicle');
