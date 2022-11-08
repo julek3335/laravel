@@ -8,14 +8,10 @@
 
 @section('content')
 @section('plugins.Jquery-validation', true)
-<div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title">Dane użytkownika</h3>
-    </div>
 
-
-    <form id="createUserForm" action="/user/add" method="POST" enctype="multipart/form-data">
-        @csrf
+<form id="createUserForm" action="/user/add" method="POST" enctype="multipart/form-data">
+    @csrf
+    <x-adminlte-card title="Dane użytkownika" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="card-body">
             <div class="form-group">
                 <label for="exampleInputName1">Imię</label>
@@ -65,11 +61,9 @@
                 </div>
             </div>
         </div>
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Zatwierdź</button>
-        </div>
-    </form>
+        <x-adminlte-button label="Zapisz" type="submit" theme="success" class="float-right" icon="fas fa-save" />
+    </x-adminlte-card>
+</form>
 </div>
 @stop
 
@@ -80,32 +74,32 @@
 @section('js')
 <script>
     $("#createUserForm").validate({
-    rules: {
-        name: {
-            required: true,
-            minlength: 4,
-            maxlength: 10
+        rules: {
+            name: {
+                required: true,
+                minlength: 4,
+                maxlength: 10
+            },
+            last_name: {
+                required: true,
+                minlength: 4,
+                maxlength: 10
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            status: "required",
+            driving_licence_category: "required",
+            password: {
+                required: true,
+                minlength: 8,
+            },
+            photo: "required",
         },
-        last_name: {
-            required: true,
-            minlength: 4,
-            maxlength: 10
+        highlight: function(element) {
+            $(element).parent().css('color', 'red')
         },
-        email: {
-            required: true,
-            email: true
-        },
-        status: "required",
-        driving_licence_category: "required",
-        password: {
-            required: true,
-            minlength: 8,
-        },
-        photo: "required",
-    },
-    highlight: function (element) {
-        $(element).parent().css('color', 'red')
-    },
-});
+    });
 </script>
 @stop
