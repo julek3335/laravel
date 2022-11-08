@@ -21,6 +21,22 @@ class UserController extends Controller
         $this->rentalService = $rentalService;
     }
 
+    public function showCurrentProfile(){
+
+        $id = Auth::user()-> id;
+
+        return view('user.show',[
+            'user' => User::findOrFail($id),
+            'reservations' => Reservation::where('user_id' , '=', $id)->get(),
+            'entitlements' => Auth::user()-> auth_level,
+            'avaibleUsers' => User::all(),
+            'userJobs'     => Job::where('jobs.user_id' , $id)
+                                ->join('vehicles', 'vehicles.id', '=', 'jobs.vehicle_id')
+                                ->select('jobs.*', 'vehicles.id as vehicle_id', 'vehicles.name')
+                                ->get(),
+        ]);
+    }
+
     public function show($id){
         $user = User::findOrFail($id);
         // if($user-> auth_level == 0)
@@ -116,10 +132,12 @@ class UserController extends Controller
         return $this->rentalService->verifyQualification(Auth::user(),Vehicle::find($request->vehicle_id));
     }
     
-    public function delete($id)
+    public function delete(Request $request)
     {
-            $user = User::where('id',$id);
+        if( isset($request->user_id)){
+            $user = User::find($request->user_id);
             $user->delete();
+        }
         return redirect()->route('showAllUsers');
     }
 }

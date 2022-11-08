@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>i</b>Pojazd',
+    'logo_img' => 'vendor/adminlte/dist/img/hatchback.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/hatchback.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/hatchback.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -256,10 +256,10 @@ return [
     'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    // 'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => '/user/showProfile',
 
     /*
     |--------------------------------------------------------------------------
@@ -334,9 +334,21 @@ return [
                 ],
         ],
         [
+            'text'        => 'Trasy',
+            'url'         => 'jobs',
+            'icon'        => 'fas fa-light fa-route',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie trasy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'jobs'
+                    ],
+                ],
+        ],
+        [
             'text'        => 'Usterki',
             'url'         => 'incidents',
-            'icon'        => 'fas fa-light fa-triangle-exclamation',
+            'icon'        => 'fas fa-light fa-car-burst',
             'submenu' => [
                     [
                         'text'  => 'Wszystkie usterki',
@@ -347,6 +359,23 @@ return [
                         'text'  => 'Utwórz usterkę',
                         'icon'  => 'fas fa-light fa-plus',
                         'url'   => 'incident/add'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Ubezpieczenia',
+            'url'         => 'insurance',
+            'icon'        => 'fas fa-light fa-file-lines',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie ubezpieczenia',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'insurance'
+                    ],
+                    [
+                        'text'  => 'Utwórz ubezpieczenie',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'add-new'
                     ],
                 ],
         ],
@@ -387,7 +416,7 @@ return [
         [
             'text'        => 'Rezerwacje',
             'url'         => 'reservations',
-            'icon'        => 'far fa-address-card',
+            'icon'        => 'far fa-calendar',
             'submenu' => [
                 [
                     'text'  => 'Kalendarz',
@@ -404,13 +433,8 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'user/showProfile',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
         ],
     ],
 
@@ -634,6 +658,26 @@ return [
                 ],
             ],
         ],
+        'Jquery-validation' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/additional-methods.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/jquery.validate.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/localization/messages_pl.js',
+                ],
+            ],
+        ],
         'Leaflet' => [
             'active' => false,
             'files' => [
@@ -646,6 +690,21 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/leaflet/leaflet.js',
+                ],
+            ],
+        ],
+        'Leaflet-Control-Geocoder' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-control-geocoder/css/Control.Geocoder.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-control-geocoder/js/Control.Geocoder.js',
                 ],
             ],
         ],

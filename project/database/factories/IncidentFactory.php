@@ -20,11 +20,11 @@ class IncidentFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
-        // Storage::disk('public')->makeDirectory('incidents_photos');
+        Storage::disk('public')->makeDirectory('incidents_photos');
         return [
             'date' => fake()->date(),
             'description' => fake()->paragraph(2),
-            // 'photo' => $faker->image('storage'.public_path('incidents_photos'), 640, 480, ['car','crash'],false), 
+            'photo' => $faker->image('storage'.public_path('incidents_photos'), 640, 480, ['car','crash'],false), 
             'status' => fake()->randomElement(['resolved','in_progress','unprocessed']),
             'address' => fake()->address(),
         ];

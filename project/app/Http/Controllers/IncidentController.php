@@ -29,8 +29,7 @@ class IncidentController extends Controller
             $file_path = $new_file->store('incidents_photos');
  
             $incident = new Incident([
-                //"date" => $request->get('date'), //Format daty z frontu do 19.10.2020 09:50
-                "date" => "2022-10-19",
+                "date" =>  new \DateTimeImmutable($request->date??now()),
                 "description" => $request->get('description'),
                 "photo" => $request->photo->hashName(),
                 "address" => $request->get('address'),
@@ -39,15 +38,11 @@ class IncidentController extends Controller
             ]);
 
             $incident->save();
-
-            return view('incident.show', [
-                'incident' => $incident,
-                'vehicle'  => Vehicle::findOrFail($incident->vehicle_id)
-            ]);
+            
+            return redirect('/incident/' . $incident->id);
         }
 
         echo "Error - probably no photo or wrong photo extension";
-        echo "Zdjecie" . $request->file('photo');
     }
 
     /*
@@ -59,6 +54,39 @@ class IncidentController extends Controller
 
     public function prepareAdd(){
         return view('incident.add', ['vehicles' => Vehicle::all()]);
+    }
+
+    public function prepareEdit($id){
+
+        $incident = Incident::findOrFail($id);
+        $car = Vehicle::where('id', $incident->vehicle_id)->first();
+        return view('incident.edit', [
+            'incident' => Incident::findOrFail($id),
+            'vehicles' => Vehicle::all(),
+            'thisCar'  => $car 
+        ]);
+    }
+
+    public function edit(Request $request, $id){
+        $updateIncident = Incident::find($id);
+        $updateIncident->updated_at = new \DateTimeImmutable(now());
+        $updateIncident->date = new \DateTimeImmutable($request->date);
+        $updateIncident->description = $request->input('description');
+        $updateIncident->address = $request->input('address');
+        $updateIncident->status = $request->input('status');
+        $updateIncident->vehicle_id = $request->input('vehicle_id');
+        $updateIncident->update();
+
+        return redirect('/incident/' . $updateIncident->id);
+    }
+
+    public function delete(Request $request)
+    {
+        if( isset($request->incydent_id)){
+            $incydent = Incident::find($request->incydent_id);
+            $incydent->delete();
+        }
+        return redirect()->route('showAllIncidents');
     }
 
 }

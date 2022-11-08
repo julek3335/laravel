@@ -8,7 +8,6 @@ use App\Services\VehicleRentalService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\VehicleRentalService;
 
 class JobController extends Controller
 {
@@ -23,22 +22,29 @@ class JobController extends Controller
     public function startJob(Request $request)
     {
         $jobData = [
-            'start_point' => $request->start_localization,
-            'end_point' => $request->end_localization,
-            'start_odometer' => $request->meter_status,
-            'start_time' => new \DateTimeImmutable($request->start_time),
+            'start_point' => $request->start_localization??'',
+            'end_point' => $request->end_localization??'',
+            'start_odometer' => $request->start_odometer??null,
+            'start_time' => new \DateTimeImmutable($request->start_time??now()),
         ];
 
-        $this->rentalService->rentVehicle(Auth::user()->id, $request->vehicle_id, $jobData);
+        $job = $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id , $jobData);
+
+        return redirect('/jobs/' . $job->id);
     }
 
     public function listVehicleJobs(Request $request)
     {
-        return Job::where('vehicle_id', 51)->get();
+        return Job::where('vehicle_id', $request->vehicle_id)->get();
+    }
+
+    public function show($id)
+    {
+        return view('job.show',  ['job' => Job::findOrFail($id)]);
     }
 
     public function showAll()
     {
-        return view('jobs.list',  ['jobs' => Job::all()->sortBy("created_at")]);
+        return view('job.list',  ['jobs' => Job::all()->sortBy("created_at")]);
     }
 }

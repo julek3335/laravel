@@ -46,29 +46,22 @@ class VehicleController extends Controller
             ['status', '<>', 'resolved']
         ])->get()->sortBy('created_at');
 
-        //here must be insurance with the longest expiration date
-        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
-
-        $show_info_7_days = false;
-        $show_info_end = false;
-        if ($insurances) {
-            $actual_date_plus_7 = date('Y-m-d', strtotime(date('Y-m-d') . '+ 7 days'));
-            $actual_date = date('Y-m-d');
-            $insurances_date = $insurances->expiration_date;
-
-            if ($insurances_date <= $actual_date_plus_7 && $insurances_date > $actual_date) {
-                $show_info_7_days = true;
-            }
-
-            if ($insurances_date <= date('Y-m-d')) {
-                $show_info_end = true;
-            }
-        }
-
         $insuranceActive = Insurance::where([
             ['vehicle_id', '=', $vehicle->id],
             ['status', '=', 'active']
         ])->get()->sortBy('created_at');
+
+        $insuranceActiveOC = Insurance::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['type', '=', 'oc'],
+            ['status', '=', 'active']
+        ])->get()->sortBy('created_at');
+
+        $insuranceActiveEndIn7Days = Insurance::where([
+            ['vehicle_id', '=', $vehicle->id],
+            ['status', '=', 'active'],
+        ])->whereBetween('expiration_date', [date('Y-m-d'), date('Y-m-d',strtotime("+7 day"))])->get()->sortBy('created_at');
+
 
         //jobs list
         $jobs = Job::where('jobs.vehicle_id' , $id)->get();
@@ -82,13 +75,25 @@ class VehicleController extends Controller
             'insurances' => $insurances,
             'incidents_resolved' => $incidents_resolved,
             'incidents_others' => $incidents_others,
-            'insurance_importance_in_7_days' => $show_info_7_days,
-            'insurance_importance_end' => $show_info_end,
             'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
             'entitlements' => Auth::user()->auth_level, 
             'reservations' => Reservation::where('vehicle_id' , '=', $id)->get(),
             'activeInsurance' => $insuranceActive,
             'jobs' => $jobs,
+            'activeInsuraneOC' => $insuranceActiveOC,
+            'insuranceEnds' => $insuranceActiveEndIn7Days,
+        ]);
+    }
+
+    /*
+    ** Prepare vehicle data for add
+    */
+    public function prepareAdd(){
+
+        $vehicleTypes = VehicleType::all();
+        
+        return view('vehicle.add', [
+            'vehicle_types' => $vehicleTypes
         ]);
     }
 
@@ -116,7 +121,7 @@ class VehicleController extends Controller
         return view('vehicle.edit', [
             'vehicle' => $vehicle,
             'registration_card' => $registrationCard,
-            'vehicle_type' => $vehicleTypes
+            'vehicle_types' => $vehicleTypes
         ]);
     }
 
@@ -309,9 +314,9 @@ class VehicleController extends Controller
     public function delete(Request $request)
     {
         if (isset($request->vehicle_id)) {
-            $user = Vehicle::find($request->vehicle_id)->first();
+            $vehicle = Vehicle::find($request->vehicle_id);
             try {
-                $user->delete();
+                $vehicle->delete();
                 $code = 200;
                 $message = 'Pojazd został usunięty';
             } catch (\Throwable $th) {

@@ -20,14 +20,14 @@ class VehicleFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
-        // Storage::disk('public')->makeDirectory('vehicles_photos');
+        Storage::disk('public')->makeDirectory('vehicles_photos');
 
-        // $photo1 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
-        // $photo2 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
-        // $photo3 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
+        $photo1 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
+        $photo2 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
+        $photo3 = $faker->image('storage'.public_path('vehicles_photos'), 640, 480, ['car'],false);
         
 
-        // $photos = json_encode([$photo1,$photo2,$photo3]);
+        $photos = json_encode([$photo1,$photo2,$photo3]);
 
         $faker = (new \Faker\Factory())::create();
         $faker->addProvider(new \Faker\Provider\Fakecar($faker));
@@ -36,7 +36,7 @@ class VehicleFactory extends Factory
             'name' => $this->faker->userName(),
             'status' => VehicleStatusEnum::READY,
             'license_plate' => $faker->vehicleRegistration('[A-Z]{2}-[0-9]{5}'),
-            // 'photos' => $photos,
+            'photos' => $photos,
             'vehicle_type_id'=>fake()->numberBetween(1, 4),
             'user_id'=>fake()->numberBetween(1, 50),
         ];

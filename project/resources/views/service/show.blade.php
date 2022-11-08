@@ -12,5 +12,6 @@
         <a href="/service/edit/{{ $service->id }}">
             <x-adminlte-button label="Edytuj" icon="fas fa-light fa-edit"/>
         </a>
+        @include('partials.service.delete')
     </x-adminlte-card>
 @stop

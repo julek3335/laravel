@@ -27,12 +27,10 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 Route::controller(VehicleController::class)->group(function () {
-    Route::post('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
-    Route::get('/vehicles', 'showAll')->name('showAllVehicles');;
+    Route::get('/vehicles/delete/{vehicle_id}', 'delete')->middleware(['auth'])->name('vehiclesDelete');;
+    Route::get('/vehicles', 'showAll')->middleware(['auth'])->name('showAllVehicles');;
     Route::get('/vehicles/{id}', 'show')->middleware(['auth'])->name('dashboard');;
-    Route::get('/vehicle/add', function () {
-        return view('vehicle.add');
-    })->middleware(['auth'])->name('dashboard');
+    Route::get('/vehicle/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/vehicle/add', 'store');
     Route::get('/vehicle/edit/{id}', 'edit');
     Route::post('/vehicle/edit/{id}', 'updateVehicle');
@@ -42,7 +40,10 @@ Route::controller(VehicleController::class)->group(function () {
 
 
 Route::controller(JobController::class)->group(function () {
-    Route::post('/rent', 'startJob')->name('dashboard');
+    Route::post('/rent', 'startJob')->middleware(['auth'])->name('dashboard');
+    Route::get('/jobs/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/jobs/{id}/end', 'endJob')->middleware(['auth'])->name('dashboard');
+    Route::get('/jobs', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/jobs/vehicle', 'listVehicleJobs')->name('dashboard');
 //    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
@@ -51,18 +52,28 @@ Route::get('/example-car', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::controller(InsuranceController::class)->group(function(){
-    Route::get('/insurance/create/{id}', 'insuranceToEdit')->middleware(['auth'])->name('dashboard');
-    Route::post('/insurance/create-new/{id}', [InsuranceController::class, 'create']);
+    Route::get('/insurance/delete/{insurance_id}', 'delete')->middleware(['auth'])->name('deleteInsurance');
+    Route::get('/insurance', 'showAll')->middleware(['auth'])->name('showAllInsurances');
+    Route::get('/insurance/{insurance_id}', 'show')->middleware(['auth'])->name('show');
+    Route::get('/insurance/edit/{id}', 'edit');
+    Route::post('/insurance/edit/{id}', 'updateInsurance');
+    Route::get('/add-new', 'prepareAdd')->middleware(['auth'])->name('dashboard');
+    Route::post('/add-new', 'create')->middleware(['auth'])->name('dashboard');
 });
 
 Route::controller(IncidentController::class)->group(function () {
-    Route::get('/incidents', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/incidents/delete/{incident_id}', 'delete')->middleware(['auth'])->name('deleteIncident');
+    Route::get('/incidents', 'showAll')->middleware(['auth'])->name('showAllIncidents');
     Route::get('/incident/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/incident/add', 'store');
     Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident/edit/{id}', 'prepareEdit')->middleware(['auth'])->name('dashboard');
+    Route::post('/incident/edit/{id}', 'edit')->middleware(['auth'])->name('dashboard');
+
 });
 
 Route::controller(UserController::class)->group(function () {
+    Route::get(' /user/showProfile', 'showCurrentProfile')->middleware(['auth'])->name('dashboard');
     Route::get('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');
     Route::get('/user/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/user/add', 'store')->middleware(['auth'])->name('dashboard');
@@ -80,7 +91,8 @@ Route::controller(ReservationController::class)->group(function () {
 });
 
 Route::controller(ServiceController::class)->group(function () {
-    Route::get('/services', 'showAll')->middleware(['auth'])->name('dashboard');
+    Route::get('/services/delete/{service_id}', 'delete')->middleware(['auth'])->name('deleteService');
+    Route::get('/services', 'showAll')->middleware(['auth'])->name('showAllServices');
     Route::get('/service/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/service/add', 'store')->middleware(['auth'])->name('dashboard');
     Route::get('/service/{id}', 'show')->middleware(['auth'])->name('dashboard');
