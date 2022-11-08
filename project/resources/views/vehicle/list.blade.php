@@ -15,10 +15,12 @@
         'Typ',
         'Status',
         'Numer rejestracyjny',
-        ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
+        ['label' => 'Akcja', 'width' => 20, 'no-export' => true, 'orderable' => false],
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+        'order' => [[0, 'asc']],
+        'columns' => [null, null, null, null, null, ['orderable' => false]],
     ];
 
     @endphp
