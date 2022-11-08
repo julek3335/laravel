@@ -9,8 +9,8 @@ projekt składa się z:
 ```bash
 git clone https://github.com/julek3335/laravel.git
 
-cd laravel/
-
+cd laravel/ 
+e
 rm -rf project
 
 docker compose up #uruchomienie moze trwać 2-3 min
