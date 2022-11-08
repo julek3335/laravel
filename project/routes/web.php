@@ -67,6 +67,9 @@ Route::controller(IncidentController::class)->group(function () {
     Route::get('/incident/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/incident/add', 'store');
     Route::get('/incident/{id}', 'show')->middleware(['auth'])->name('dashboard');
+    Route::get('/incident/edit/{id}', 'prepareEdit')->middleware(['auth'])->name('dashboard');
+    Route::post('/incident/edit/{id}', 'edit')->middleware(['auth'])->name('dashboard');
+
 });
 
 Route::controller(UserController::class)->group(function () {

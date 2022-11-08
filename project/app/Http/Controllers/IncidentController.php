@@ -56,6 +56,30 @@ class IncidentController extends Controller
         return view('incident.add', ['vehicles' => Vehicle::all()]);
     }
 
+    public function prepareEdit($id){
+
+        $incident = Incident::findOrFail($id);
+        $car = Vehicle::where('id', $incident->vehicle_id)->first();
+        return view('incident.edit', [
+            'incident' => Incident::findOrFail($id),
+            'vehicles' => Vehicle::all(),
+            'thisCar'  => $car 
+        ]);
+    }
+
+    public function edit(Request $request, $id){
+        $updateIncident = Incident::find($id);
+        $updateIncident->updated_at = new \DateTimeImmutable(now());
+        $updateIncident->date = new \DateTimeImmutable($request->date);
+        $updateIncident->description = $request->input('description');
+        $updateIncident->address = $request->input('address');
+        $updateIncident->status = $request->input('status');
+        $updateIncident->vehicle_id = $request->input('vehicle_id');
+        $updateIncident->update();
+
+        return redirect('/incident/' . $updateIncident->id);
+    }
+
     public function delete(Request $request)
     {
         if( isset($request->incydent_id)){
