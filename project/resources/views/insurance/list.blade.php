@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $insurance->id }}</td>
                         <td>{{ $insurance->created_at }}</td>
-                        <td>{{ $insurance->status->name }}</td>
+                        <td>{{ __('status.'.$insurance->status->name) }}</td>
                         <td>{{ $insurance->vehicle_id }}</td>
                         <td>
                             <a href="/insurance/edit/{{ $insurance->id }}">

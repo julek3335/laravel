@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $incident->id }}</td>
                         <td>{{ $incident->created_at }}</td>
-                        <td>{{ $incident->status }}</td>
+                        <td>{{ __('status.'.$incident->status) }}</td>
                         <td>{{ $incident->vehicle_id }}</td>
                         <td>
                             <a href="/incident/edit/{{ $incident->id }}">

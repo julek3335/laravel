@@ -12,6 +12,9 @@
         <div class="col-sm-6">
             <ul class="mt-4 list-group list-group-unbordered">
                 <li class="list-group-item">
+                    <strong>Status</strong> <span class="float-right">{{__('status.'.$insurance -> status -> name)}}</span>
+                </li>
+                <li class="list-group-item">
                     <strong>Numer ubezpieczenia</strong> <span class="float-right">{{$insurance -> policy_number }}</span>
                 </li>
                 <li class="list-group-item">
