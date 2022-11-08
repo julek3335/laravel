@@ -13,14 +13,14 @@
     @csrf
     <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
-            <div class="col-sm-6">
-                <x-adminlte-input name="policy_number" type="text" label="Numer ubezpieczenia" placeholder="Numer ubezpieczenia" value="" disable-feedback required />
-                <x-adminlte-input name="expiration_date" type="text" label="Data wygaśnięcia" placeholder="Data wygaśnięcia" value="" disable-feedback required />
-                <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" value="" disable-feedback />
-                <x-adminlte-input name="phone_number" type="number" label="Numer kontaktowy" placeholder="Numer kontaktowy" value="" disable-feedback required />
-                <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="" disable-feedback />
-                <x-adminlte-textarea name="description" type="text" label="Opis" placeholder="Opis" value="" disable-feedback required />
-                <!-- <x-adminlte-input name="status" type="text" label="Status" placeholder="Status ubezpieczenia" value="" disable-feedback required /> -->
+            <div class="col-sm-12">
+                <x-adminlte-input name="policy_number" type="text" label="Numer ubezpieczenia" placeholder="Numer ubezpieczenia" disable-feedback required />
+                <x-adminlte-input name="expiration_date" type="text" label="Data wygaśnięcia" placeholder="Data wygaśnięcia" disable-feedback required />
+                <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" disable-feedback />
+                <x-adminlte-input name="phone_number" type="number" label="Numer kontaktowy" placeholder="Numer kontaktowy" disable-feedback required />
+                <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" disable-feedback required />
+                <x-adminlte-textarea name="description" type="text" label="Opis" placeholder="Opis" disable-feedback required />
+                {{-- <x-adminlte-input name="status" type="text" label="Status" placeholder="Status ubezpieczenia" value="" disable-feedback required /> --}}
                 <x-adminlte-select-bs name="selBsVehicle" label="Typ" data-title="Wybierz typ ubezpieczenia ..." data-live-search data-live-search-placeholder="Wybierz pojazd ..." data-show-tick>
                     <x-slot name="prependSlot">
                         <div class="input-group-text bg-gradient-info">
