@@ -62,6 +62,8 @@ class VehicleController extends Controller
             ['status', '=', 'active'],
         ])->whereBetween('expiration_date', [date('Y-m-d'), date('Y-m-d',strtotime("+7 day"))])->get()->sortBy('created_at');
 
+        $assignedUserID = $vehicle->user_id;
+        $assignedUser = User::findOrFail($assignedUserID);
 
         //jobs list
         $jobs = Job::where('jobs.vehicle_id' , $id)->get();
@@ -82,6 +84,7 @@ class VehicleController extends Controller
             'jobs' => $jobs,
             'activeInsuraneOC' => $insuranceActiveOC,
             'insuranceEnds' => $insuranceActiveEndIn7Days,
+            'assignedUser' => $assignedUser 
         ]);
     }
 
@@ -93,7 +96,8 @@ class VehicleController extends Controller
         $vehicleTypes = VehicleType::all();
         
         return view('vehicle.add', [
-            'vehicle_types' => $vehicleTypes
+            'vehicle_types' => $vehicleTypes,
+            'users' => User::all()
         ]);
     }
 
@@ -115,13 +119,19 @@ class VehicleController extends Controller
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $vehicleTypes = VehicleType::all();
+
+        $assignedUserID = $vehicle->user_id;
+        $assignedUser = User::findOrFail($assignedUserID);
+
         /*
         ** Passing data to view
         */
         return view('vehicle.edit', [
             'vehicle' => $vehicle,
             'registration_card' => $registrationCard,
-            'vehicle_types' => $vehicleTypes
+            'vehicle_types' => $vehicleTypes,
+            'assignedUser' => $assignedUser,
+            'users' => User::all(),
         ]);
     }
 
@@ -144,6 +154,7 @@ class VehicleController extends Controller
         $vehicle->license_plate = $req->license_plate;
         // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+        $vehicle->user_id = $req->user_id;
         // $vehicle->user_id = $req->user_id;
 
         if ($req->hasFile('photos')) {
@@ -256,6 +267,7 @@ class VehicleController extends Controller
         $vehicle->license_plate = $req->license_plate;
         // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
+        $vehicle->user_id = $req->user_id;
         // $vehicle->user_id = $req->vehicle_user_id;
         if ($req->hasFile('photos')) {
             $req->validate([

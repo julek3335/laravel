@@ -134,7 +134,10 @@
                         <strong>Zarejestrowane trasy</strong> <a href="#" class="float-right">254</a>
                     </li>
                     <li class="list-group-item">
-                        <strong>Data utworzenia</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->created_at)) }}</span>
+                        <strong>Ilość miejsc stojących</strong> <span class="float-right">{{ $registration_card->standing_places }}</span>
+                    </li>
+                    <li class="list-group-item">
+                            <strong>Opiekun pojazdu</strong> <span class="float-right"><a href="/user/{{$assignedUser->id}}">{{ $assignedUser -> name }} {{ $assignedUser -> last_name }}</a></span>
                     </li>
                 </ul>
             </div>
