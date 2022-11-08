@@ -34,7 +34,7 @@
                 </li>
             </ul>
             <div class="col-sm-6">
-                <img src="{{asset('storage/insurances_photos/'. $insurance -> photo)}}" class="img-fluid p-4">
+                <img src="{{asset('storage/insurance_photos/'. $insurance -> photo)}}" class="img-fluid p-4">
             </div>
             <div class="row mt-4">
                 @include('partials.insurance.delete')

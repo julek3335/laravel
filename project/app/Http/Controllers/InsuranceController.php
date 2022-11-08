@@ -26,10 +26,14 @@ class InsuranceController extends Controller
 
     public function edit($id)
     {
+
+        $thoseVehicleInsurances = Insurance::findOrFail($id);
+        $vehicle  = Vehicle::where('id', $thoseVehicleInsurances->vehicle_id);
+
         return view('insurance.edit', [
             'insurance' => Insurance::findOrFail($id),
             'vehicles' => Vehicle::all(),
-            'currentVehicle' => Vehicle::where('id', $id)->firstOrFail()
+            'currentVehicle' => $vehicle->firstOrFail()
         ]);
     }
 
