@@ -13,16 +13,24 @@
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
     </x-adminlte-alert>
 
-     @if( $insurance_importance_in_7_days )
+     @if( $insuranceEnds )
+     @foreach($insuranceEnds as $insuranceEnd)
             <x-adminlte-alert theme="warning" title="Ubezpieczenie straci ważność w przeciągu tygodnia!" dismissable>
-            Ubezpieczenie straci ważność dnia: <strong>{{ $insurances->expiration_date }}</strong> należy wykupić nowe.
+            Ubezpieczenie {{$insuranceEnd->type}} straci ważność dnia: <strong>{{ $insuranceEnd->expiration_date }}</strong> należy wykupić nowe.
             </x-adminlte-alert>
+            @endforeach
     @endif
 
-    @if( $insurance_importance_end )
-            <x-adminlte-alert theme="danger" title="Ubezpieczenie pojazdu straciło ważność!" dismissable>
-            Ubezpieczenie straciło ważność dnia: <strong>{{ $insurances->expiration_date }}</strong> należy wykupić nowe.
-            </x-adminlte-alert>
+    @if( count($activeInsurance)==0 )
+        <x-adminlte-alert theme="danger" title="Brak ważnych ubezpieczeń!" dismissable>
+            Brak ważnych ubezpieczeń! Należy wykupić nowe
+        </x-adminlte-alert>
+    @endif
+
+    @if( count($activeInsuraneOC) == 0 )
+        <x-adminlte-alert theme="danger" title="Brak ważnego ubezpieczenia OC!" dismissable>
+            Należy wykupić ubezpieczenie OC
+        </x-adminlte-alert>
     @endif
 
     <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>   
@@ -213,6 +221,9 @@
                             </ul>
                         </div>
                         @include('partials.insurance.delete')
+                        <a href="/insurance/edit/{{$insurance->id}}">
+                            <x-adminlte-button label="Edytuj ubezpieczenie" icon="fas fa-edit" class="float-right mr-2"/>
+                        </a>
                     </div>
                 @endif
             @endforeach

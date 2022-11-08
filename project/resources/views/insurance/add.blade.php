@@ -21,7 +21,7 @@
                 <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="" disable-feedback />
                 <x-adminlte-textarea name="description" type="text" label="Opis" placeholder="Opis" value="" disable-feedback required />
                 <!-- <x-adminlte-input name="status" type="text" label="Status" placeholder="Status ubezpieczenia" value="" disable-feedback required /> -->
-                <x-adminlte-select-bs name="selBsVehicle" label="Typ" data-title="Wybierz pojazd ..." data-live-search data-live-search-placeholder="Wybierz pojazd ..." data-show-tick>
+                <x-adminlte-select-bs name="selBsVehicle" label="Typ" data-title="Wybierz typ ubezpieczenia ..." data-live-search data-live-search-placeholder="Wybierz pojazd ..." data-show-tick>
                     <x-slot name="prependSlot">
                         <div class="input-group-text bg-gradient-info">
                             <i class="fas fa-car-side"></i>
@@ -32,14 +32,14 @@
                     <option data-icon="fa fa-fw fa-truck-moving">NNW</option>
                     <option data-icon="fa fa-fw fa-motorcycle">Assistance</option>
                 </x-adminlte-select-bs>
-                <x-adminlte-input-file name="photo" label="Zdjęcie" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcie" required>
+                <!-- <x-adminlte-input-file name="photo" label="Zdjęcie" legend="Wybierz" placeholder="Wybierz lub upuść zdjęcie" >
                     <x-slot name="prependSlot">
                         <div class="input-group-text bg-lightblue">
                             <i class="fas fa-upload"></i>
                         </div>
                     </x-slot>
-                </x-adminlte-input-file>
-                <x-adminlte-select-bs name="license_plate" label="Numer rejestracyjny pojazdu" data-title="Wybierz typ ..." data-live-search data-live-search-placeholder="Wybierz typ ..." data-show-tick>
+                </x-adminlte-input-file> -->
+                <x-adminlte-select-bs name="license_plate" label="Numer rejestracyjny pojazdu" data-title="Wybierz pojazd ..." data-live-search data-live-search-placeholder="Wybierz typ ..." data-show-tick>
                     <x-slot name="prependSlot">
                         <div class="input-group-text bg-gradient-info">
                             <i class="fas fa-car-side"></i>
@@ -84,9 +84,6 @@
                 required: true,
             },
             selBsVehicle: {
-                required: true,
-            },
-            photo: {
                 required: true,
             },
             license_plate: {
