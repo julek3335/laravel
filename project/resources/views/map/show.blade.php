@@ -42,8 +42,8 @@
     //var marker = L.marker([52.41567, 16.93088]).addTo(map);
     //marker.bindPopup("<center><strong>Pojazd pierwszy</strong><br>Jan Kowalski</center>").openPopup();
 
-    //var gpxURL = 'http://localhost:8000/temp-gpx/trasa.gpx'; // URL to your GPX file or the GPX itself
-    var gpxURL = 'http://localhost:8000/temp-gpx/trasa-min.gpx'; // URL to your GPX file or the GPX itself
+    //var gpxURL = '{{  url('') }}/temp-gpx/trasa.gpx'; // URL to your GPX file or the GPX itself
+    var gpxURL = '{{  url('') }}/temp-gpx/trasa-min.gpx'; // URL to your GPX file or the GPX itself
     new L.GPX(gpxURL, {
         async: true,
         marker_options: {

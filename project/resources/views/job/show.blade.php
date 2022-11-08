@@ -115,7 +115,7 @@
             map.fitBounds(featureGroup.getBounds())
         }
     @elseif($job->status->value == 'finished')
-        var gpxURL = 'http://localhost:8000/temp-gpx/trasa-min.gpx';
+        var gpxURL = '{{  url('') }}/temp-gpx/trasa-min.gpx';
         new L.GPX(gpxURL, {
             async: true,
             marker_options: {
