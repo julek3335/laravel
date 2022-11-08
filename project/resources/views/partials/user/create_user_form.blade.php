@@ -24,7 +24,7 @@
                     </div>
                 </x-slot>
                 @foreach(App\Enums\UserStatusEnum::cases() as $status_option)
-                <option value="{{ $status_option->value }}" {{ $status_option->value === $user->status->value ? "selected" : ""}}>{{ $status_option->name }}</option>
+                <option value="{{ $status_option->value }}" {{ $status_option->value === $user->status->value ? "selected" : ""}}>{{ __('status.'.$status_option->name) }}</option>
                 @endforeach>
             </x-adminlte-select-bs>
             <div class="form-group">

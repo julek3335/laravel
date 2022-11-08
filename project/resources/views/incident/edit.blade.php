@@ -41,7 +41,7 @@
                             <i class="fas fa-car-side"></i>
                         </div>
                     </x-slot>
-                    <option value="{{ $incident->status }}" selected>{{ $incident->status }}</option>
+                    <option value="{{ $incident->status }}" selected>{{ __('status.'.$incident->status) }}</option>
                     <option data-icon="fa fa-fw fa-car">in_progress</option>
                     <option data-icon="fa fa-fw fa-car">resolved</option>
                     <option data-icon="fa fa-fw fa-car">unprocessed</option>

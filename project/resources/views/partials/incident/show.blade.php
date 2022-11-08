@@ -12,7 +12,7 @@
         <strong>Adres</strong> <span class="float-right">{{ $incident->address }}</span>
     </li>
     <li class="list-group-item">
-        <strong>Status</strong> <span class="float-right">{{ $incident->status }}</span>
+        <strong>Status</strong> <span class="float-right">{{ __('status.'.$incident->status) }}</span>
     </li>
     <li class="list-group-item">
         <strong>Pojazd</strong> <a href="/vehicles/{{ $vehicle->id }}" class="float-right">{{ $vehicle->name }}</a>
