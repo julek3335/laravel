@@ -15,6 +15,16 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
+
+        $userID = Auth::user()-> id;
+        $vehicles = Vehicle::all();
+        $allVehicles = [];
+        foreach($vehicles as $vehicle){
+            if($vehicle->user_id == $userID){
+                array_push($allVehicles, $vehicle);
+            }
+        }
+
         return view('dashboard', [
             //Trzeba zmienić żeby zwracało tylko wolne pojazdy a nie wszystkie
             'availableVehicles' => Vehicle::all(), 
@@ -26,6 +36,7 @@ class DashboardController extends Controller
             'numberOfIncidents' => Incident::all()->count(),
             'numberOfServices'  => Service::all()->count(),
             'entitlements'      => Auth::user()-> auth_level,
+            'userVehicles'      => $allVehicles,
 
             // trasy dla aktualnie zalogowanego użytkownika
             'userJobs'          => Job::where('jobs.user_id' , Auth::user()->id)

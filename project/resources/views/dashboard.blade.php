@@ -62,4 +62,21 @@
         </div>
     </div>
     @endif
+
+    @if($userVehicles)
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Twoje pojazdy</h3>
+        </div>
+        <div class="card-body">
+        @foreach($userVehicles as $vehicle)
+           <a href="/vehicles/{{$vehicle->id}}"> <p>{{$vehicle->license_plate}}</p> </a>
+        @endforeach
+        </div>
+    </div>
+    @else
+        <div class="card-header">
+            <h3 class="card-title">Nie posiadasz przypisanych pojazdów </h3>
+        </div>
+    @endif
 @stop

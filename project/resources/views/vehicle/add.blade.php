@@ -16,6 +16,15 @@
             <div class="col-sm-6">
                 <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa" disable-feedback />
                 <x-adminlte-input name="brand" type="text" label="Marka" placeholder="Marka" disable-feedback />
+                <x-adminlte-select-bs name="user_id" label="Opiekun pojazdu" 
+                    data-title="Wybierz opiekuna ..." data-live-search
+                    data-live-search-placeholder="Wybierz opiekuna ..." data-show-tick>
+                    <x-slot name="prependSlot">
+                    </x-slot>
+                    @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}} {{$user->last_name}}</option>
+                    @endforeach
+                </x-adminlte-select-bs>
                 <x-adminlte-input name="model" type="text" label="Model" placeholder="Model" disable-feedback />
                 <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny" disable-feedback />
                 <x-adminlte-input name="vehicle_identification_number" type="text" label="Numer VIN" placeholder="Numer VIN" disable-feedback />

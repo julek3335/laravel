@@ -7,6 +7,16 @@
                 value="{{ $vehicle->name }}" disable-feedback/>
             <x-adminlte-input name="brand" type="text" label="Marka" placeholder="Marka"
                 value="{{ $registration_card->brand }}" disable-feedback/>
+            <x-adminlte-select-bs name="user_id" label="Opiekun pojazdu" 
+                data-title="Wybierz opiekuna ..." data-live-search
+                data-live-search-placeholder="Wybierz opiekuna ..." data-show-tick>
+                <x-slot name="prependSlot">
+                </x-slot>
+                <option value="{{$assignedUser->id}}" selected>{{$assignedUser->name}} {{$assignedUser->last_name}}</option>
+                @foreach($users as $user)
+                    <option value="{{$user->id}}">{{$user->name}} {{$user->last_name}}</option>
+                @endforeach
+            </x-adminlte-select-bs>
             <x-adminlte-input name="model" type="text" label="Model" placeholder="Model"
                 value="{{ $registration_card->model }}" disable-feedback/>
             <x-adminlte-input name="license_plate" type="text" label="Numer rejestracyjny" placeholder="Numer rejestracyjny"
