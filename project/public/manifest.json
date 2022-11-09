@@ -3,12 +3,12 @@
     "name": "iPojazd",
     "icons": [
       {
-        "src": "/img/pwa/icon-192x192.png",
+        "src": "/img/pwa/icon_192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/img/pwa/icon-512x512.png",
+        "src": "/img/pwa/icon_512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
@@ -16,6 +16,6 @@
     "id": "/?source=pwa",
     "start_url": "/?source=pwa",
     "background_color": "#f4f6f9",
-    "display": "fullscreen",
+    "display": "standalone",
     "theme_color": "#f4f6f9"
   }
