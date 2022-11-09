@@ -94,7 +94,7 @@ class ReservationController extends Controller
             $newReservation -> vehicle_id = $req -> vehicle_id;
             $newReservation -> save();
             $id = $newReservation -> id;
-            return view('reservations', Reservation::findOrFail($id));
+            // return redirect('/dashboard/');
 
         }else{
             return("This vehicle is already ocupied in this time period. Please try again");
