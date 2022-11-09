@@ -104,12 +104,11 @@ class ReservationController extends Controller
 
     public function showAllReservationsCalendar()
     {
-        $reservations = DB::select('
-        select  r.start_date AS start_date, r.end_date AS end_date, u.name AS user_name, u.last_name AS user_last_name, r.user_id AS user_id, r.vehicle_id AS vehicle_id, v.name AS vehicle_name
-        from reservations r
-        inner join users u ON r.user_id = u.id
-        inner join vehicles v ON r.vehicle_id = v.id
-        ');
+        $reservations = Reservation::
+        select('reservations.start_date AS start_date', 'reservations.end_date AS end_date', 'users.name AS user_name', 'users.last_name AS user_last_name', 'reservations.user_id AS user_id', 'reservations.vehicle_id AS vehicle_id', 'vehicles.name AS vehicle_name')
+        ->join( 'users', 'reservations.user_id', '=', 'users.id')
+        ->join('vehicles', 'reservations.vehicle_id', '=', 'vehicles.id')
+        ->get();
         return view('reservation.showCalendar', ['reservations' => $reservations]);
     }
 
