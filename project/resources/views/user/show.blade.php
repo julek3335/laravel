@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Użytkownik - ...')
+@section('title', 'Użytkownik')
 
 @section('content_header')
 
@@ -63,10 +63,8 @@
                             </div>
 
                             <!-- rezerwacje -->
-                            <div class="tab-pane" id="reservations">
-                                <x-adminlte-card title="Kalendarz rezerwacji" theme="lightblue" theme-mode="outline" collapsible maximizable>
-                                    <div id='calendar'></div>
-                                </x-adminlte-card>
+                            <div class="tab-pane active" id="reservations">
+                                <div id="calendar"></div>
                                 <script>
                                     var reservations = []
                                     @foreach($reservations as $reservation)
@@ -90,7 +88,7 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')

@@ -11,6 +11,9 @@
                 data-title="Wybierz opiekuna ..." data-live-search
                 data-live-search-placeholder="Wybierz opiekuna ..." data-show-tick>
                 <x-slot name="prependSlot">
+                    <div class="input-group-text bg-gradient-info">
+                        <i class="fas fa-person"></i>
+                    </div>
                 </x-slot>
                 <option value="{{$assignedUser->id}}" selected>{{$assignedUser->name}} {{$assignedUser->last_name}}</option>
                 @foreach($users as $user)
