@@ -1,13 +1,13 @@
-<form id="eeer" action="{{ url('insurance/edit/'. $insurance->id) }}" method="POST" enctype="multipart/form-data">
+<form id="insurance-edit" action="{{ url('insurance/edit/'. $insurance->id) }}" method="POST" enctype="multipart/form-data">
 @section('plugins.Jquery-validation', true)
 
     <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-12">
                 @csrf
-                <x-adminlte-input name="policy_number" type="text" label="Number polisy" placeholder="Number polisy" value="{{ $insurance->policy_number }}" disable-feedback />
-                <x-adminlte-input name="expiration_date" type="text" label="Data ważności" placeholder="Data ważności" value="{{ $insurance->expiration_date }}" disable-feedback />
-                <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="{{ $insurance->insurer_name }}" disable-feedback />
+                <x-adminlte-input name="policy_number" type="number" label="Number polisy" placeholder="Number polisy" value="{{ $insurance->policy_number }}" disable-feedback required/>
+                <x-adminlte-input name="expiration_date" type="text" label="Data ważności" placeholder="Data ważności" value="{{ $insurance->expiration_date }}" disable-feedback required/>
+                <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="{{ $insurance->insurer_name }}" disable-feedback required/>
                 <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" value="{{ $insurance->cost }}" disable-feedback />
                 <x-adminlte-input name="phone_number" type="number" label="Numer kontaktowy" placeholder="Numer kontaktowy" value="{{ $insurance->phone_number }}" disable-feedback />
                 <x-adminlte-textarea name="description" type="text" label="Opis" placeholder="Opis" value="{{ $insurance->description	}}" disable-feedback />
@@ -48,7 +48,7 @@
 
 @section('js')
 <script>
-    $("#eeer").validate({
+    $("#insurance-edit").validate({
         rules: {
             policy_number: {
                 required: true,
@@ -68,7 +68,7 @@
                 minlength: 9
             },
             insurer_name: {
-                require: true
+                required: true
             },
             description: {
                 required: true,
