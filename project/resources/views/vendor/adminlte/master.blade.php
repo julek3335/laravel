@@ -77,6 +77,9 @@
 
     {{-- PWA head assets  --}}
     @include('partials.pwa.head')
+
+    {{-- Include custom styles and scripts  --}}
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
