@@ -169,7 +169,7 @@ class VehicleController extends Controller
 
             foreach($req->file('photos') as $image)
             {
-                $file_path = $image->store('vehicles_photos', 'public'); 
+                $file_path = $image->store('vehicles_photos'); 
                 
                 $image_name_hash = $image->hashName();
                 array_push($image_arr, $image_name_hash);

@@ -77,7 +77,7 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/users/delete/{user_id}', 'delete')->middleware(['auth'])->name('deleteUser');
     Route::get('/user/add', 'prepareAdd')->middleware(['auth'])->name('dashboard');
     Route::post('/user/add', 'store')->middleware(['auth'])->name('dashboard');
-    Route::get('/users', 'showAll')->middleware(['auth'])->name('showAllUsers');
+    Route::get('/users', 'showAll')->name('showAllUsers');
     Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');
     Route::put('/user/edit/{id}', [UserController::class, 'updateUser']);
     Route::get('/user/edit/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');

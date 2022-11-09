@@ -26,7 +26,7 @@ class IncidentController extends Controller
             ]);
             
             $new_file = $request->file('photo');
-            $file_path = $new_file->store('incidents_photos', 'public');
+            $file_path = $new_file->store('incidents_photos');
  
             $incident = new Incident([
                 "date" =>  new \DateTimeImmutable($request->date??now()),
