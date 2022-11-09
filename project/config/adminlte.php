@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>i</b>Pojazd',
+    'logo_img' => 'vendor/adminlte/dist/img/hatchback.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/hatchback.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/hatchback.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -253,13 +253,13 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
-    'register_url' => 'register',
+    // 'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => '/user/showProfile',
 
     /*
     |--------------------------------------------------------------------------
@@ -293,7 +293,7 @@ return [
         // Navbar items:
         [
             'type'         => 'navbar-search',
-            'text'         => 'search',
+            'text'         => 'Szukaj',
             'topnav_right' => true,
         ],
         [
@@ -304,7 +304,7 @@ return [
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Szukaj',
         ],
         [
             'text' => 'blog',
@@ -312,81 +312,129 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text'        => 'Dashboard',
+            'url'         => '/',
+            'icon'        => 'fas fa-tachometer-alt',
         ],
         [
-            'text'        => 'Przykład karty pojazdu',
-            'url'         => 'example-car',
-            'icon'        => 'far fa-fw fa-file',
+            'text'        => 'Pojazdy',
+            'url'         => 'vehicles',
+            'icon'        => 'fas fa-light fa-truck',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie pojazdy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'vehicles'
+                    ],
+                    [
+                        'text'  => 'Utwórz pojazd',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'vehicle/add'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Trasy',
+            'url'         => 'jobs',
+            'icon'        => 'fas fa-light fa-route',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie trasy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'jobs'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Usterki',
+            'url'         => 'incidents',
+            'icon'        => 'fas fa-light fa-car-burst',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie usterki',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'incidents'
+                    ],
+                    [
+                        'text'  => 'Utwórz usterkę',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'incident/add'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Ubezpieczenia',
+            'url'         => 'insurance',
+            'icon'        => 'fas fa-light fa-file-lines',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie ubezpieczenia',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'insurance'
+                    ],
+                    [
+                        'text'  => 'Utwórz ubezpieczenie',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'add-new'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Akcje serwisowe',
+            'url'         => 'services',
+            'icon'        => 'fas fa-light fa-wrench',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszystkie akcje serwisowe',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'services'
+                    ],
+                    [
+                        'text'  => 'Utwórz akcję serwisową',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'service/add'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Uzytkownicy',
+            'url'         => 'users',
+            'icon'        => 'fas fa-light fa-user',
+            'submenu' => [
+                    [
+                        'text'  => 'Wszyscy użytkownicy',
+                        'icon'  => 'fas fa-light fa-list',
+                        'url'   => 'users'
+                    ],
+                    [
+                        'text'  => 'Utwórz użytkownika',
+                        'icon'  => 'fas fa-light fa-plus',
+                        'url'   => 'user/add'
+                    ],
+                ],
+        ],
+        [
+            'text'        => 'Rezerwacje',
+            'url'         => 'reservations',
+            'icon'        => 'far fa-calendar',
+            'submenu' => [
+                [
+                    'text'  => 'Kalendarz',
+                    'icon'  => 'fas fa-light fa-calendar',
+                    'url'   => 'reservations/all/calendar'
+                ],
+            ],
+        ],
+        [
+            'text'        => 'Mapa',
+            'url'         => 'map',
+            'icon'        => 'far fa-map',
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'user/showProfile',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
         ],
     ],
 
@@ -426,22 +474,67 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'DatatablesPlugins' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.html5.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.print.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/jszip/jszip.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/vfs_fonts.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
                 ],
             ],
         ],
@@ -457,6 +550,21 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
+                ],
+            ],
+        ],
+        'BootstrapSelect' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
                 ],
             ],
         ],
@@ -492,6 +600,151 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'TempusDominusBs4' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/moment.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/moment/locale/pl.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css',
+                ],
+            ],
+        ],
+        'BsCustomFileInput' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.min.js',
+                ],
+            ],
+        ],
+        'Fullcalendar' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/main.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/fullcalendar/locales/pl.js',
+                ],
+            ],
+        ],
+        'Jquery-validation' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/additional-methods.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/jquery.validate.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/jquery-validation/localization/messages_pl.js',
+                ],
+            ],
+        ],
+        'Leaflet' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet/leaflet.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet/leaflet.js',
+                ],
+            ],
+        ],
+        'Leaflet-Control-Geocoder' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-control-geocoder/css/Control.Geocoder.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-control-geocoder/js/Control.Geocoder.js',
+                ],
+            ],
+        ],
+        'Leaflet-GPX' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/leaflet-gpx/gpx.min.js',
+                ],
+            ],
+        ],
+        'PhotoSwipe' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/photoswipe/css/photoswipe.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/photoswipe/js/photoswipe.umd.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/photoswipe/js/photoswipe-lightbox.umd.min.js',
+                ],
+            ],
+        ],
+        'JS-Cookie' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/js-cookie/js.cookie.min.js',
                 ],
             ],
         ],
