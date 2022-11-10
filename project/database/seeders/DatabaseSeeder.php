@@ -47,8 +47,14 @@ class DatabaseSeeder extends Seeder
 
 
         //create test user Login: akowalski@mail.com Password: password
-        $faker = \Faker\Factory::create();
-        $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
+        if(env('FILESYSTEM_DISK') == 'public')
+        {
+            $faker = \Faker\Factory::create();
+            $faker->addProvider(new \Xvladqt\Faker\LoremFlickrProvider($faker));
+            $photo = $faker->image('storage'.public_path('users_photos'), 640, 480, ['face',],false);
+        }else{
+            $photo = fake()->randomElement(['00d1d21857410b973258af77b8ca3ea2.jpg','0a7d529a138bf95efa6ec1b6646b4a5a.jpg','0ba96848fe83a963ff8f27b999c05b8c.jpg','0c4471892f370ec4f4dec96920fe43e9.jpg','0c64ea099fca6f64f1bbb2f398bfebb1.jpg']);
+        }
 
         DB::table('users')->insert([
             'name' => 'Adam',
@@ -61,7 +67,7 @@ class DatabaseSeeder extends Seeder
             'status' => UserStatusEnum::FREE,
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
-            'photo' => $faker->image('storage' . public_path('users_photos'), 640, 480, ['face',], false),
+            'photo' => $photo,
         ]);
 
         $this->call(QualificationSeeder::class);

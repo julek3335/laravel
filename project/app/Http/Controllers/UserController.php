@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\VehicleRentalService;
 use App\Notifications\TestNotification;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -24,9 +25,11 @@ class UserController extends Controller
     public function showCurrentProfile(){
 
         $id = Auth::user()-> id;
+        $user = User::findOrFail($id);
+        $user -> photo = Storage::url('users_photos/'.$user -> photo);
 
         return view('user.show',[
-            'user' => User::findOrFail($id),
+            'user' => $user,
             'reservations' => Reservation::where('user_id' , '=', $id)->get(),
             'entitlements' => Auth::user()-> auth_level,
             'avaibleUsers' => User::all(),
@@ -45,8 +48,11 @@ class UserController extends Controller
         //     $user -> notify(new TestNotification($message));
         // }
 
+        $user = User::findOrFail($id);
+        $user -> photo = Storage::url('users_photos/'.$user -> photo);
+
         return view('user.show',[
-            'user' => User::findOrFail($id),
+            'user' => $user,
             'reservations' => Reservation::where('user_id' , '=', $id)->get(),
             'entitlements' => Auth::user()-> auth_level,
             'avaibleUsers' => User::all(),
@@ -108,7 +114,7 @@ class UserController extends Controller
             ]);
             
             $new_file = $request->file('photo');
-            $file_path = $new_file->store('users_photos', 'public');
+            $file_path = $new_file->store('users_photos');
  
             $photo_value = $request->photo->hashName();
         }

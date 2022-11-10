@@ -17,7 +17,7 @@
                     <div class="card-body box-profile">
                         @if (isset($user->photo))
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/users_photos/'. $user->photo)}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
+                            <img class="profile-user-img img-fluid img-circle" src="{{$user->photo}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
                         </div>
                         @endif
                         <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
