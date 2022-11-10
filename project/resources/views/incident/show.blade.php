@@ -13,7 +13,7 @@
             @include('partials.incident.show')
         </div>
         <div class="col-sm-6">
-            <img src="{{asset('storage/incidents_photos/'. $incident->photo)}}" class="img-fluid p-4">
+            <img src="{{$incident->photo}}" class="img-fluid p-4">
         </div>
         <a href="/incident/edit/{{$incident->id}}">
             <x-adminlte-button label="Edytuj usterke" icon="fas fa-edit" class="float-right mr-2" />
