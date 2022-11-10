@@ -12,7 +12,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "league/flysystem": "^3.10",
+        "league/flysystem": "^3.0",
         "matthewbdaly/laravel-azure-storage": "^2.0",
         "xvladqt/faker-lorem-flickr": "^1.0"
     },
