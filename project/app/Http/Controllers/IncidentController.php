@@ -11,8 +11,10 @@ class IncidentController extends Controller
 {
     public function show($id)
     {
+        $incident = Incident::findOrFail($id);
+        $incident -> photo = Storage::url('incidents_photos/'.$incident -> photo);
         return view('incident.show', [
-            'incident' => $incident = Incident::findOrFail($id),
+            'incident' => $incident,
             'vehicle'  => Vehicle::findOrFail($incident->vehicle_id)
         ]);
     }
