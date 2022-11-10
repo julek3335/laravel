@@ -33,6 +33,13 @@ class VehicleController extends Controller
 
         if(isset($vehicle->photos)){
             $vehicle->photos = json_decode($vehicle->photos);
+            $photos = [];
+            foreach($vehicle->photos as $photo)
+            {
+                $photo = Storage::url('vehicles_photos/'.$photo);
+                $photos[] = $photo;
+            }
+            $vehicle->photos = $photos;
         }else{$vehicle->photos = [];}
        
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
@@ -115,7 +122,16 @@ class VehicleController extends Controller
         ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
-        $vehicle->photos = json_decode($vehicle->photos);
+        if(isset($vehicle->photos)){
+            $vehicle->photos = json_decode($vehicle->photos);
+            $photos = [];
+            foreach($vehicle->photos as $photo)
+            {
+                $photo = Storage::url('vehicles_photos/'.$photo);
+                $photos[] = $photo;
+            }
+            $vehicle->photos = $photos;
+        }else{$vehicle->photos = [];}
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $vehicleTypes = VehicleType::all();

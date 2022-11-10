@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Enums\InsuranceStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -15,13 +16,17 @@ class InsuranceController extends Controller
 {
     public function showNew($id)
     {
-        return view('insurance.showNew', Insurance::findOrFail($id));
+        $insurance = Insurance::findOrFail($id);
+        $insurance -> photo = Storage::url('insurance_photos/'.$insurance -> photo);
+        return view('insurance.showNew', $insurance);
     }
 
     public function show($id)
     {
+        $insurance = Insurance::findOrFail($id);
+        $insurance -> photo = Storage::url('insurance_photos/'.$insurance -> photo);
         return view('insurance.show',[
-            'insurance' => Insurance::findOrFail($id)]);
+            'insurance' => $insurance]);
     }
 
     public function edit($id)
