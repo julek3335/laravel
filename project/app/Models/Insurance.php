@@ -6,10 +6,13 @@ use App\Enums\InsuranceStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Insurance extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = [
         'policy_number',
         'expiration_date',
