@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StartJobRequest;
 use App\Models\Job;
 use App\Models\Vehicle;
 use App\Services\VehicleRentalService;
@@ -19,13 +20,13 @@ class JobController extends Controller
         $this->rentalService = $rentalService;
     }
 
-    public function startJob(Request $request)
+    public function startJob(StartJobRequest $request)
     {
         $jobData = [
-            'start_point' => $request->start_localization??'',
-            'end_point' => $request->end_localization??'',
-            'start_odometer' => $request->start_odometer??null,
-            'start_time' => new \DateTimeImmutable($request->start_time??now()),
+            'start_point' => $request->start_localization,
+            'end_point' => $request->end_localization,
+            'start_odometer' => $request->start_odometer,
+            'start_time' => new \DateTimeImmutable($request->start_time),
         ];
 
         $job = $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id , $jobData);
