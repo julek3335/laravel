@@ -39,4 +39,14 @@ class Job extends Model
     protected $casts = [
         'status' => JobStatusEnum::class
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
