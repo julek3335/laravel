@@ -64,4 +64,9 @@ class VehicleRentalService
         return true;
     }
 
+
+    public function calculateTravelDistance(float $startOdo, float $endOdo): float
+    {
+        return $endOdo - $startOdo;
+    }
 }
