@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Enums\JobStatusEnum;
+use App\Enums\UserStatusEnum;
+use App\Enums\VehicleStatusEnum;
 use App\Models\Job;
 use App\Models\Qualification;
 use App\Models\User;
@@ -43,12 +45,20 @@ class VehicleRentalService
 
     protected function vehicleIsFree(int $id): ?Vehicle
     {
-        return Vehicle::find($id);
+        $car = Vehicle::find($id);
+        if($car->status == VehicleStatusEnum::READY){
+            return $car;
+        }
+        return null;
     }
 
     protected function userIsReady(int $id): ?User
     {
-        return User::find($id);
+        $user = User::find($id);
+        if($user->status == UserStatusEnum::FREE){
+            return $user;
+        }
+        return null;
     }
 
     public function verifyQualification(User $user, Vehicle $vehicle): bool
