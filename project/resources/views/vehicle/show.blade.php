@@ -125,16 +125,10 @@
                         <strong>Status</strong> <a href="#" class="float-right">{{__('status.'.$vehicle->status->name)}}</a>
                     </li>
                     <li class="list-group-item">
-                        <strong>Akcje serwisowe</strong> <a href="#" class="float-right">5</a>
+                        <strong>Usterki</strong> <span class="float-right">{{$incidents_count}}</a>
                     </li>
                     <li class="list-group-item">
-                        <strong>Aktywne zgłoszenia</strong> <a href="#" class="float-right">2</a>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Zarejestrowane trasy</strong> <a href="#" class="float-right">254</a>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>Ilość miejsc stojących</strong> <span class="float-right">{{ $registration_card->standing_places }}</span>
+                        <strong>Zarejestrowane trasy</strong> <span class="float-right">{{$jobs_count}}</span>
                     </li>
                     <li class="list-group-item">
                         <strong>Data utworzenia</strong> <span class="float-right">{{ date('m:H d.m.Y', strtotime($vehicle->created_at)) }}</span>
