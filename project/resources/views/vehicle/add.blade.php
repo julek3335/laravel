@@ -13,13 +13,16 @@
     @csrf
     <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <x-adminlte-input name="name" type="text" label="Nazwa" placeholder="Nazwa" disable-feedback />
                 <x-adminlte-input name="brand" type="text" label="Marka" placeholder="Marka" disable-feedback />
                 <x-adminlte-select-bs name="user_id" label="Opiekun pojazdu" 
                     data-title="Wybierz opiekuna ..." data-live-search
                     data-live-search-placeholder="Wybierz opiekuna ..." data-show-tick>
                     <x-slot name="prependSlot">
+                        <div class="input-group-text bg-gradient-info">
+                            <i class="fas fa-person"></i>
+                        </div>
                     </x-slot>
                     @foreach($users as $user)
                         <option value="{{$user->id}}">{{$user->name}} {{$user->last_name}}</option>
@@ -67,7 +70,9 @@
 
 @section('js')
 <script>
-    $("#addVehicleForm").validate({
+    $(document).ready(function(){
+        //Validate fields
+        $("#addVehicleForm").validate({
             rules: {
                 name: {
                     required: true,
@@ -75,13 +80,16 @@
                 brand: {
                     required: true,
                 },
+                user_id: {
+                    required: true
+                },
                 model: {
                     required: true,
                 },
                 license_plate: {
                     required: true,
                     maxlength: 7,
-                    minlength: 7
+                    minlength: 5
                 },
                 vehicle_identification_number: {
                     required: true,
@@ -128,11 +136,8 @@
                     required: true,
                     number: true,
                 },
-            },
-            highlight: function (element) {
-                $(element).parent().css('color', 'red')
-            },
-            
+            } 
         });
+    })
 </script>
 @stop

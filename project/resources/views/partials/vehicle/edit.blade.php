@@ -11,6 +11,9 @@
                 data-title="Wybierz opiekuna ..." data-live-search
                 data-live-search-placeholder="Wybierz opiekuna ..." data-show-tick>
                 <x-slot name="prependSlot">
+                    <div class="input-group-text bg-gradient-info">
+                        <i class="fas fa-person"></i>
+                    </div>
                 </x-slot>
                 <option value="{{$assignedUser->id}}" selected>{{$assignedUser->name}} {{$assignedUser->last_name}}</option>
                 @foreach($users as $user)
@@ -86,81 +89,79 @@
 </x-adminlte-card>
 @section('js')
     <script>
-        //Set delete photo form after form opened
-        $(".modalDeleteVehiclePhoto").click(function(evt){
-            let storage_url = '{{asset('storage/vehicles_photos')}}';
-            let photo_name = $(this).data("photo");
-            $("#photo_to_delete").attr("src", storage_url + '/' + photo_name);
-            $("#form_delete_photo").attr("action", '/vehicle/{{$vehicle->id}}/delete/photo/' + photo_name)
-        });
+        $(document).ready(function(){
+            //Set delete photo form after form opened
+            $(".modalDeleteVehiclePhoto").click(function(evt){
+                let storage_url = '{{asset('storage/vehicles_photos')}}';
+                let photo_name = $(this).data("photo");
+                $("#photo_to_delete").attr("src", storage_url + '/' + photo_name);
+                $("#form_delete_photo").attr("action", '/vehicle/{{$vehicle->id}}/delete/photo/' + photo_name)
+            });
 
-        //Form validation
-        $("#editVehicleForm").validate({
-            rules: {
-                name: {
-                    required: true,
+            //Form validation
+            $("#editVehicleForm").validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    brand: {
+                        required: true,
+                    },
+                    model: {
+                        required: true,
+                    },
+                    license_plate: {
+                        required: true,
+                        maxlength: 7,
+                        minlength: 5
+                    },
+                    vehicle_identification_number: {
+                        required: true,
+                        maxlength: 17,
+                        minlength: 17
+                    },
+                    selBsVehicle: {
+                        required: true,
+                    },
+                    production_year: {
+                        required: true,
+                        digits: true
+                    },
+                    engine_capacity: {
+                        required: true,
+                        number: true
+                    },
+                    engine_power: {
+                        required: true,
+                        number: true
+                    },
+                    max_axle_load: {
+                        required: true,
+                        number: true
+                    },
+                    max_total_weight: {
+                        required: true,
+                        number: true,
+                        minlength: 3
+                    },
+                    max_towed_load: {
+                        required: true,
+                        number: true,
+                    },
+                    siting_places: {
+                        required: true,
+                        number: true,
+                    },
+                    axle: {
+                        required: true,
+                        number: true,
+                    },
+                    standing_places: {
+                        required: true,
+                        number: true,
+                    },
                 },
-                brand: {
-                    required: true,
-                },
-                model: {
-                    required: true,
-                },
-                license_plate: {
-                    required: true,
-                    maxlength: 7,
-                    minlength: 7
-                },
-                vehicle_identification_number: {
-                    required: true,
-                    maxlength: 17,
-                    minlength: 17
-                },
-                selBsVehicle: {
-                    required: true,
-                },
-                production_year: {
-                    required: true,
-                    digits: true
-                },
-                engine_capacity: {
-                    required: true,
-                    number: true
-                },
-                engine_power: {
-                    required: true,
-                    number: true
-                },
-                max_axle_load: {
-                    required: true,
-                    number: true
-                },
-                max_total_weight: {
-                    required: true,
-                    number: true,
-                    minlength: 3
-                },
-                max_towed_load: {
-                    required: true,
-                    number: true,
-                },
-                siting_places: {
-                    required: true,
-                    number: true,
-                },
-                axle: {
-                    required: true,
-                    number: true,
-                },
-                standing_places: {
-                    required: true,
-                    number: true,
-                },
-            },
-            highlight: function (element) {
-                $(element).parent().css('color', 'red')
-            },
-            
+            });
         });
     </script>
 @stop

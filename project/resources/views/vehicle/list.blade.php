@@ -36,7 +36,7 @@
                         <td>{{ $vehicle->id }}</td>
                         <td>{{ $vehicle->name }}</td>
                         <td>{{ $vehicle->type }}</td>
-                        <td>{{__('status.'.$vehicle->status)}}</td>
+                        <td>{{ $vehicle->status->name }}</td>
                         <td>{{ $vehicle->license_plate }}</td>
                         <td>
                             <a href="/vehicle/edit/{{ $vehicle->id }}">

@@ -55,32 +55,27 @@
 @stop
 @section('js')
 <script>
-    //Set datetime of datetime filed
     $(document).ready(function() {
+        //Set datetime of datetime filed
         $('#date').datetimepicker("defaultDate", new Date());
-    });
 
-    $("#addIncidentForm").validate({
-        rules: {
-            date: {
-                required: true,
-            },
-            address: {
-                required: true,
-            },
-            incident_id: {
-                required: true,
-            },
-            description: {
-                required: true,
-            },
-            // photo: {
-            //     require: true
-            // },
-        },
-        highlight: function(element) {
-            $(element).parent().css('color', 'red')
-        },
+        //Validate fields
+        $("#addIncidentForm").validate({
+            rules: {
+                date: {
+                    required: true,
+                },
+                address: {
+                    required: true,
+                },
+                incident_id: {
+                    required: true,
+                },
+                description: {
+                    required: true,
+                }
+            }
+        });
     });
 </script>
 

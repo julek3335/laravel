@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Użytkownik - ...')
+@section('title', 'Użytkownik')
 
 @section('content_header')
 
@@ -17,7 +17,7 @@
                     <div class="card-body box-profile">
                         @if (isset($user->photo))
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="{{asset('storage/users_photos/'. $user->photo)}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
+                            <img class="profile-user-img img-fluid img-circle" src="{{$user->photo}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
                         </div>
                         @endif
                         <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
@@ -59,14 +59,12 @@
 
                             <!-- edycja -->
                             <div class="tab-pane" id="edit">
-                                @include('partials.user.create_user_form')
+                                @include('partials.user.fields')
                             </div>
 
                             <!-- rezerwacje -->
-                            <div class="tab-pane" id="reservations">
-                                <x-adminlte-card title="Kalendarz rezerwacji" theme="lightblue" theme-mode="outline" collapsible maximizable>
-                                    <div id='calendar'></div>
-                                </x-adminlte-card>
+                            <div class="tab-pane active" id="reservations">
+                                <div id="calendar"></div>
                                 <script>
                                     var reservations = []
                                     @foreach($reservations as $reservation)
@@ -90,7 +88,7 @@
 @stop
 
 @section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')

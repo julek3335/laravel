@@ -33,18 +33,36 @@ class VehicleController extends Controller
 
         if(isset($vehicle->photos)){
             $vehicle->photos = json_decode($vehicle->photos);
+            $photos = [];
+            foreach($vehicle->photos as $photo)
+            {
+                $photo = Storage::url('vehicles_photos/'.$photo);
+                $photos[] = $photo;
+            }
+            $vehicle->photos = $photos;
         }else{$vehicle->photos = [];}
        
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
+
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
+
         $incidents_resolved = Incident::where([
             ['vehicle_id', '=', $vehicle->id],
             ['status', '=', 'resolved']
         ])->get()->sortBy('created_at');
+
         $incidents_others = Incident::where([
             ['vehicle_id', '=', $vehicle->id],
             ['status', '<>', 'resolved']
         ])->get()->sortBy('created_at');
+
+        $incidents_count = Incident::where([
+            ['vehicle_id', '=', $vehicle->id]
+        ])->count();
+
+        $jobs_count = Job::where([
+            ['vehicle_id', '=', $vehicle->id]
+        ])->count();
 
         $insuranceActive = Insurance::where([
             ['vehicle_id', '=', $vehicle->id],
@@ -84,7 +102,9 @@ class VehicleController extends Controller
             'jobs' => $jobs,
             'activeInsuraneOC' => $insuranceActiveOC,
             'insuranceEnds' => $insuranceActiveEndIn7Days,
-            'assignedUser' => $assignedUser 
+            'assignedUser' => $assignedUser, 
+            'incidents_count' => $incidents_count,
+            'jobs_count' => $jobs_count
         ]);
     }
 
@@ -115,7 +135,16 @@ class VehicleController extends Controller
         ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->firstOrFail();
 
-        $vehicle->photos = json_decode($vehicle->photos);
+        if(isset($vehicle->photos)){
+            $vehicle->photos = json_decode($vehicle->photos);
+            $photos = [];
+            foreach($vehicle->photos as $photo)
+            {
+                $photo = Storage::url('vehicles_photos/'.$photo);
+                $photos[] = $photo;
+            }
+            $vehicle->photos = $photos;
+        }else{$vehicle->photos = [];}
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
         $vehicleTypes = VehicleType::all();
@@ -243,14 +272,12 @@ class VehicleController extends Controller
     /*
     ** Show all vehicles and return view
     */
-    public function showAll()
+    public function showAll()//
     {
-        $vehicles = DB::table('vehicles')
-        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
+        $vehicles = Vehicle::select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
         ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->get();
-
         return view('vehicle.list', ['vehicles' => $vehicles]);
     }
 

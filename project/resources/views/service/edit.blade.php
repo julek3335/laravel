@@ -11,7 +11,7 @@
     $config_next_time_filed = ['format' => 'YYYY-MM-DD'];
 @endphp
 
-<form action="/service/edit/{{$service->id}}" method="POST">
+<form id="service-form" action="/service/edit/{{$service->id}}" method="POST">
     @csrf
     @method('PUT')
     <x-adminlte-card title="Dane akcji serwisowej" theme="lightblue" theme-mode="outline" collapsible maximizable>

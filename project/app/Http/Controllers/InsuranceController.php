@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Enums\InsuranceStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -15,13 +16,18 @@ class InsuranceController extends Controller
 {
     public function showNew($id)
     {
-        return view('insurance.showNew', Insurance::findOrFail($id));
+        $insurance = Insurance::findOrFail($id);
+        $insurance -> photo = Storage::url('insurance_photos/'.$insurance -> photo);
+
+        return view('insurance.showNew', $insurance);
     }
 
     public function show($id)
     {
+        $insurance = Insurance::findOrFail($id);
+        $insurance -> photo = Storage::url('insurance_photos/'.$insurance -> photo);
         return view('insurance.show',[
-            'insurance' => Insurance::findOrFail($id)]);
+            'insurance' => $insurance]);
     }
 
     public function edit($id)
@@ -76,9 +82,18 @@ class InsuranceController extends Controller
             $newInsurance->photo = $req->photo->hashName();
         }
 
-        $newInsurance -> save();
-        $id = $newInsurance -> id;
-        return view('insurance.showNew', Insurance::findOrFail($id));
+        try {
+            $newInsurance -> save();
+            $id = $newInsurance -> id;
+            $code = 200;
+            $message = 'Ubezpieczenie zostało dodane';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
+        return view('insurance.showNew', Insurance::findOrFail($id))
+        ->with('return_code', $code)
+        ->with('return_message', $message);
      }
 
     
@@ -108,15 +123,34 @@ class InsuranceController extends Controller
             $updateInsurance->photo = $request->photo->hashName();
         }
 
-        $updateInsurance->update();
-        return redirect('/insurance/' . $updateInsurance->id);
+        try {
+            $updateInsurance->update();
+            $code = 200;
+            $message = 'Ubezpieczenie zostało zaktalizowane';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+            return redirect()->back()
+            ->with('return_code', $code)
+            ->with('return_message', $message);
+        }
+        return redirect('/insurance/' . $updateInsurance->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     public function delete(Request $request)
     {
         if( isset($request->insurance_id)){
-            $insurance = Insurance::find($request->insurance_id);
-            $insurance->delete();
+            try{
+                $insurance = Insurance::find($request->insurance_id);
+                $insurance->delete();
+                $code = 200;
+                $message = 'Ubezpieczenie zostało usunięte';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+            }
         }
         return redirect()->route('showAllInsurances');
     }

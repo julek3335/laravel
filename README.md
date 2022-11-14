@@ -69,10 +69,18 @@ docker exec <laravel container id> <polecenie>
 # np.
 docker exec 544363 php artisan migrate:fresh
 ```
-wejscie w wiersz poleceń w kontenerze:
+Uruchomienie wiersza poleceń w kontenerze:
 ```bash
 docker exec -it <laravel container id> /bin/sh
 bash
+```
+Budowanie styli (na produkcję)
+```bash
+docker exec -it laravel-myapp-1 bash -c "npm run build"
+```
+Budowanie styli podczas developmentu
+```bash
+docker exec -it laravel-myapp-1 bash -c "npm run dev"
 ```
 
 ## Wykorzystane biblioteki

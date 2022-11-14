@@ -11,8 +11,10 @@ class IncidentController extends Controller
 {
     public function show($id)
     {
+        $incident = Incident::findOrFail($id);
+        $incident -> photo = Storage::url('incidents_photos/'.$incident -> photo);
         return view('incident.show', [
-            'incident' => $incident = Incident::findOrFail($id),
+            'incident' => $incident,
             'vehicle'  => Vehicle::findOrFail($incident->vehicle_id)
         ]);
     }
@@ -37,12 +39,26 @@ class IncidentController extends Controller
                 "vehicle_id" => $request->get('vehicle_id'),
             ]);
 
-            $incident->save();
+            try{
+                $incident->save();
+                $code = 200;
+                $message = 'Zdarzenie zostało dodane';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+                return redirect()->back()
+                ->with('return_code', $code)
+                ->with('return_message', $message);
+            }
             
-            return redirect('/incident/' . $incident->id);
+        }else{
+            $code = 500;
+            $message = 'Brak zdjęcia lub złe rozszerzenie';
         }
 
-        echo "Error - probably no photo or wrong photo extension";
+        return redirect('/incident/' . $incident->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     /*
@@ -75,18 +91,41 @@ class IncidentController extends Controller
         $updateIncident->address = $request->input('address');
         $updateIncident->status = $request->input('status');
         $updateIncident->vehicle_id = $request->input('vehicle_id');
-        $updateIncident->update();
 
-        return redirect('/incident/' . $updateIncident->id);
+        try{
+            $updateIncident->update();
+            $code = 200;
+            $message = 'Zdarzenie zostało zaktualizowane';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+            return redirect()->back()
+            ->with('return_code', $code)
+            ->with('return_message', $message);
+        }
+
+        return redirect('/incident/' . $updateIncident->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     public function delete(Request $request)
     {
         if( isset($request->incydent_id)){
+            try{
             $incydent = Incident::find($request->incydent_id);
             $incydent->delete();
-        }
-        return redirect()->route('showAllIncidents');
+            $code = 200;
+            $message = 'Zdarzenie zostało usunięte';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+            }
+        }else{return redirect()->back();}
+        
+        return redirect()->route('showAllIncidents')
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
 }

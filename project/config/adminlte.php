@@ -664,12 +664,12 @@ return [
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => 'vendor/jquery-validation/additional-methods.js',
+                    'location' => 'vendor/jquery-validation/jquery.validate.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => 'vendor/jquery-validation/jquery.validate.js',
+                    'location' => 'vendor/jquery-validation/additional-methods.js',
                 ],
                 [
                     'type' => 'js',
