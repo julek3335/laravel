@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Usterki')
+@section('title', 'Ubezpieczenia')
 
 @section('content_header')
     <h1>Ubezpieczenia pojazdów</h1>

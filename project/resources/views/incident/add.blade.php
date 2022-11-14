@@ -18,7 +18,7 @@
                     @php
                     $config = ['format' => 'DD.MM.YYYY HH:mm'];
                     @endphp
-                    <x-adminlte-input-date name="date" :config="$config" label="Data">
+                    <x-adminlte-input-date name="date" :config="$config" label="Data" required>
                         <x-slot name="appendSlot">
                             <x-adminlte-button icon="fas fa-calendar-day"
                                 title="Data"/>
@@ -53,33 +53,31 @@
 @stop
 @section('js')
     <script>
-        //Set datetime of datetime filed
         $(document).ready(function(){
+            //Set datetime of datetime filed
             $('#date').datetimepicker("defaultDate", new Date());
-        });
 
-        $("#addIncidentForm").validate({
-        rules: {
-            date: {
-                required: true,
-            },
-            address: {
-                required: true,
-            },
-            vehicle_id: {
-                required: true,
-            },
-            description: {
-                required: true,
-            },
-            photo: {
-                require: true
-            },
-        },
-        highlight: function (element) {
-            $(element).parent().css('color', 'red')
-        },
-    });
+            //Validate fields
+            $("#addIncidentForm").validate({
+                rules: {
+                    date: {
+                        required: true,
+                    },
+                    address: {
+                        required: true,
+                    },
+                    vehicle_id: {
+                        required: true,
+                    },
+                    description: {
+                        required: true,
+                    },
+                    photo: {
+                        require: true
+                    },
+                }
+            });
+        });
 </script>
 
 @stop

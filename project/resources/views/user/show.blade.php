@@ -59,7 +59,7 @@
 
                             <!-- edycja -->
                             <div class="tab-pane" id="edit">
-                                @include('partials.user.create_user_form')
+                                @include('partials.user.fields')
                             </div>
 
                             <!-- rezerwacje -->

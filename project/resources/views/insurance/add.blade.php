@@ -17,7 +17,7 @@
                 <x-adminlte-input name="policy_number" type="text" label="Numer ubezpieczenia" placeholder="Numer ubezpieczenia" disable-feedback required />
                 <x-adminlte-input name="expiration_date" type="text" label="Data wygaśnięcia" placeholder="Data wygaśnięcia" disable-feedback required />
                 <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" disable-feedback />
-                <x-adminlte-input name="phone_number" type="number" label="Numer kontaktowy" placeholder="Numer kontaktowy" disable-feedback required />
+                <x-adminlte-input name="phone_number" type="tel" label="Numer kontaktowy" placeholder="Numer kontaktowy" disable-feedback required />
                 <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" disable-feedback required />
                 <x-adminlte-textarea name="description" type="text" label="Opis" placeholder="Opis" disable-feedback required />
                 {{-- <x-adminlte-input name="status" type="text" label="Status" placeholder="Status ubezpieczenia" value="" disable-feedback required /> --}}
@@ -57,41 +57,38 @@
 
 @section('js')
 <script>
-    $("#addInsuranceForm").validate({
-        rules: {
-            policy_number: {
-                required: true,
-                decimal: true,
-            },
-            expiration_date: {
-                required: true,
-            },
-            cost: {
-                required: true,
-                number: true
-            },
-            phone_number: {
-                required: true,
-                decimal: true,
-                maxlength: 9,
-                minlength: 9
-            },
-            insurer_name: {
-                require: true
-            },
-            description: {
-                required: true,
-            },
-            selBsVehicle: {
-                required: true,
-            },
-            license_plate: {
-                required: true,
-            },
-        },
-        highlight: function(element) {
-            $(element).parent().css('color', 'red')
-        },
+    $(document).ready(function(){
+        $("#addInsuranceForm").validate({
+            rules: {
+                policy_number: {
+                    required: true,
+                    decimal: true,
+                },
+                expiration_date: {
+                    required: true,
+                },
+                cost: {
+                    required: true,
+                    number: true
+                },
+                phone_number: {
+                    required: true,
+                    phonePL: true
+                },
+                insurer_name: {
+                    require: true
+                },
+                description: {
+                    required: true,
+                },
+                selBsVehicle: {
+                    required: true,
+                },
+                license_plate: {
+                    required: true,
+                },
+            }
+        });
     });
 </script>
 @stop
