@@ -82,6 +82,7 @@ class ReservationController extends Controller
                 $flag = "valid";
             }else{
                 $flag = "invalid";
+                $message = "Ten pojazd jest zajęty";
             }
         }
 
@@ -93,11 +94,17 @@ class ReservationController extends Controller
             $newReservation -> user_id = $user_id;
             $newReservation -> vehicle_id = $req -> vehicle_id;
             $newReservation -> save();
+            $code = 200;
+            $message = 'Rezervacja została dodana';
             $id = $newReservation -> id;
-            // return redirect('/dashboard/');
+            // return redirect('/dashboard/')        
+                // ->with('return_code', $code)
+                // ->with('return_message', $message);
 
         }else{
-            return("This vehicle is already ocupied in this time period. Please try again");
+            return redirect('/dashboard/')        
+            ->with('return_code', 500)
+            ->with('return_message', $message);
         }
 
      }

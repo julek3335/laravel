@@ -93,9 +93,18 @@ class UserController extends Controller
             $updateUser->photo = $request->photo->hashName();
         }
 
-        $updateUser->update();
+        try {
+            $updateUser->update();
+            $code = 200;
+            $message = 'Użytkownik został zaktalizowany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
 
-        return redirect('/user/' . $updateUser->id);
+        return redirect('/user/' . $updateUser->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     public function showAll(){
@@ -127,9 +136,19 @@ class UserController extends Controller
         $newUser->status = $request->status;
         $newUser->password = Hash::make($request->password);
         $newUser->auth_level = $request -> auth_level;
-        $newUser->save();
 
-        return redirect('/user/' . $newUser->id);
+        try {
+            $newUser->save();
+            $code = 200;
+            $message = 'Użytkownik został dodany';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
+
+        return redirect('/user/' . $newUser->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
 
@@ -142,8 +161,17 @@ class UserController extends Controller
     {
         if( isset($request->user_id)){
             $user = User::find($request->user_id);
-            $user->delete();
+            try {
+                $user->delete();
+                $code = 200;
+                $message = 'Użytkownik został usunięty';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+            }
         }
-        return redirect()->route('showAllUsers');
+        return redirect()->route('showAllUsers')
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 }
