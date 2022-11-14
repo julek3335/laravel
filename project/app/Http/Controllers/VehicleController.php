@@ -43,15 +43,26 @@ class VehicleController extends Controller
         }else{$vehicle->photos = [];}
        
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
+
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
+
         $incidents_resolved = Incident::where([
             ['vehicle_id', '=', $vehicle->id],
             ['status', '=', 'resolved']
         ])->get()->sortBy('created_at');
+
         $incidents_others = Incident::where([
             ['vehicle_id', '=', $vehicle->id],
             ['status', '<>', 'resolved']
         ])->get()->sortBy('created_at');
+
+        $incidents_count = Incident::where([
+            ['vehicle_id', '=', $vehicle->id]
+        ])->count();
+
+        $jobs_count = Job::where([
+            ['vehicle_id', '=', $vehicle->id]
+        ])->count();
 
         $insuranceActive = Insurance::where([
             ['vehicle_id', '=', $vehicle->id],
@@ -91,7 +102,9 @@ class VehicleController extends Controller
             'jobs' => $jobs,
             'activeInsuraneOC' => $insuranceActiveOC,
             'insuranceEnds' => $insuranceActiveEndIn7Days,
-            'assignedUser' => $assignedUser 
+            'assignedUser' => $assignedUser, 
+            'incidents_count' => $incidents_count,
+            'jobs_count' => $jobs_count
         ]);
     }
 
