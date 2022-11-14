@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $insurance->created_at }}</td>
                         <td>{{ __('status.'.$insurance->status->name) }}</td>
-                        <td>{{ $insurance->vehicle_id }}</td>
+                        <td>{{ $insurance->vehicle->license_plate }}</td>
                         <td>
                             <a href="/insurance/edit/{{ $insurance->id }}">
                                 <button type="button" class="btn btn-primary ml-1 mr-1" data-toggle="tooltip" title="Edytuj">

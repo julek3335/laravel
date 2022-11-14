@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use App\Models\Insurance;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Enums\InsuranceStatusEnum;
 use Illuminate\Support\Facades\DB;

@@ -9,10 +9,10 @@
         <strong>Status</strong> <span class="float-right">{{ $job->status->name }}</span>
     </li>
     <li class="list-group-item">
-        <strong>Pojazd</strong> <a href="/vehicles/{{ $job->vehicle_id }}" class="float-right">{{ $job->vehicle_id }}</a>
+        <strong>Pojazd</strong> <a href="/vehicles/{{ $job->vehicle_id }}" class="float-right">{{ $job->vehicle->license_plate }}</a>
     </li>
     <li class="list-group-item">
-        <strong>Użytkownik</strong> <a href="/user/{{ $job->user_id }}" class="float-right">{{ $job->user_id }}</a>
+        <strong>Użytkownik</strong> <a href="/user/{{ $job->user_id }}" class="float-right">{{ $job->user->name }} {{ $job->user->last_name }}</a>
     </li>
     <li class="list-group-item">
         <strong>Dystans</strong> <span class="float-right">{{ $job->distance or '' }}</span>
