@@ -9,5 +9,7 @@ return [
     'ACTIVE' => 'Aktywne',
     'RENTING' => 'Zajęty',
     'in_progress' => 'W trakcie',
-    'resolved' => 'Rozwiązane'
+    'resolved' => 'Rozwiązane',
+    'finished' => 'Zakończone',
+    'in_progress' => "W trakcie",
 ];

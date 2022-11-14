@@ -83,6 +83,44 @@
                 </div>
             </div>
         </div>
+        <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible maximizable >   
+            @php
+            $heads = [
+                'Status',
+                'Numer rejestracyjny',
+                'Dystans',
+                'Data rozpoczęcia',
+                'Data zakończenia',
+                'Opis',
+                'Miejsce rozpoczęcia',
+                'Miejsce zakończenia',
+            ];
+            $dataTableConfig = [
+                'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+                'order' => [[0, 'asc']],
+                'columns' => [null, null, null, null, ['orderable' => false]],
+            ];
+            @endphp
+
+            <div class="card">
+                <div class="card-body">
+                    <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
+                        @foreach ($userJobs as $key=>$userJob)
+                            <tr>
+                                <td>{{ $userJob->status->name }}</td>
+                                <td>{{ $userJob->vehicle->license_plate }}</td>
+                                <td>{{ $userJob->distance }}</td>
+                                <td>{{ $userJob->start_time }}</td>
+                                <td>{{ $userJob->end_time }}</td>
+                                <td>{{ $userJob->description }}</td>
+                                <td>{{ $userJob->start_point }}</td>
+                                <td>{{ $userJob->end_point }}</td>
+                            </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
+                </div>
+            </div>
+        </x-adminlte-card>
     </div>
 </section>
 @stop

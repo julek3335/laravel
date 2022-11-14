@@ -15,7 +15,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <x-adminlte-input name="policy_number" type="text" label="Numer ubezpieczenia" placeholder="Numer ubezpieczenia" disable-feedback required />
-                <x-adminlte-input name="expiration_date" type="text" label="Data wygaśnięcia" placeholder="Data wygaśnięcia" disable-feedback required />
+                @php
+                $config = ['format' => 'DD.MM.YYYY HH:mm'];
+                @endphp
+                <x-adminlte-input-date name="expiration_date" :config="$config" label="Data wygaśnięcia" required>
+                    <x-slot name="appendSlot">
+                        <x-adminlte-button icon="fas fa-calendar-day"
+                            title="Data"/>
+                    </x-slot>
+                </x-adminlte-input-date>
                 <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" disable-feedback />
                 <x-adminlte-input name="phone_number" type="tel" label="Numer kontaktowy" placeholder="Numer kontaktowy" disable-feedback required />
                 <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" disable-feedback required />
