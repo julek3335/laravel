@@ -10,7 +10,6 @@
     {{-- Setup data for datatables --}}
     @php
     $heads = [
-        'ID',
         'Imię',
         'Nazwisko',
         'Mail',
@@ -20,6 +19,8 @@
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+        'columns' => [null, null, null, null, null, ['orderable' => false]],
+
     ];
 
    
@@ -33,7 +34,6 @@
             <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
                 @foreach ($users as $key=>$user)
                     <tr>
-                        <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
