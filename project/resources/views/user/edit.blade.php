@@ -7,11 +7,9 @@
 @stop
 
 @section('content')
-    <!-- edit form -->
-    @include('partials.user.create_user_form')
+    <form id="user_form" action="{{ url('user/edit/'.$user->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @include('partials.user.fields')
+    </form>
 
-@stop
-
-@section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
 @stop

@@ -115,9 +115,6 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 
-    {{-- PWA Scripts --}}
-    @include('partials.pwa.scripts')
-
     {{-- Toasts Scripts --}}
     @include('partials.toasts.toasts')
 </body>

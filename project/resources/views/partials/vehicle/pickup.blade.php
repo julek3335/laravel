@@ -1,5 +1,6 @@
+@section('plugins.Jquery-validation', true)
 <x-adminlte-button label="Podejmij pojazd" icon="fas fa-light fa-plus" data-toggle="modal" data-target="#modalPickupVehicle" id="modalPickupVehicleButton"/>
-<form action="/rent" method="POST">
+<form action="/rent" method="POST" id="pickup_vehicle_form">
     @csrf
     <x-adminlte-modal id="modalPickupVehicle" title="Podjęcie pojazdu" theme="light" icon="fas fa-bolt">
         <x-adminlte-select-bs name="vehicle_id" label="Wybierz pojazd" 
@@ -39,11 +40,38 @@
     </x-adminlte-modal>
 </form>
 @section('js')
-    <script>
+<script>
+    $(document).ready(function(){
         //Set datetime of start date when Button Pickup Vehicle clicked
         $("#modalPickupVehicleButton").click(function(){
             $('#start_time').datetimepicker("defaultDate", new Date());
         });
-    </script>
-    @parent
+        
+        //Validate fields
+        $("#pickup_vehicle_form").validate({
+            rules: {
+                vehicle_id: {
+                    required: true,
+                },
+                start_time: {
+                    required: true,
+                },
+                user_id: {
+                    required: true
+                },
+                start_localization: {
+                    required: true,
+                },
+                end_localization: {
+                    required: true,
+                },
+                start_odometer: {
+                    required: true,
+                    digits: true
+                }
+            } 
+        });
+    })
+</script>
+@parent
 @stop

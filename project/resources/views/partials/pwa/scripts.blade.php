@@ -1,1 +1,0 @@
-<script src="{{ URL::asset('js/pwa/installation.js') }}"></script>

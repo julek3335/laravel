@@ -91,7 +91,3 @@
         </div>
     </div>
 @stop
-
-@section('css')
-
-@stop
