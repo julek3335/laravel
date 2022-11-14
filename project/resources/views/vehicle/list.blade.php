@@ -10,7 +10,6 @@
     {{-- Setup data for datatables --}}
     @php
     $heads = [
-        'ID',
         'Nazwa',
         'Typ',
         'Status',
@@ -20,7 +19,7 @@
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
         'order' => [[0, 'asc']],
-        'columns' => [null, null, null, null, null, ['orderable' => false]],
+        'columns' => [null, null, null, null, ['orderable' => false]],
     ];
 
     @endphp
@@ -33,7 +32,6 @@
             <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
                 @foreach ($vehicles as $key=>$vehicle)
                     <tr>
-                        <td>{{ $vehicle->id }}</td>
                         <td>{{ $vehicle->name }}</td>
                         <td>{{ $vehicle->type }}</td>
                         <td>{{ $vehicle->status->name }}</td>

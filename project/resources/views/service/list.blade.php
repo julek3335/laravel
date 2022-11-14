@@ -10,12 +10,12 @@
     {{-- Setup data for datatables --}}
     @php
     $heads = [
-        'ID',
         'Name',
         ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+        'columns' => [null, ['orderable' => false]],
     ];
     @endphp
 
@@ -27,7 +27,6 @@
             <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
                 @foreach ($services as $key=>$service)
                     <tr>
-                        <td>{{ $service->id }}</td>
                         <td>{{ $service->name }}</td>
                         <td>
                             <a href="/service/edit/{{ $service->id }}">
