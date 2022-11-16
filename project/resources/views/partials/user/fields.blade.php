@@ -1,4 +1,4 @@
-
+@section('plugins.Jquery-validation', true)
 <x-adminlte-card title="Dane użytkownika" theme="lightblue" theme-mode="outline" collapsible maximizable>
     <x-adminlte-input name="name" type="text" label="Imię" placeholder="Imię" value="{{ isset($user->name) ? $user->name : '' }}" disable-feedback required/>
     <x-adminlte-input name="last_name" type="text" label="Nazwisko" placeholder="Nazwisko" value="{{ isset($user->last_name) ? $user->last_name : '' }}" disable-feedback required/>
@@ -42,6 +42,11 @@
         <x-adminlte-input name="password" type="password" label="Hasło" placeholder="Hasło"/>
     @endif
     <x-adminlte-button label="Zapisz" type="submit" theme="success" class="float-right" icon="fas fa-save" />
+    @isset($user)
+    <a href="/user/{{ isset($user) ? $user->id : ''}}">
+        <x-adminlte-button label="Strona użytkownika" icon="fas fa-arrow-left" class="float-right mr-2"/>
+    </a>
+    @endisset
 </x-adminlte-card>
 
 @section('js')
@@ -69,7 +74,9 @@
                     required: true,
                     minlength: 8,
                 },
-                photo: "required",
+                auth_level: {
+                    required: true
+                }
             },
         });
         })

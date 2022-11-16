@@ -15,11 +15,11 @@
             <div class="col-md-3">
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
-                        @if (isset($user->photo))
+                        @isset($user->photo)
                         <div class="text-center">
                             <img class="profile-user-img img-fluid img-circle" src="{{$user->photo}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
                         </div>
-                        @endif
+                        @endisset
                         <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
                         <p class="text-muted text-center">Kierowca</p>
                     </div>
@@ -59,7 +59,10 @@
 
                             <!-- edycja -->
                             <div class="tab-pane" id="edit">
-                                @include('partials.user.fields')
+                                <form id="user_form" action="{{ url('user/edit/'.$user->id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @include('partials.user.fields')
+                                </form>
                             </div>
 
                             <!-- rezerwacje -->
