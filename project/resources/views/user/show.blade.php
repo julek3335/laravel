@@ -15,11 +15,11 @@
             <div class="col-md-3">
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
-                        @if (isset($user->photo))
+                        @isset($user->photo)
                         <div class="text-center">
                             <img class="profile-user-img img-fluid img-circle" src="{{$user->photo}}" alt="Zdjęcie profilowe - {{$user->name}} {{$user->last_name}}">
                         </div>
-                        @endif
+                        @endisset
                         <h3 class="profile-username text-center">{{$user->name}} {{$user->last_name}}</h3>
                         <p class="text-muted text-center">Kierowca</p>
                     </div>
@@ -59,7 +59,10 @@
 
                             <!-- edycja -->
                             <div class="tab-pane" id="edit">
-                                @include('partials.user.fields')
+                                <form id="user_form" action="{{ url('user/edit/'.$user->id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    @include('partials.user.fields')
+                                </form>
                             </div>
 
                             <!-- rezerwacje -->
@@ -83,6 +86,44 @@
                 </div>
             </div>
         </div>
+        <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible maximizable >   
+            @php
+            $heads = [
+                'Status',
+                'Numer rejestracyjny',
+                'Dystans',
+                'Data rozpoczęcia',
+                'Data zakończenia',
+                'Opis',
+                'Miejsce rozpoczęcia',
+                'Miejsce zakończenia',
+            ];
+            $dataTableConfig = [
+                'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+                'order' => [[0, 'asc']],
+                'columns' => [null, null, null, null, ['orderable' => false]],
+            ];
+            @endphp
+
+            <div class="card">
+                <div class="card-body">
+                    <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
+                        @foreach ($userJobs as $key=>$userJob)
+                            <tr>
+                                <td>{{ $userJob->status->name }}</td>
+                                <td>{{ $userJob->vehicle->license_plate }}</td>
+                                <td>{{ $userJob->distance }}</td>
+                                <td>{{ $userJob->start_time }}</td>
+                                <td>{{ $userJob->end_time }}</td>
+                                <td>{{ $userJob->description }}</td>
+                                <td>{{ $userJob->start_point }}</td>
+                                <td>{{ $userJob->end_point }}</td>
+                            </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
+                </div>
+            </div>
+        </x-adminlte-card>
     </div>
 </section>
 @stop

@@ -5,7 +5,15 @@
             <div class="col-sm-12">
                 @csrf
                 <x-adminlte-input name="policy_number" type="number" label="Numer polisy" placeholder="Number polisy" value="{{ $insurance->policy_number }}" disable-feedback required/>
-                <x-adminlte-input name="expiration_date" type="text" label="Data ważności" placeholder="Data ważności" value="{{ $insurance->expiration_date }}" disable-feedback required/>
+                @php
+                $config = ['format' => 'DD.MM.YYYY HH:mm'];
+                @endphp
+                <x-adminlte-input-date name="expiration_date" :config="$config" label="Data wygaśnięcia" value="{{ $insurance->expiration_date }}" disable-feedback required>
+                    <x-slot name="appendSlot">
+                        <x-adminlte-button icon="fas fa-calendar-day"
+                            title="Data"/>
+                    </x-slot>
+                </x-adminlte-input-date>
                 <x-adminlte-input name="insurer_name" type="text" label="Ubezpieczyciel" placeholder="Ubezpieczyciel" value="{{ $insurance->insurer_name }}" disable-feedback required/>
                 <x-adminlte-input name="cost" type="number" label="Koszt" placeholder="Koszt" value="{{ $insurance->cost }}" disable-feedback />
                 <x-adminlte-input name="phone_number" type="tel" label="Numer kontaktowy" placeholder="Numer kontaktowy" value="{{ $insurance->phone_number }}" disable-feedback />

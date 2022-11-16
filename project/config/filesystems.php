@@ -32,14 +32,15 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app/public'),
+            'url' => '/storage',
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').':8000/storage',
+            'url' => '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

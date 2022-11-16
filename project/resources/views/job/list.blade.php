@@ -10,7 +10,6 @@
     {{-- Setup data for datatables --}}
     @php
     $heads = [
-        'ID',
         'Użytkownik',
         'Pojazd',
         'Status',
@@ -20,6 +19,7 @@
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+        'columns' => [null, null, null, null, null, ['orderable' => false]],
     ];
     
     @endphp
@@ -32,10 +32,9 @@
             <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
                 @foreach ($jobs as $key=>$job)
                     <tr>
-                        <td>{{ $job->id }}</td>
-                        <td>{{ $job->user_id }}</td>
-                        <td>{{ $job->vehicle_id }}</td>
-                        <td>{{ $job->status->name }}</td>
+                        <td>{{ $job->user->name }} {{ $job->user->last_name }}</td>
+                        <td>{{ $job->vehicle->license_plate }}</td>
+                        <td>{{ __('status.'.$job->status->name) }}</td>
                         <td>{{ $job->start_time }}</td>
                         <td>{{ $job->end_time }}</td>
                         <td>

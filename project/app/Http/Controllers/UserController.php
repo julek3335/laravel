@@ -26,7 +26,9 @@ class UserController extends Controller
 
         $id = Auth::user()-> id;
         $user = User::findOrFail($id);
-        $user -> photo = Storage::url('users_photos/'.$user -> photo);
+
+        if($user->photo)
+            $user -> photo = Storage::url('users_photos/'.$user -> photo);
 
         return view('user.show',[
             'user' => $user,
@@ -49,7 +51,9 @@ class UserController extends Controller
         // }
 
         $user = User::findOrFail($id);
-        $user -> photo = Storage::url('users_photos/'.$user -> photo);
+
+        if($user->photo)
+            $user -> photo = Storage::url('users_photos/'.$user -> photo);
 
         return view('user.show',[
             'user' => $user,
@@ -74,12 +78,12 @@ class UserController extends Controller
     public function updateUser(Request $request, $id){
 
         $updateUser = User::find($id);
-        $updateUser->name = $request->input('name');
-        $updateUser->last_name = $request->input('last_name');
-        $updateUser->status = $request->input('status');
-        $updateUser->email = $request->input('email');
-        $updateUser->driving_licence_category = $request->input('driving_licence_category');
-        $updateUser -> auth_level = $request -> input('auth_level');
+        $updateUser->name = $request->name;
+        $updateUser->last_name = $request->last_name;
+        $updateUser->status = $request->status;
+        $updateUser->email = $request->email;
+        $updateUser->driving_licence_category = $request->driving_licence_category;
+        $updateUser -> auth_level = $request -> auth_level;
 
         if ($request->hasFile('photo')) {
 
@@ -94,7 +98,7 @@ class UserController extends Controller
         }
 
         try {
-            $updateUser->update();
+            $updateUser->save();
             $code = 200;
             $message = 'Użytkownik został zaktalizowany';
         } catch (\Throwable $th) {

@@ -44,8 +44,6 @@
             </x-adminlte-select-bs>
             <x-adminlte-input name="production_year" type="number" label="Rok produkcji" placeholder="2022"
                 value="{{ $registration_card->production_year }}" disable-feedback/>
-            <!-- <x-adminlte-input name="engine_capacity" type="number" label="Pojemność silnika (cm3)" placeholder="3000"
-                value="{{ $registration_card->engine_capacity }}" disable-feedback/> -->
             <x-adminlte-input name="engine_capacity" type="number" label="Pojemność silnika (cm3)" placeholder="3000"
                 value="{{ $registration_card->engine_capacity }}" disable-feedback/>
             <x-adminlte-input name="engine_power" type="number" label="Moc silnika (KM)" placeholder="70"
@@ -73,7 +71,7 @@
                 <div class="row">
                 @foreach($vehicle->photos as $photo)
                     <div class="col-sm-2">
-                        <img src="{{asset('storage/vehicles_photos/'. $photo)}}" alt="" class="img-fluid"/>
+                        <img src="{{ $photo }}" alt="" class="img-fluid"/>
                         <x-adminlte-button label="Usuń" theme="danger" icon="fas fa-trash" class="mt-2 modalDeleteVehiclePhoto" data-toggle="modal" data-target="#modalDeleteVehiclePhoto" id="modalDeleteVehiclePhoto-{{$photo}}" data-photo="{{$photo}}"/>
                     </div>
                 @endforeach
@@ -92,10 +90,12 @@
         $(document).ready(function(){
             //Set delete photo form after form opened
             $(".modalDeleteVehiclePhoto").click(function(evt){
-                let storage_url = '{{asset('storage/vehicles_photos')}}';
-                let photo_name = $(this).data("photo");
-                $("#photo_to_delete").attr("src", storage_url + '/' + photo_name);
-                $("#form_delete_photo").attr("action", '/vehicle/{{$vehicle->id}}/delete/photo/' + photo_name)
+                let photo_name_url = $(this).data("photo");
+                $("#photo_to_delete").attr("src", photo_name_url);
+
+                let photo_file_name = photo_name_url.replace('/storage/vehicles_photos/', '');
+                console.log(photo_file_name);
+                $("#form_delete_photo").attr("action", '/vehicle/{{$vehicle->id}}/delete/photo/' + photo_file_name)
             });
 
             //Form validation

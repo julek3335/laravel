@@ -79,7 +79,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/user/add', 'store')->middleware(['auth'])->name('dashboard');
     Route::get('/users', 'showAll')->name('showAllUsers');
     Route::get('/user/{id}', 'show')->middleware(['auth'])->name('dashboard');
-    Route::put('/user/edit/{id}', [UserController::class, 'updateUser']);
+    Route::post('/user/edit/{id}', 'updateUser')->middleware(['auth'])->name('dashboard');
     Route::get('/user/edit/{id}', 'userToEdit')->middleware(['auth'])->name('dashboard');
 });
 
