@@ -11,5 +11,4 @@
         @csrf
         @include('partials.user.fields')
     </form>
-
 @stop
