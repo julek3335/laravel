@@ -150,12 +150,12 @@
         </div>
     </x-adminlte-card>
     <x-adminlte-card title="Galeria zdjęć" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
-        {{-- @if(isset($vehicle->photos) && !empty($vehicle->photos))
+        @if(isset($vehicle->photos) && !empty($vehicle->photos))
         <div class="vehicle-gallery">
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    $photo_size = getimagesize( $photo );          
+                    $photo_size = getimagesize( ltrim($photo, '/') );       
                 @endphp
                 <div class="col-sm-4 p-2">
                     <a href="{{$photo}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
@@ -167,7 +167,7 @@
         </div>
         @else
         <p>Brak zdjęć pojazdu</p>
-        @endif --}}
+        @endif
     </x-adminlte-card>
     @section('plugins.Fullcalendar', true)
     <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
