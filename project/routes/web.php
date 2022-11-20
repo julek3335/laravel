@@ -10,6 +10,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Insurance;
+use App\Models\Job;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,6 +121,8 @@ Route::get('/reservation-getvehicle', function () {
 });
 
 Route::post('/reservation-getvehicle', [ReservationController::class, 'showVehicleReservations']);
+
+Route::get('/route',[JobController::class, 'route']);
 
 
 
