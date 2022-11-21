@@ -41,7 +41,9 @@
                         <p class="text-muted">{{__('status.'.$user->status->name)}}</p>
                         <p>
                         <div>
+                        @if($entitlements == 0 || $entitlements == 1)
                             @include('partials.user.deleteUser')
+                        @endif
                         </div>
                     </div>
                 </div>
@@ -50,7 +52,9 @@
                 <div class="card">
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
+                        @if($entitlements == 0 || $entitlements == 1)
                             <li class="nav-item"><a class="nav-link" href="#edit" data-toggle="tab">Edycja</a></li>
+                        @endif
                             <li class="nav-item"><a class="nav-link active" href="#reservations" data-toggle="tab">Rezerwacje</a></li>
                         </ul>
                     </div>
@@ -101,7 +105,7 @@
             $dataTableConfig = [
                 'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
                 'order' => [[0, 'asc']],
-                'columns' => [null, null, null, null, ['orderable' => false]],
+                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
             ];
             @endphp
 

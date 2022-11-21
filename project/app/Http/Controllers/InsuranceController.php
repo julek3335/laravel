@@ -10,7 +10,7 @@ use App\Enums\InsuranceStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class InsuranceController extends Controller
@@ -28,7 +28,9 @@ class InsuranceController extends Controller
         $insurance = Insurance::findOrFail($id);
         $insurance -> photo = Storage::url('insurance_photos/'.$insurance -> photo);
         return view('insurance.show',[
-            'insurance' => $insurance]);
+            'insurance' => $insurance,
+            'entitlements' => Auth::user()-> auth_level,   
+        ]);
     }
 
     public function edit($id)
@@ -47,6 +49,7 @@ class InsuranceController extends Controller
     public function showAll(){
         return view('insurance.list', [
             'insurances' => Insurance::all()->sortBy("created_at"),
+            'entitlements' => Auth::user()-> auth_level, 
         ]);
     }
 

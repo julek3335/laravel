@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Incident;
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class IncidentController extends Controller
@@ -15,7 +16,8 @@ class IncidentController extends Controller
         $incident -> photo = Storage::url('incidents_photos/'.$incident -> photo);
         return view('incident.show', [
             'incident' => $incident,
-            'vehicle'  => Vehicle::findOrFail($incident->vehicle_id)
+            'vehicle'  => Vehicle::findOrFail($incident->vehicle_id),
+            'entitlements' => Auth::user()-> auth_level, 
         ]);
     }
 
@@ -65,7 +67,12 @@ class IncidentController extends Controller
     ** Show all incidents and return view
     */
     public function showAll(){
-        return view('incident.list', ['incidents' => Incident::all()->sortBy("created_at")]);
+        $incidents = Incident::all()->sortBy("created_at");
+        $incidents->load(['vehicle']);
+        return view('incident.list', [
+            'incidents' => $incidents,
+            'entitlements' => Auth::user()-> auth_level, 
+        ]);
     }
 
     public function prepareAdd(){
