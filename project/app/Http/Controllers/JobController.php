@@ -44,7 +44,20 @@ class JobController extends Controller
 
         $job = $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id, $jobData);
 
-        return redirect('/jobs/' . $job->id);
+        if ($job !== null) {
+            $code = 200;
+            $message = 'Trasa została rozpoczęta';
+            return redirect('/jobs/' . $job->id)
+                ->with('return_code', $code)
+                ->with('return_message', $message);
+        } else {
+            $code = 400;
+            $message = 'Nie udało się rozpocząć trasy';
+            return redirect('/jobs' )
+                ->with('return_code', $code)
+                ->with('return_message', $message);
+        }
+
     }
 
     public function endJob(EndJobRequest $request)
@@ -57,7 +70,7 @@ class JobController extends Controller
         $job->end_point = $request->end_localization;
         $job->description = $request->description;
         $job->distance = $this->rentalService->calculateTravelDistance($job->start_odometer, $job->end_odometer);
-        
+
         try {
             $job->save();
             $code = 200;
@@ -113,7 +126,7 @@ class JobController extends Controller
             $track->name = "route_file".$id;
             $track->type = 'RUN';
             $track->source = "iPojazd.pl";
- 
+
             $track->recalculateStats();
             // Add track to file
             $gpx_file->tracks[] = $track;
@@ -135,7 +148,7 @@ class JobController extends Controller
 
             return Storage::url('routes_files/'.$job -> route_file);
         }
-        
+
 
         ///if file allready exists
 
