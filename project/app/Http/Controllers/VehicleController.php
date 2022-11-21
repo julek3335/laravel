@@ -117,7 +117,8 @@ class VehicleController extends Controller
         
         return view('vehicle.add', [
             'vehicle_types' => $vehicleTypes,
-            'users' => User::all()
+            'users' => User::all(),
+            'entitlements' => Auth::user()-> auth_level, 
         ]);
     }
 
@@ -278,7 +279,10 @@ class VehicleController extends Controller
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
         ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
         ->get();
-        return view('vehicle.list', ['vehicles' => $vehicles]);
+        return view('vehicle.list', [
+            'vehicles' => $vehicles,
+            'entitlements' => Auth::user()-> auth_level, 
+        ]);
     }
 
     /*

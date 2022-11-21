@@ -58,6 +58,7 @@
                 </div>
             </div>
         </div>
+        @if($entitlements == 0 || $entitlements == 1)
         <div class="row mt-2">
             <div clas="col-sm-12">
                 <div class="float-left m-1">
@@ -67,6 +68,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </x-adminlte-card>
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         <div class="row">
@@ -220,10 +222,12 @@
                                 <img src="{{asset('storage/insurance_photos/'. $insurance->photo)}}" class="img-fluid p-4">
                             </ul>
                         </div>
-                        @include('partials.insurance.delete')
-                        <a href="/insurance/edit/{{$insurance->id}}">
-                            <x-adminlte-button label="Edytuj ubezpieczenie" icon="fas fa-edit" class="float-right mr-2"/>
-                        </a>
+                        @if($entitlements == 0 || $entitlements == 1)
+                            @include('partials.insurance.delete')
+                            <a href="/insurance/edit/{{$insurance->id}}">
+                                <x-adminlte-button label="Edytuj ubezpieczenie" icon="fas fa-edit" class="float-right mr-2"/>
+                            </a>
+                        @endif
                     </div>
                 @endif
             @endforeach

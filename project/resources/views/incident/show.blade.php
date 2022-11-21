@@ -15,10 +15,12 @@
         <div class="col-sm-6">
             <img src="{{$incident->photo}}" class="img-fluid p-4">
         </div>
-        <a href="/incident/edit/{{$incident->id}}">
-            <x-adminlte-button label="Edytuj usterke" icon="fas fa-edit" class="float-right mr-2" />
-        </a>
-        @include('partials.incident.delete')
+        @if($entitlements == 0 || $entitlements == 1)
+            <a href="/incident/edit/{{$incident->id}}">
+                <x-adminlte-button label="Edytuj usterke" icon="fas fa-edit" class="float-right mr-2" />
+            </a>
+            @include('partials.incident.delete')
+        @endif
     </div>
 </x-adminlte-card>
 @stop

@@ -23,25 +23,24 @@
         </div>
 
         <div id="secondSection" style="display: none;">
-            <p><strong>Wybierz pojazd</strong></p>
-            <select name="vehicle_id" id="selectList" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-            </select>
-
+            <div style="margin-bottom: 20px;">
+                <p><strong>Wybierz pojazd</strong></p>
+                <select name="vehicle_id" id="selectList" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                </select>
+            </div>
             <!-- pokaz możliwość wyboru pracownika tylko dla Administratora albo edytora -->
             @if($entitlements == 0 || $entitlements == 1)
-            <x-adminlte-select-bs name="user_id" label="Wybierz pracownika" data-title="Wybierz pojazd ..." data-live-search data-live-search-placeholder="Wybierz pojazd ..." data-show-tick>
-                <x-slot name="prependSlot">
-                    <div class="input-group-text bg-gradient-info">
-                        <i class="fas fa-car-side"></i>
-                    </div>
-                </x-slot>
-                @if (isset($avaibleUsers))
-                @foreach ($avaibleUsers as $user)
-                <option value="{{ $user->id }}" data-icon="fa fa-fw fa-car">{{ $user->name }} {{$user->last_name}}</option>
-                @endforeach
-                <option data-icon="fa fa-fw fa-car">Żaden pracownik nie jest dostępny</option>
-                @endif
-            </x-adminlte-select-bs>
+            <div style="margin-bottom: 20px;">
+                <p><strong>Wybierz pracownika</strong></p>
+                <select name="user_id" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                    @if (isset($avaibleUsers))
+                    @foreach ($avaibleUsers as $user)
+                    <option value="{{ $user->id }}" data-icon="fa fa-fw fa-car">{{ $user->name }} {{$user->last_name}}</option>
+                    @endforeach
+                    <option data-icon="fa fa-fw fa-car">Żaden pracownik nie jest dostępny</option>
+                    @endif
+                </select>
+            </div>
             @endif
 
             <x-adminlte-button id="submitButton" type="submit" label="Zarezerwuj pojazd" theme="success" class="mr-auto" icon="fas fa-arrow-alt-circle-right" />
@@ -65,11 +64,11 @@
 
     $(document).ready(function() {
         $('#submitDate').click(function() {
-            
+
             var date_start = $('start_date').val()
             var date_end = $('start_date').val()
 
-            if(!$('#startDate').val() || !$('#endDate').val()){
+            if (!$('#startDate').val() || !$('#endDate').val()) {
                 alert('Prosimy uzupełnić obydwie daty')
                 return
             }
