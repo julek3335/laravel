@@ -86,25 +86,24 @@ class ReservationController extends Controller
             }
         }
 
-        if ($flag == "valid")
-        {
+        if ($flag == "valid") {
             $newReservation = new Reservation;
-            $newReservation -> start_date = $req -> start_date;
-            $newReservation -> end_date = $req -> end_date;
-            $newReservation -> user_id = $user_id;
-            $newReservation -> vehicle_id = $req -> vehicle_id;
-            $newReservation -> save();
+            $newReservation->start_date = $req->start_date;
+            $newReservation->end_date = $req->end_date;
+            $newReservation->user_id = $user_id;
+            $newReservation->vehicle_id = $req->vehicle_id;
+            $newReservation->save();
             $code = 200;
             $message = 'Rezervacja została dodana';
-            $id = $newReservation -> id;
-            // return redirect('/dashboard/')        
-                // ->with('return_code', $code)
-                // ->with('return_message', $message);
+            $id = $newReservation->id;
 
-        }else{
-            return redirect('/dashboard/')        
-            ->with('return_code', 500)
-            ->with('return_message', $message);
+            return redirect()->route('all-reservations-calendar')
+                ->with('return_code', $code)
+                ->with('return_message', $message);
+        } else {
+            return redirect('/dashboard/')
+                ->with('return_code', 500)
+                ->with('return_message', $message);
         }
 
      }

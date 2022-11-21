@@ -2,7 +2,7 @@
 
 <form id="formReservation" action="/reservation-create" method="POST" enctype="multipart/form-data">
     @csrf
-    @method('PUT')
+    @method('POST')
     <x-adminlte-modal id="modalReservationVehicle" title="Rezerwacja pojazdu" theme="light" icon="fas fa-bolt">
         @php
         $config = ['format' => 'YYYY.MM.DD'];
