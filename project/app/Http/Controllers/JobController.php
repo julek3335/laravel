@@ -54,9 +54,22 @@ class JobController extends Controller
         $job->status = JobStatusEnum::FINISHED;
         $job->end_time = new \DateTimeImmutable($request->end_time);
         $job->end_odometer = $request->end_odometer;
+        $job->end_point = $request->end_localization;
         $job->description = $request->description;
         $job->distance = $this->rentalService->calculateTravelDistance($job->start_odometer, $job->end_odometer);
-        $job->save();
+        
+        try {
+            $job->save();
+            $code = 200;
+            $message = 'Trasa została zakończona';
+        } catch (\Throwable $th) {
+            $code = 400;
+            $message = $th->getMessage();
+        }
+
+        return redirect('/jobs/' . $job->id)
+        ->with('return_code', $code)
+        ->with('return_message', $message);
     }
 
     public function listVehicleJobs(Request $request)

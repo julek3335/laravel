@@ -8,11 +8,13 @@
 
 @section('content')
     <x-adminlte-card title="Trasa" theme="lightblue" theme-mode="outline" collapsible maximizable>
+    @if($job->status->value != 'finished')
         <div class="row">
             <div class="col-sm-12">
                 @include('partials.job.end')
             </div>
         </div>
+    @endif
         <div class="row">
             <div class="col-sm-12">
                 @include('partials.job.show')

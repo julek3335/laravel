@@ -155,7 +155,7 @@
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    $photo_size = getimagesize( ltrim($photo, '/') );       
+                    $photo_size = getimagesize( ltrim($photo, '/') );     
                 @endphp
                 <div class="col-sm-4 p-2">
                     <a href="{{$photo}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
