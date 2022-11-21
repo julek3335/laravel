@@ -12,21 +12,21 @@ use App\Models\Vehicle;
 
 class VehicleRentalService
 {
-    public function rentVehicle(int $vehicleId, int $userId, array $jobData)
+    public function rentVehicle(int $vehicleId, int $userId, array $jobData): ?Job
     {
         $vehicle = $this->vehicleIsFree($vehicleId);
         if (is_null($vehicle)) {
-            return;
+            return null;
         }
 
 
         $user = $this->userIsReady($userId);
         if (is_null($user)) {
-            return;
+            return null;
         }
 
         if (! $this->verifyQualification($user, $vehicle)) {
-            return;
+            return null;
         }
 
         $job = Job::create(
