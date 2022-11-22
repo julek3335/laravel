@@ -11,6 +11,10 @@
 
 <form id="user_form" action="/user/add" method="POST" enctype="multipart/form-data">
     @csrf
-    @include('partials.user.fields')
+    @if($entitlements == 0 || $entitlements == 1)
+        @include('partials.user.fields')
+    @else
+        <p>Nie posiadasz uprawnień do tworzenia użytkownika</p>
+    @endif
 </form>
 @stop

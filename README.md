@@ -4,6 +4,13 @@ projekt składa się z:
 - bazy danych mariadb port 3306
 - adminera port 8080
 
+## Instrukcja uruchomienia przy pomocy skryptu PowerShell
+```PowerShell
+curl https://raw.githubusercontent.com/julek3335/laravel/develop/autorun.ps1 -O autorun.ps1
+
+.\autorun.ps1
+```
+
 ## Instrukcja uruchomienia po raz pierwszy
 ### Linux
 ```bash

@@ -40,7 +40,9 @@
                 <img src="{{asset($insurance -> photo)}}" class="img-fluid p-4">
             </div>
             <div class="row mt-4">
+            @if($entitlements == 0 || $entitlements == 1)
                 @include('partials.insurance.delete')
+            @endif
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@
 
 <form id="addVehicleForm" action="/vehicle/add" method="POST" enctype="multipart/form-data">
     @csrf
+    @if($entitlements == 0 || $entitlements == 1)
     <x-adminlte-card title="Dane pojazdu" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-12">
@@ -61,6 +62,9 @@
             </div>
         </div>
     </x-adminlte-card>
+    @else
+        <p>Nie posiadasz uprawnień do tworzenia pojazdów</p>
+    @endif
 </form>
 @stop
 

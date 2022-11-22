@@ -10,6 +10,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\InsuranceController;
 use App\Http\Controllers\ServiceController;
 use App\Models\Insurance;
+use App\Models\Job;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ Route::controller(VehicleController::class)->group(function () {
 Route::controller(JobController::class)->group(function () {
     Route::post('/rent', 'startJob')->middleware(['auth'])->name('dashboard');
     Route::get('/jobs/{id}', 'show')->middleware(['auth'])->name('dashboard');
-    Route::get('/jobs/{job_id}/end', 'endJob')->middleware(['auth'])->whereNumber('job_id');
+    Route::post('/jobs/{job_id}/end', 'endJob')->middleware(['auth'])->whereNumber('job_id');
     Route::get('/jobs', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/jobs/vehicle', 'listVehicleJobs')->name('dashboard');
 //    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
@@ -87,7 +88,7 @@ Route::controller(ReservationController::class)->group(function () {
     Route::get('/reservation/available-cars', 'getAvailableCars')->middleware(['auth']);
     Route::post('/reservation-create', [ReservationController::class, 'created']);
     Route::get('/reservations', 'showAll')->middleware(['auth'])->name('dashboard');
-    Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('dashboard');
+    Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('all-reservations-calendar');
 });
 
 Route::controller(ServiceController::class)->group(function () {
@@ -120,6 +121,8 @@ Route::get('/reservation-getvehicle', function () {
 });
 
 Route::post('/reservation-getvehicle', [ReservationController::class, 'showVehicleReservations']);
+
+Route::get('/route',[JobController::class, 'route']);
 
 
 

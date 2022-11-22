@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.7",
         "league/flysystem": "^3.0",
         "matthewbdaly/laravel-azure-storage": "^2.0",
+        "sibyx/phpgpx": "@RC",
         "xvladqt/faker-lorem-flickr": "^1.0"
     },
     "require-dev": {

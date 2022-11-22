@@ -58,6 +58,7 @@
                 </div>
             </div>
         </div>
+        @if($entitlements == 0 || $entitlements == 1)
         <div class="row mt-2">
             <div clas="col-sm-12">
                 <div class="float-left m-1">
@@ -67,6 +68,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </x-adminlte-card>
     <x-adminlte-card title="Informacje o pojeździe" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         <div class="row">
@@ -155,7 +157,7 @@
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    $photo_size = getimagesize( ltrim($photo, '/') );       
+                    $photo_size = getimagesize( ltrim($photo, '/') );     
                 @endphp
                 <div class="col-sm-4 p-2">
                     <a href="{{$photo}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
@@ -220,10 +222,12 @@
                                 <img src="{{asset('storage/insurance_photos/'. $insurance->photo)}}" class="img-fluid p-4">
                             </ul>
                         </div>
-                        @include('partials.insurance.delete')
-                        <a href="/insurance/edit/{{$insurance->id}}">
-                            <x-adminlte-button label="Edytuj ubezpieczenie" icon="fas fa-edit" class="float-right mr-2"/>
-                        </a>
+                        @if($entitlements == 0 || $entitlements == 1)
+                            @include('partials.insurance.delete')
+                            <a href="/insurance/edit/{{$insurance->id}}">
+                                <x-adminlte-button label="Edytuj ubezpieczenie" icon="fas fa-edit" class="float-right mr-2"/>
+                            </a>
+                        @endif
                     </div>
                 @endif
             @endforeach
@@ -290,6 +294,44 @@
             </div>
         </div>
         @endif
+    </x-adminlte-card>
+    <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable >   
+            @php
+            $heads = [
+                'Status',
+                'Numer rejestracyjny',
+                'Dystans',
+                'Data rozpoczęcia',
+                'Data zakończenia',
+                'Opis',
+                'Miejsce rozpoczęcia',
+                'Miejsce zakończenia',
+            ];
+            $dataTableConfig = [
+                'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+                'order' => [[0, 'asc']],
+                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+            ];
+            @endphp
+
+            <div class="card">
+                <div class="card-body">
+                    <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
+                        @foreach ($jobs as $key=>$jobs)
+                            <tr>
+                                <td>{{ $jobs->status->name }}</td>
+                                <td>{{ $jobs->vehicle->license_plate }}</td>
+                                <td>{{ $jobs->distance }}</td>
+                                <td>{{ $jobs->start_time }}</td>
+                                <td>{{ $jobs->end_time }}</td>
+                                <td>{{ $jobs->description }}</td>
+                                <td>{{ $jobs->start_point }}</td>
+                                <td>{{ $jobs->end_point }}</td>
+                            </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
+                </div>
+            </div>
     </x-adminlte-card>
     <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="timeline">

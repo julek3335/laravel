@@ -8,7 +8,7 @@ return [
     'INACTIVE' => 'Nieaktywne',
     'ACTIVE' => 'Aktywne',
     'RENTING' => 'Zajęty',
-    'in_progress' => 'W trakcie',
+    'IN_PROGRESS' => 'W trakcie',
     'resolved' => 'Rozwiązane',
     'finished' => 'Zakończone',
     'in_progress' => "W trakcie",
