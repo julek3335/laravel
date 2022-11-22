@@ -6,7 +6,7 @@ projekt składa się z:
 
 ## Instrukcja uruchomienia przy pomocy skryptu PowerShell
 ```PowerShell
-curl https://raw.githubusercontent.com/julek3335/laravel/PI-81-zrobienie-skryptu-uruchamiajacego-komendy/autorun.ps1 -O autorun.ps1
+curl https://raw.githubusercontent.com/julek3335/laravel/develop/autorun.ps1 -O autorun.ps1
 
 .\autorun.ps1
 ```
