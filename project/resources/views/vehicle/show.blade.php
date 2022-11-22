@@ -295,6 +295,44 @@
         </div>
         @endif
     </x-adminlte-card>
+    <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable >   
+            @php
+            $heads = [
+                'Status',
+                'Numer rejestracyjny',
+                'Dystans',
+                'Data rozpoczęcia',
+                'Data zakończenia',
+                'Opis',
+                'Miejsce rozpoczęcia',
+                'Miejsce zakończenia',
+            ];
+            $dataTableConfig = [
+                'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
+                'order' => [[0, 'asc']],
+                'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
+            ];
+            @endphp
+
+            <div class="card">
+                <div class="card-body">
+                    <x-adminlte-datatable id="table1" :heads="$heads" :config="$dataTableConfig" striped hoverable with-buttons>
+                        @foreach ($jobs as $key=>$jobs)
+                            <tr>
+                                <td>{{ $jobs->status->name }}</td>
+                                <td>{{ $jobs->vehicle->license_plate }}</td>
+                                <td>{{ $jobs->distance }}</td>
+                                <td>{{ $jobs->start_time }}</td>
+                                <td>{{ $jobs->end_time }}</td>
+                                <td>{{ $jobs->description }}</td>
+                                <td>{{ $jobs->start_point }}</td>
+                                <td>{{ $jobs->end_point }}</td>
+                            </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
+                </div>
+            </div>
+    </x-adminlte-card>
     <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         <div class="timeline">
             <div class="time-label">
