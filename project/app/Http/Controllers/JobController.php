@@ -94,6 +94,10 @@ class JobController extends Controller
     {
         /** @var Job $job */
         $job = Job::findOrFail($id);
+
+        if($job->route_file)
+            $job->route_file = Storage::url('routes_files/'.$job->route_file);
+
         $job->load(['user', 'vehicle']);
         return view('job.show', ['job' => $job]);
     }
@@ -163,7 +167,7 @@ class JobController extends Controller
 
         // create new segment
         $segment = new Segment();
-
+        
 
         foreach ($gpx_data as $gpx_point)
         {
