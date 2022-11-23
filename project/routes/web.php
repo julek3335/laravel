@@ -46,6 +46,8 @@ Route::controller(JobController::class)->group(function () {
     Route::post('/jobs/{job_id}/end', 'endJob')->middleware(['auth'])->whereNumber('job_id');
     Route::get('/jobs', 'showAll')->middleware(['auth'])->name('dashboard');
     Route::get('/jobs/vehicle', 'listVehicleJobs')->name('dashboard');
+    Route::post('/route/{id}', 'route')->middleware(['auth'])->whereNumber('id');
+
 //    Route::get('/rent/{vehicleId}/{userId}', 'startJob')->name('dashboard');;
 });
 Route::get('/example-car', function () {
@@ -121,9 +123,5 @@ Route::get('/reservation-getvehicle', function () {
 });
 
 Route::post('/reservation-getvehicle', [ReservationController::class, 'showVehicleReservations']);
-
-Route::get('/route',[JobController::class, 'route']);
-
-
 
 require __DIR__.'/auth.php';
