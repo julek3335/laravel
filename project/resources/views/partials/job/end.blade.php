@@ -1,5 +1,5 @@
 @section('plugins.Jquery-validation', true)
-<x-adminlte-button label="Zakończ trasę" icon="fas fa-forward-step" data-toggle="modal" data-target="#modalEndJobId{{$job->id}}" id="modalEndJobButtonId{{$job->id}}"/>
+<x-adminlte-button label="Zakończ trasę" icon="fas fa-forward-step" data-toggle="modal" class="modalEndJobButton" data-target="#modalEndJobId{{$job->id}}" id="modalEndJobButtonId{{$job->id}}"/>
 <form id="job_end_form" action="/jobs/{{$job->id}}/end" method="POST">
     @csrf
     <x-adminlte-modal id="modalEndJobId{{$job->id}}" title="Zakończenie trasy" theme="light" icon="fas fa-bolt">
@@ -33,9 +33,6 @@
         $("#job_end_form").validate({
             rules: {
                 end_time: {
-                    required: true,
-                },
-                description: {
                     required: true,
                 },
                 end_odometer: {

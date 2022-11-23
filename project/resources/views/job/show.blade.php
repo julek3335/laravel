@@ -63,17 +63,21 @@
         marker.bindPopup("<center><strong>Pojazd pierwszy</strong><br>Jan Kowalski</center>").openPopup();
         */
 
-        let drawMap = function(gpxURL){
-            new L.GPX(gpxURL, {
-                async: true,
-                marker_options: {
-                    startIconUrl: '/vendor/leaflet-gpx/img/pin-icon-start.png',
-                    endIconUrl: '/vendor/leaflet-gpx/img/pin-icon-end.png',
-                    shadowUrl: '/vendor/leaflet-gpx/img/pin-shadow.png'
-                }
-            }).on('loaded', function(e) {
-                map.fitBounds(e.target.getBounds());
-            }).addTo(map);
+        function drawMap(){
+            let routeFileName = '{{$job->route_file}}';
+            if(routeFileName){
+                let gpxURL = '{{  url('') }}' + routeFileName;
+                let gpx = new L.GPX(gpxURL, {
+                    async: true,
+                    marker_options: {
+                        startIconUrl: '/vendor/leaflet-gpx/img/pin-icon-start.png',
+                        endIconUrl: '/vendor/leaflet-gpx/img/pin-icon-end.png',
+                        shadowUrl: '/vendor/leaflet-gpx/img/pin-shadow.png'
+                    }
+                }).on('loaded', function(e) {
+                    map.fitBounds(e.target.getBounds());
+                }).addTo(map);
+            }
         }
     
     @if($job->status->value == 'in_progress')
@@ -89,10 +93,18 @@
             }, 5000);
 
             setInterval(() => {
-                saveCordsToDB();
+                if(cordsForRequest.length > 10)
+                    saveCordsToDB();   
             }, 15000);
+
         };
 
+        drawMap();
+
+        //On end job click button save existing cords to DB
+        $('.modalEndJobButton').click(function(){
+            saveCordsToDB();
+        });
 
         var marker, circle, lat, long, accuracy;
 
@@ -100,41 +112,39 @@
 
         let last_cords; 
 
+        let IsMapDrowedFlag = false;
+        
         function getPosition(position) {
             lat = position.coords.latitude
             long = position.coords.longitude
             accuracy = position.coords.accuracy
-            
+            timestamp = position.coords.timestamp
 
-            if(cordsForRequest.length > 0)
+            if(cordsForRequest.length > 0 )
             {
 
                 if(last_cords.latitude != lat || last_cords.longitude != long)
                 {
                     cordsForRequest.push({
                         'elevation': null,
-                        'time': 'new Date()',
+                        'time': new Date(),
                         'latitude': lat,
                         'longitude': long
                     });
 
                     last_cords = cordsForRequest.at(-1);
                 }
-            }else{
+            }else if(last_cords == undefined){ //First cords on begining
 
-                console.log("Pierwszy zapis")
-                //First cords on begining
                 cordsForRequest.push({
                     'elevation': null,
-                    'time': 'new Date()',
+                    'time': new Date(),
                     'latitude': lat,
                     'longitude': long
                 });
 
                 last_cords = cordsForRequest.at();
             }
-
-            console.log(cordsForRequest);
 
             if (marker) {
                 map.removeLayer(marker)
@@ -154,46 +164,50 @@
 
         function saveCordsToDB(){
             //Send save request to db and render map
-            if(cordsForRequest.length > 10){
-                $(document).ready(function() {
-                    
-                    last_cords = cordsForRequest.at(-1);
+            $(document).ready(function() {
+                
+                last_cords = cordsForRequest.at(-1);
 
-                    $.ajax({
-                        url: '/route/{{$job->id}}',
-                        dataType: "json",
-                        method: 'POST',
-                        data: { 
-                            "gpx_data": cordsForRequest
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(gpxURL) {
+                $.ajax({
+                    url: '/route/{{$job->id}}',
+                    dataType: "json",
+                    method: 'POST',
+                    data: { 
+                        "gpx_data": cordsForRequest
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(gpxURL) {
 
-                            cordsForRequest = [];
-                            //Draw line
-                            drawMap(gpxURL);
-                        },
-                        error:function (xhr, ajaxOptions, thrownError){
-                            if(xhr.status != 200){
-                                alert('Błąd, status: ' + xhr.status);
-                                console.log(xhr.statusText);
-                                console.log(xhr.responseText);
-                            }
+                        cordsForRequest = [];
+                        //Draw line
+                        if(!IsMapDrowedFlag){
+                            drawMap();
+                            IsMapDrowedFlag = true;
                         }
-                    }).done(function( msg ) {
-                        alert( "Data Saved: " + msg );
-                    });
-
-                    cordsForRequest = [];
+                        
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        if(xhr.status != 200){
+                            alert('Błąd, status: ' + xhr.status);
+                            console.log(xhr.statusText);
+                            console.log(xhr.responseText);
+                        }
+                    }
                 });
-            }
 
+                cordsForRequest = [];
+            });
         }
+
     @elseif($job->status->value == 'finished')
-        var gpxURL = '{{  url('') . $job->route_file }}';
-        drawMap(gpxURL);
+
+        let routeFileName = '{{$job->route_file}}'; 
+        if(routeFileName){
+            drawMap();
+        }
+        
     @endif
 
     </script>
