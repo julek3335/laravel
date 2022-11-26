@@ -171,11 +171,10 @@
         <p>Brak zdjęć pojazdu</p>
         @endif
     </x-adminlte-card>
-    @section('plugins.Fullcalendar', true)
-    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
+    <!-- @section('plugins.Fullcalendar', true) -->
+    <!-- <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         <div id='calendar'></div>
-    </x-adminlte-card>
-    <script>
+        <script>
         var events = []
         @foreach ($reservations as $reservation)
             events.push({
@@ -187,6 +186,8 @@
             });
         @endforeach
     </script>
+    </x-adminlte-card> -->
+   
     <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         @if($activeInsurance)
             @foreach($activeInsurance as $insurance)
@@ -333,43 +334,24 @@
                 </div>
             </div>
     </x-adminlte-card>
-    <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
-        <div class="timeline">
-            <div class="time-label">
-                <span class="bg-blue">{{ date('d.m.Y', strtotime($vehicle->updated_at)) }}</span>
-            </div>
 
-            <div>
-                <i class="fas fa-save bg-yellow"></i>
-                <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($vehicle->updated_at)) }}</span>
-                    <h3 class="timeline-header"><a href="#">Aktualizacja</a></h3>
-                    <div class="timeline-body">
-                        Aktualizacja danych.
-                    </div>
-                </div>
-            </div>
+<div>
+    <h2>Kalendarz rezerwacji</h2>
+    <div id='calendar'></div>
+        <script>
+        var events = []
+        @foreach ($reservations as $reservation)
+            events.push({
+                title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
+                start: "{{$reservation->start_date}}", 
+                end: "{{$reservation->end_date}}",
+                backgroundColor: '#f39c12', //yellow
+                borderColor    : '#f39c12' //yellow
+            });
+        @endforeach
+    </script>
+</div>
 
-            <div class="time-label">
-                <span class="bg-green">{{ date('d.m.Y', strtotime($vehicle->created_at)) }}</span>
-            </div>
-
-            <div>
-                <i class="fa fa-car bg-yellow"></i>
-                <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($vehicle->created_at)) }}</span>
-                    <h3 class="timeline-header"><a href="#">Utworzenie pojazdu</a></h3>
-                    <div class="timeline-body">
-                        <p>Pojazd został stworzony</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <i class="fas fa-clock bg-gray"></i>
-            </div>
-        </div><!-- .timeline -->
-    </x-adminlte-card>
 @stop
 
 @section('css')
