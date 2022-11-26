@@ -18,7 +18,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Czy na pewno chcesz usunąć incydent: <br> <strong>{{ $incident->id }}</strong></p>
+                    <p>Czy na pewno chcesz usunąć incydent:</p>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-outline-light" data-dismiss="modal">Anuluj</button>

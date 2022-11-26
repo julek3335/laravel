@@ -20,10 +20,7 @@
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
         'columns' => [null, null, null, null, null, ['orderable' => false]],
-
     ];
-
-   
     @endphp
 
     <div class="card">
