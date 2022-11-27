@@ -77,7 +77,7 @@ class ServiceController extends Controller
             $service = Service::find($request->service_id);
             $service->delete();
         }
-        return redirect()->route('showAllServices');
+        return redirect()->route('service-show-all');
     }
 
 }

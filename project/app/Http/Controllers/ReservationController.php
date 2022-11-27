@@ -98,7 +98,7 @@ class ReservationController extends Controller
             $message = 'Rezervacja została dodana';
             $id = $newReservation->id;
 
-            return redirect()->route('all-reservations-calendar')
+            return redirect()->route('reservation-calendar-all')
                 ->with('return_code', $code)
                 ->with('return_message', $message);
         } else {
