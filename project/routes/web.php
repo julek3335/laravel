@@ -91,7 +91,7 @@ Route::controller(ReservationController::class)->group(function () {
     Route::post('/reservation-create', [ReservationController::class, 'created']);
     Route::get('/reservations', 'showAll')->middleware(['auth'])->name('Reservations');
     Route::get('/reservations/all/calendar', 'showAllReservationsCalendar')->middleware(['auth'])->name('all-reservations-calendar');
-    Route::delete('/reservations/{reservation_id}', 'showAllReservationsCalendar')->middleware(['auth'])->name('delete-reservation');
+    Route::delete('/reservations/{reservation_id}', 'delete')->middleware(['auth'])->name('delete-reservation');
 });
 
 Route::controller(ServiceController::class)->group(function () {
