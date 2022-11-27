@@ -90,10 +90,10 @@ class UserController extends Controller
             $request->validate([
                 'photo' => 'mimes:jpeg,bmp,png,jpg'
             ]);
-            
+
             $new_file = $request->file('photo');
             $file_path = $new_file->store('users_photos');
- 
+
             $updateUser->photo = $request->photo->hashName();
         }
 
@@ -128,13 +128,13 @@ class UserController extends Controller
             $request->validate([
                 'photo' => 'mimes:jpeg,bmp,png,jpg'
             ]);
-            
+
             $new_file = $request->file('photo');
             $file_path = $new_file->store('users_photos');
- 
+
             $photo_value = $request->photo->hashName();
         }
-       
+
         $newUser->name = $request -> name;
         $newUser->last_name = $request -> last_name;
         $newUser->email = $request -> email;
@@ -163,7 +163,7 @@ class UserController extends Controller
     {
         return $this->rentalService->verifyQualification(Auth::user(),Vehicle::find($request->vehicle_id));
     }
-    
+
     public function delete(Request $request)
     {
         if( isset($request->user_id)){
@@ -177,7 +177,7 @@ class UserController extends Controller
                 $message = $th->getMessage();
             }
         }
-        return redirect()->route('showAllUsers')
+        return redirect()->route('user-show-all')
         ->with('return_code', $code)
         ->with('return_message', $message);
     }

@@ -41,7 +41,7 @@ class VehicleController extends Controller
             }
             $vehicle->photos = $photos;
         }else{$vehicle->photos = [];}
-       
+
         $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
 
         $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
@@ -96,13 +96,13 @@ class VehicleController extends Controller
             'incidents_resolved' => $incidents_resolved,
             'incidents_others' => $incidents_others,
             'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
-            'entitlements' => Auth::user()->auth_level, 
+            'entitlements' => Auth::user()->auth_level,
             'reservations' => Reservation::where('vehicle_id' , '=', $id)->get(),
             'activeInsurance' => $insuranceActive,
             'jobs' => $jobs,
             'activeInsuraneOC' => $insuranceActiveOC,
             'insuranceEnds' => $insuranceActiveEndIn7Days,
-            'assignedUser' => $assignedUser, 
+            'assignedUser' => $assignedUser,
             'incidents_count' => $incidents_count,
             'jobs_count' => $jobs_count
         ]);
@@ -114,11 +114,11 @@ class VehicleController extends Controller
     public function prepareAdd(){
 
         $vehicleTypes = VehicleType::all();
-        
+
         return view('vehicle.add', [
             'vehicle_types' => $vehicleTypes,
             'users' => User::all(),
-            'entitlements' => Auth::user()-> auth_level, 
+            'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
@@ -172,7 +172,7 @@ class VehicleController extends Controller
     {
         //Add new vehicle
         $vehicle_type_id = current((array) DB::table('vehicle_types')->select('vehicle_types.id as vehicle_types_id')->where('vehicle_types.type', '=', $req->selBsVehicle)->first());
-        
+
         $vehicle = Vehicle::where('vehicles.id', $id)
         ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
         ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
@@ -199,8 +199,8 @@ class VehicleController extends Controller
 
             foreach($req->file('photos') as $image)
             {
-                $file_path = $image->store('vehicles_photos'); 
-                
+                $file_path = $image->store('vehicles_photos');
+
                 $image_name_hash = $image->hashName();
                 array_push($image_arr, $image_name_hash);
             }
@@ -231,7 +231,7 @@ class VehicleController extends Controller
         $registrationCard->siting_places = $req->siting_places;
         $registrationCard->standing_places = $req->standing_places;
         $registrationCard->vehicle_id = $vehicle->id;
-        
+
         try {
             $registrationCard->save();
             $code = 200;
@@ -259,13 +259,13 @@ class VehicleController extends Controller
         if ($key !== false) {
             unset($vehicle_photos[$key]);
         }
-        
+
         $vehicle->photos = json_encode(array_values($vehicle_photos));
         $vehicle->save();
 
         Storage::disk('public')->delete('vehicles_photos/'.$photo_name);
 
-        return redirect('/vehicle/edit/' . $vehicle->id)        
+        return redirect('/vehicle/edit/' . $vehicle->id)
         ->with('return_code', '200')
         ->with('return_message', 'Zdjęcie zostało usunięte');
     }
@@ -281,7 +281,7 @@ class VehicleController extends Controller
         ->get();
         return view('vehicle.list', [
             'vehicles' => $vehicles,
-            'entitlements' => Auth::user()-> auth_level, 
+            'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
@@ -309,8 +309,8 @@ class VehicleController extends Controller
 
             foreach($req->file('photos') as $image)
             {
-                $file_path = $image->store('vehicles_photos', 'public'); 
-                
+                $file_path = $image->store('vehicles_photos', 'public');
+
                 $image_name_hash = $image->hashName();
                 array_push($image_arr, $image_name_hash);
             }
@@ -344,7 +344,7 @@ class VehicleController extends Controller
         $registrationCard->vehicle_id = $vehicle->id;
         $registrationCard->save();
 
-        return redirect('/vehicles/' . $vehicle->id)        
+        return redirect('/vehicles/' . $vehicle->id)
         ->with('return_code', $code)
         ->with('return_message', $message);
     }
@@ -367,7 +367,7 @@ class VehicleController extends Controller
                 $message = $th->getMessage();
             }
         }
-        return redirect()->route('showAllVehicles')        
+        return redirect()->route('vehicle-show-all')
         ->with('return_code', $code)
         ->with('return_message', $message);
     }
