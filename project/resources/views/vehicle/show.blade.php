@@ -8,6 +8,7 @@
 
 @section('content')
 @section('plugins.PhotoSwipe', true)
+@section('plugins.Fullcalendar', true)
 
     <x-adminlte-alert theme="warning" title="Przegląd olejowy" dismissable>
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
@@ -171,22 +172,9 @@
         <p>Brak zdjęć pojazdu</p>
         @endif
     </x-adminlte-card>
-    <!-- @section('plugins.Fullcalendar', true) -->
-    <!-- <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
+    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" id="card-calendar" maximizable>
         <div id='calendar'></div>
-        <script>
-        var events = []
-        @foreach ($reservations as $reservation)
-            events.push({
-                title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
-                start: "{{$reservation->start_date}}", 
-                end: "{{$reservation->end_date}}",
-                backgroundColor: '#f39c12', //yellow
-                borderColor    : '#f39c12' //yellow
-            });
-        @endforeach
-    </script>
-    </x-adminlte-card> -->
+    </x-adminlte-card>
    
     <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
         @if($activeInsurance)
@@ -335,33 +323,36 @@
             </div>
     </x-adminlte-card>
 
-<div>
-    <h2>Kalendarz rezerwacji</h2>
-    <div id='calendar'></div>
-        <script>
-        var events = []
-        @foreach ($reservations as $reservation)
-            events.push({
-                title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
-                start: "{{$reservation->start_date}}", 
-                end: "{{$reservation->end_date}}",
-                backgroundColor: '#f39c12', //yellow
-                borderColor    : '#f39c12' //yellow
-            });
-        @endforeach
-    </script>
-</div>
+<script>
+    var events = []
+    @foreach ($reservations as $reservation)
+        events.push({
+            title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
+            start: "{{$reservation->start_date}}T00:00:00", 
+            end: "{{$reservation->end_date}}T23:59:00",
+            extendedProps: {
+                'user_name': "{{$reservation->user_name}}",
+                'user_last_name': "{{$reservation->user_last_name}}",
+                'user_id': "{{$reservation->user_id}}", 
+                'vehicle_name': "{{$reservation->vehicle_name}}", 
+                'vehicle_id': "{{$reservation->vehicle_id}}",
+                'vehcile_license_plate': "{{$reservation->license_plate}}"
+            },
+            backgroundColor: '#f39c12', //yellow
+            borderColor    : '#f39c12', //yellow
+            allDay: false
+        });
+    @endforeach
+</script>
 
-@stop
-
-@section('css')
+@include('partials.reservation.eventModal')
 
 @stop
 
 @section('js')
 <script>
     /*
-    ** Calendar
+    ** Calendar re-render
     */
     $(document).ready(function(){
         var calendarEl = document.getElementById('calendar');
@@ -373,11 +364,34 @@
                 right : 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             themeSystem: 'bootstrap',
-            selectable: true,
-            events: events
+            selectable: false,
+            displayEventTime: false,
+            events: events, 
+            eventClick: function(info) {
+                $('#modal_event').modal();
+                $('#modal_event_user_name')
+                    .attr('href', '/user/' + info.event.extendedProps['user_id'])
+                    .text(info.event.extendedProps['user_name'] + ' ' + info.event.extendedProps['user_last_name']);
+                $('#modal_event_vehicle')
+                    .attr('href', '/vehicles/' + info.event.extendedProps['vehicle_id'])
+                    .text(info.event.extendedProps['vehicle_name']);
+                $('#modal_event_vehcile_license_plate')
+                    .attr('href', '/vehicles/' + info.event.extendedProps['vehicle_id'])
+                    .text(info.event.extendedProps['vehcile_license_plate']);
+
+                let date_format_options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+                $('#modal_event_start')
+                    .text(info.event.start.toLocaleDateString("pl-PL", date_format_options));
+                $('#modal_event_end')
+                    .text(info.event.end.toLocaleDateString("pl-PL", date_format_options));
+            }
         });
 
-        calendar.render();
+        $('#card-calendar').click(function(){
+            setTimeout( function() {
+                calendar.render();
+            }, 1);
+        });
     });
 
     /*
