@@ -124,4 +124,7 @@ Route::get('/reservation-getvehicle', function () {
 
 Route::post('/reservation-getvehicle', [ReservationController::class, 'showVehicleReservations']);
 
+// jh - prosze nie usuwac
+Route::get('/route/{id}', [JobController::class, 'route']);
+
 require __DIR__.'/auth.php';

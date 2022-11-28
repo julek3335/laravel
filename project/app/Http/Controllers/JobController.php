@@ -135,8 +135,12 @@ class JobController extends Controller
             // Add track to file
             $gpx_file->tracks[] = $track;
 
-            if(env("FILESYSTEM_DISK") == "public"){$gpx_file->save('storage/routes_files/route'.$id.".gpx", \phpGPX\phpGPX::XML_FORMAT);}
-            if(env("FILESYSTEM_DISK") == "azure"){$gpx_file->save('azure/routes_files/route'.$id.".gpx", \phpGPX\phpGPX::XML_FORMAT);}
+
+            $path = "routes_files/route".$id.".gpx";
+            $document = $gpx_file->toXML();
+            $string = $document->saveXML();
+            Storage::disk(env("FILESYSTEM_DISK"))->put($path, $string);
+
 
             //save filename to Job
             $job -> route_file = "route".$id.".gpx";
@@ -158,8 +162,12 @@ class JobController extends Controller
 
         $gpx = new phpGPX();
 
+        $url = Storage::url('routes_files/'.$job -> route_file);
+        
+        // $gpx_file = $gpx->load($url);
         if(env("FILESYSTEM_DISK") == "public"){$gpx_file = $gpx->load('storage/routes_files/'.$job -> route_file);}
-        if(env("FILESYSTEM_DISK") == "azure"){$gpx_file = $gpx->load('azure/routes_files/'.$job -> route_file);}
+        if(env("FILESYSTEM_DISK") == "azure"){$gpx_file = $gpx->load($url);}
+
 
         // get last track from file
         $track = end($gpx_file->tracks);
@@ -187,8 +195,10 @@ class JobController extends Controller
         $track->recalculateStats();
 
 
-        if(env("FILESYSTEM_DISK") == "public"){$gpx_file->save('storage/routes_files/route'.$id.".gpx", \phpGPX\phpGPX::XML_FORMAT);}
-        if(env("FILESYSTEM_DISK") == "azure"){$gpx_file->save('azure/routes_files/route'.$id.".gpx", \phpGPX\phpGPX::XML_FORMAT);}
+        $path = "routes_files/route".$id.".gpx";
+        $document = $gpx_file->toXML();
+        $string = $document->saveXML();
+        Storage::disk(env("FILESYSTEM_DISK"))->put($path, $string);
 
         //save filename to Job
         $job -> route_file = "route".$id.".gpx";
