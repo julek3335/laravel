@@ -19,7 +19,7 @@ class EnsureUserHasRole
         if( $request->user()->auth_level > $role)
         {
             return redirect()->back()
-            ->with('return_code', 401)
+            ->with('return_code', 400)
             ->with('return_message', 'Nie masz uprawnień do tej zawatości');
         }
         return $next($request);
