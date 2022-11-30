@@ -64,16 +64,15 @@
         */
 
         function drawMap(){
-            let routeFileName = '{{$job->route_file}}';
-            if(routeFileName){
-                let gpxURL = '{{  url('') }}' + routeFileName;
+            let gpxURL= '{{$job->route_file}}';
+            if(gpxURL){
                 let gpx = new L.GPX(gpxURL, {
                     async: true,
                     marker_options: {
                         startIconUrl: '/vendor/leaflet-gpx/img/pin-icon-start.png',
                         endIconUrl: '/vendor/leaflet-gpx/img/pin-icon-end.png',
                         shadowUrl: '/vendor/leaflet-gpx/img/pin-shadow.png'
-                    }
+                    },
                 }).on('loaded', function(e) {
                     map.fitBounds(e.target.getBounds());
                 }).addTo(map);
