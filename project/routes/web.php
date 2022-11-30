@@ -101,4 +101,8 @@ Route::group(['middleware'=>'auth'],function(){
     });
 });
 
+Route::get('/map', function () {
+    return view('map.show');
+})->middleware('role:1');
+
 require __DIR__.'/auth.php';
