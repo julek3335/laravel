@@ -124,7 +124,7 @@
                         @foreach ($userJobs as $key=>$userJob)
                             <tr>
                                 <td>{{ $userJob->status->name }}</td>
-                                <td>{{ $userJob->vehicle->license_plate }}</td>
+                                <td>{{ isset($userJob->vehicle->license_plate) ? $userJob->vehicle->license_plate : 'Brak pojazdu'}}</td>
                                 <td>{{ $userJob->distance }}</td>
                                 <td>{{ $userJob->start_time }}</td>
                                 <td>{{ $userJob->end_time }}</td>
