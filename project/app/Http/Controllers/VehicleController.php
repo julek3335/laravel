@@ -185,7 +185,6 @@ class VehicleController extends Controller
         // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
         $vehicle->user_id = $req->user_id;
-        // $vehicle->user_id = $req->user_id;
 
         if ($req->hasFile('photos')) {
             $req->validate([
@@ -299,6 +298,7 @@ class VehicleController extends Controller
         // $vehicle->company_id = $req->company_id;
         $vehicle->vehicle_type_id = $vehicle_type_id;
         $vehicle->user_id = $req->user_id;
+        $vehicle->odometer  = $req->odometer;
         // $vehicle->user_id = $req->vehicle_user_id;
         if ($req->hasFile('photos')) {
             $req->validate([
