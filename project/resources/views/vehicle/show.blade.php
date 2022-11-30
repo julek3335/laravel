@@ -328,8 +328,8 @@
     @foreach ($reservations as $reservation)
         events.push({
             title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
-            start: "{{$reservation->start_date}}T00:00:00", 
-            end: "{{$reservation->end_date}}T23:59:00",
+            start: "{{$reservation->start_date}}", 
+            end: "{{$reservation->end_date}}",
             extendedProps: {
                 'user_name': "{{$reservation->user_name}}",
                 'user_last_name': "{{$reservation->user_last_name}}",
