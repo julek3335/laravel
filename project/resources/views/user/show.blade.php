@@ -77,8 +77,8 @@
                                     @foreach($reservations as $reservation)
                                     reservations.push({
                                         title: 'Rezerwacja: {{$reservation->user_name}} {{$reservation->user_last_name}}, Pojazd: {{$reservation->vehicle_name}}',
-                                        start: "{{$reservation->start_date}}T00:00:00",
-                                        end: "{{$reservation->end_date}}T23:59:00",
+                                        start: "{{$reservation->start_date}}",
+                                        end: "{{$reservation->end_date}}",
                                         extendedProps: {
                                             'user_name': "{{$reservation->user_name}}",
                                             'user_last_name': "{{$reservation->user_last_name}}",
