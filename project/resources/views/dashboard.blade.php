@@ -70,7 +70,9 @@
         </div>
         <div class="card-body">
         @foreach($userVehicles as $vehicle)
-           <a href="/vehicles/{{$vehicle->id}}"> <p>{{$vehicle->license_plate}}</p> </a>
+            @if(isset($vehicle->license_plate))
+                <a href="/vehicles/{{$vehicle->id}}"> <p>{{$vehicle->license_plate}}</p> </a>
+           @endif
         @endforeach
         </div>
     </div>

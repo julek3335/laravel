@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserStatusEnum;
+use App\Enums\VehicleStatusEnum;
 use phpGPX\phpGPX;
 use App\Models\Job;
 use App\Models\User;
@@ -62,22 +64,13 @@ class JobController extends Controller
 
     public function endJob(EndJobRequest $request)
     {
-        /** @var Job $job */
-        $job = Job::find($request->job_id);
-        $job->status = JobStatusEnum::FINISHED;
-        $job->end_time = new \DateTimeImmutable($request->end_time);
-        $job->end_odometer = $request->end_odometer;
-        $job->end_point = $request->end_localization;
-        $job->description = $request->description;
-        $job->distance = $this->rentalService->calculateTravelDistance($job->start_odometer, $job->end_odometer);
-
-        try {
-            $job->save();
+        $job = $this->rentalService->finishJob($request);
+        if($job->save()){
             $code = 200;
             $message = 'Trasa została zakończona';
-        } catch (\Throwable $th) {
+        } else {
             $code = 400;
-            $message = $th->getMessage();
+            $message = 'Wystąpił błąd przy zapisie trasy';
         }
 
         return redirect('/jobs/' . $job->id)
@@ -167,7 +160,7 @@ class JobController extends Controller
 
         // create new segment
         $segment = new Segment();
-        
+
 
         foreach ($gpx_data as $gpx_point)
         {

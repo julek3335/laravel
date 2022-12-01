@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\Reservation;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -97,7 +98,7 @@ class ReservationController extends Controller
             $message = 'Rezervacja została dodana';
             $id = $newReservation->id;
 
-            return redirect()->route('all-reservations-calendar')
+            return redirect()->route('reservation-calendar-all')
                 ->with('return_code', $code)
                 ->with('return_message', $message);
         } else {
@@ -111,7 +112,7 @@ class ReservationController extends Controller
     public function showAllReservationsCalendar()
     {
         $reservations = Reservation::
-        select('reservations.start_date AS start_date', 'reservations.end_date AS end_date', 'users.name AS user_name', 'users.last_name AS user_last_name', 'reservations.user_id AS user_id', 'reservations.vehicle_id AS vehicle_id', 'vehicles.name AS vehicle_name')
+        select('reservations.start_date AS start_date', 'reservations.end_date AS end_date', 'users.name AS user_name', 'users.last_name AS user_last_name', 'reservations.user_id AS user_id', 'reservations.vehicle_id AS vehicle_id', 'vehicles.name AS vehicle_name', 'vehicles.license_plate AS license_plate')
         ->join( 'users', 'reservations.user_id', '=', 'users.id')
         ->join('vehicles', 'reservations.vehicle_id', '=', 'vehicles.id')
         ->get();
@@ -128,5 +129,23 @@ class ReservationController extends Controller
             ->pluck('vehicle_id');
         $cars = Vehicle::whereNotIn('id',$reservedIds->all())->get();
         return response()->json($cars->all());
+    }
+
+    public function delete(Request $request): RedirectResponse
+    {
+        if( isset($request->reservation_id)){
+            $reservation = Reservation::find($request->reservation_id);
+            try {
+                $reservation->delete();
+                $code = 200;
+                $message = 'Usunięto rezerwację';
+            } catch (\Throwable $th) {
+                $code = 400;
+                $message = $th->getMessage();
+            }
+        }
+        return redirect()->route('Reservations')
+            ->with('return_code', $code)
+            ->with('return_message', $message);
     }
 }

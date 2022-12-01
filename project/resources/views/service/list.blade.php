@@ -10,12 +10,15 @@
     {{-- Setup data for datatables --}}
     @php
     $heads = [
-        'Name',
+        'Nazwa',
+        'Opis',
+        'Data następnego wykonaia',
+        'Interwał',
         ['label' => 'Akcja', 'width' => 20, 'no-export' => true],
     ];
     $dataTableConfig = [
         'language' => ['url' => '/vendor/datatables-plugins/i18n/pl.json'],
-        'columns' => [null, ['orderable' => false]],
+        'columns' => [null, null, null, null, ['orderable' => false]],
     ];
     @endphp
 
@@ -28,6 +31,9 @@
                 @foreach ($services as $key=>$service)
                     <tr>
                         <td>{{ $service->name }}</td>
+                        <td>{{ $service->description }}</td>
+                        <td>{{ $service->next_time }}</td>
+                        <td>{{ $service->interval }}</td>
                         <td>
                             <a href="/service/edit/{{ $service->id }}">
                                 <button type="button" class="btn btn-primary ml-1 mr-1" data-toggle="tooltip" title="Edytuj">

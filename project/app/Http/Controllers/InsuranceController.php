@@ -29,7 +29,7 @@ class InsuranceController extends Controller
         $insurance -> photo = Storage::url('insurance_photos/'.$insurance -> photo);
         return view('insurance.show',[
             'insurance' => $insurance,
-            'entitlements' => Auth::user()-> auth_level,   
+            'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
@@ -49,7 +49,7 @@ class InsuranceController extends Controller
     public function showAll(){
         return view('insurance.list', [
             'insurances' => Insurance::all()->sortBy("created_at"),
-            'entitlements' => Auth::user()-> auth_level, 
+            'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
@@ -79,10 +79,10 @@ class InsuranceController extends Controller
             $req->validate([
                 'photo' => 'mimes:jpeg,bmp,png,jpg'
             ]);
-            
+
             $new_file = $req->file('photo');
             $file_path = $new_file->store('insurance_photos');
- 
+
             $newInsurance->photo = $req->photo->hashName();
         }
 
@@ -100,7 +100,7 @@ class InsuranceController extends Controller
         ->with('return_message', $message);
      }
 
-    
+
      public function updateInsurance(Request $request, $id){
         if(!Gate::allows('admins-editors')){abort(403);}
 
@@ -120,10 +120,10 @@ class InsuranceController extends Controller
             $request->validate([
                 'photo' => 'mimes:jpeg,bmp,png,jpg'
             ]);
-            
+
             $new_file = $request->file('photo');
             $file_path = $new_file->store('insurance_photos');
- 
+
             $updateInsurance->photo = $request->photo->hashName();
         }
 
@@ -156,6 +156,6 @@ class InsuranceController extends Controller
                 $message = $th->getMessage();
             }
         }
-        return redirect()->route('showAllInsurances');
+        return redirect()->route('insurance-show-all');
     }
 }

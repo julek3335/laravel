@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->foreignIdFor(Vehicle::class)->default(1);
             $table->foreignIdFor(User::class)->default(1);
             $table->timestamps();

@@ -33,7 +33,7 @@
                 @foreach ($jobs as $key=>$job)
                     <tr>
                         <td>{{ $job->user->name }} {{ $job->user->last_name }}</td>
-                        <td>{{ $job->vehicle->license_plate }}</td>
+                        <td>{{ isset($job->vehicle->license_plate) ? $job->vehicle->license_plate : 'Pojazd usunięty' }}</td>
                         <td>{{ __('status.'.$job->status->name) }}</td>
                         <td>{{ $job->start_time }}</td>
                         <td>{{ $job->end_time }}</td>

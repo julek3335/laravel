@@ -63,7 +63,6 @@ class DatabaseSeeder extends Seeder
             'auth_level' => 0,
             'company_id' => 1,
             'email_verified_at' => now(),
-            'driving_licence_category' => 'B',
             'status' => UserStatusEnum::FREE,
             'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
