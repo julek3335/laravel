@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\UserStoreRequest;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -109,7 +110,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(UserStoreRequest $request){
 
         $newUser = new User;
 
