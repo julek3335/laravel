@@ -33,13 +33,6 @@ class UserController extends Controller
 
     public function show($id){
         $user = User::findOrFail($id);
-        // if($user-> auth_level == 0)
-        // {
-        //     $message = 'U are admin!';
-        //     $user -> notify(new TestNotification($message));
-        // }
-
-        $user = User::findOrFail($id);
 
         if($user->photo)
             $user -> photo = Storage::url('users_photos/'.$user -> photo);
@@ -60,7 +53,7 @@ class UserController extends Controller
 
     public function userToEdit($id){
         return view('user.edit', [
-            'user'                      => User::findOrFail($id), 
+            'user'                      => User::findOrFail($id),
             'qualifications'            => Qualification::all(),
             'selectedQualifications'    => DB::table('qualification_user')->where('user_id', $id)->get(),
         ]);
@@ -69,7 +62,7 @@ class UserController extends Controller
     public function prepareAdd(){
         return view('user.add', [
             'entitlements'   => Auth::user()-> auth_level,
-            'qualifications' => Qualification::all(), 
+            'qualifications' => Qualification::all(),
         ]);
     }
 
