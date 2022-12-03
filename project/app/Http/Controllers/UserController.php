@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -67,15 +68,16 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateUser(Request $request, $id){
+    public function updateUser(UserUpdateRequest $request, $id){
 
+        $validated = $request->validated();
+        $qualifications = Qualification::find($validated['driving_licence_category']);
+        unset($validated['driving_licence_category']);
+        /** @var User $updateUser */
         $updateUser = User::find($id);
-        $updateUser->name = $request->name;
-        $updateUser->last_name = $request->last_name;
-        $updateUser->status = $request->status;
-        $updateUser->email = $request->email;
-        //$updateUser->driving_licence_category = $request->driving_licence_category;
-        $updateUser -> auth_level = $request -> auth_level;
+
+        $updateUser->update($validated);
+        $updateUser->qualifications()->sync($qualifications);
 
         if ($request->hasFile('photo')) {
 
