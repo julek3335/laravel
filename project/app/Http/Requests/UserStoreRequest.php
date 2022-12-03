@@ -28,10 +28,11 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:App\Models\User,email',
             'status' =>  [new Enum(UserStatusEnum::class)],
             'password' => 'required',
             'auth_level' => 'required',
+            'driving_licence_category' => 'required|array',
         ];
     }
 }

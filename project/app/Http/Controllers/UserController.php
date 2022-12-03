@@ -111,10 +111,15 @@ class UserController extends Controller
     }
 
     public function store(UserStoreRequest $request){
+        $validated = $request->validated();
+        $qualifications = Qualification::find($validated['driving_licence_category']);
+        unset($validated['driving_licence_category']);
 
-        $newUser = new User;
+        /** @var User $newUser */
+        $newUser = User::create($validated);
+        $newUser->qualifications()->saveMany($qualifications);
 
-        $photo_value = null;
+//        $photo_value = null;
         if ($request->hasFile('photo')) {
 
             $request->validate([
@@ -125,16 +130,11 @@ class UserController extends Controller
             $file_path = $new_file->store('users_photos');
 
             $photo_value = $request->photo->hashName();
+            $newUser->photo = $photo_value;
         }
 
-        $newUser->name = $request -> name;
-        $newUser->last_name = $request -> last_name;
-        $newUser->email = $request -> email;
-        $newUser->driving_licence_category = $request -> driving_licence_category;
-        $newUser->photo = $photo_value;
-        $newUser->status = $request->status;
         $newUser->password = Hash::make($request->password);
-        $newUser->auth_level = $request -> auth_level;
+
 
         try {
             $newUser->save();
