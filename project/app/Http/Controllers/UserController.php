@@ -105,7 +105,7 @@ class UserController extends Controller
 
     public function showAll(){
         return view('user.list', [
-            'users' => User::all()->sortBy("created_at"),
+            'users' => User::all()->load('qualifications')->sortBy("created_at"),
             'entitlements' => Auth::user()-> auth_level,
         ]);
     }
