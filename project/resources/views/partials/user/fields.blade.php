@@ -24,8 +24,8 @@
             <x-adminlte-button theme="outline-dark" label="Wyczyść" icon="fas fa-lg fa-ban text-danger"/>
         </x-slot>
         @foreach($qualifications as $qualification)
-            <option data-icon="fa address-card" value="{{$qualification->id }}" 
-            @isset($selectedQualifications) 
+            <option data-icon="fa address-card" value="{{$qualification->id }}"
+            @isset($selectedQualifications)
                 @if($selectedQualifications->where('qualification_id', $qualification->id)->first())
                     selected
                 @endif
@@ -68,13 +68,11 @@
             rules: {
                 name: {
                     required: true,
-                    minlength: 3,
-                    maxlength: 10
+                    minlength: 1
                 },
                 last_name: {
                     required: true,
-                    minlength: 3,
-                    maxlength: 10
+                    minlength: 1
                 },
                 email: {
                     required: true,

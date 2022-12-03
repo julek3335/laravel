@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -33,13 +35,6 @@ class UserController extends Controller
 
     public function show($id){
         $user = User::findOrFail($id);
-        // if($user-> auth_level == 0)
-        // {
-        //     $message = 'U are admin!';
-        //     $user -> notify(new TestNotification($message));
-        // }
-
-        $user = User::findOrFail($id);
 
         if($user->photo)
             $user -> photo = Storage::url('users_photos/'.$user -> photo);
@@ -60,7 +55,7 @@ class UserController extends Controller
 
     public function userToEdit($id){
         return view('user.edit', [
-            'user'                      => User::findOrFail($id), 
+            'user'                      => User::findOrFail($id),
             'qualifications'            => Qualification::all(),
             'selectedQualifications'    => DB::table('qualification_user')->where('user_id', $id)->get(),
         ]);
@@ -69,19 +64,20 @@ class UserController extends Controller
     public function prepareAdd(){
         return view('user.add', [
             'entitlements'   => Auth::user()-> auth_level,
-            'qualifications' => Qualification::all(), 
+            'qualifications' => Qualification::all(),
         ]);
     }
 
-    public function updateUser(Request $request, $id){
+    public function updateUser(UserUpdateRequest $request, $id){
 
+        $validated = $request->validated();
+        $qualifications = Qualification::find($validated['driving_licence_category']);
+        unset($validated['driving_licence_category']);
+        /** @var User $updateUser */
         $updateUser = User::find($id);
-        $updateUser->name = $request->name;
-        $updateUser->last_name = $request->last_name;
-        $updateUser->status = $request->status;
-        $updateUser->email = $request->email;
-        //$updateUser->driving_licence_category = $request->driving_licence_category;
-        $updateUser -> auth_level = $request -> auth_level;
+
+        $updateUser->update($validated);
+        $updateUser->qualifications()->sync($qualifications);
 
         if ($request->hasFile('photo')) {
 
@@ -111,16 +107,21 @@ class UserController extends Controller
 
     public function showAll(){
         return view('user.list', [
-            'users' => User::all()->sortBy("created_at"),
+            'users' => User::all()->load('qualifications')->sortBy("created_at"),
             'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
-    public function store(Request $request){
+    public function store(UserStoreRequest $request){
+        $validated = $request->validated();
+        $qualifications = Qualification::find($validated['driving_licence_category']);
+        unset($validated['driving_licence_category']);
 
-        $newUser = new User;
+        /** @var User $newUser */
+        $newUser = User::create($validated);
+        $newUser->qualifications()->saveMany($qualifications);
 
-        $photo_value = null;
+//        $photo_value = null;
         if ($request->hasFile('photo')) {
 
             $request->validate([
@@ -131,16 +132,11 @@ class UserController extends Controller
             $file_path = $new_file->store('users_photos');
 
             $photo_value = $request->photo->hashName();
+            $newUser->photo = $photo_value;
         }
 
-        $newUser->name = $request -> name;
-        $newUser->last_name = $request -> last_name;
-        $newUser->email = $request -> email;
-        $newUser->driving_licence_category = $request -> driving_licence_category;
-        $newUser->photo = $photo_value;
-        $newUser->status = $request->status;
         $newUser->password = Hash::make($request->password);
-        $newUser->auth_level = $request -> auth_level;
+
 
         try {
             $newUser->save();
