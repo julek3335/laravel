@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\InsuranceStatusEnum;
+use App\Enums\InsuranceTypeEnum;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -22,14 +24,10 @@ class VehicleController extends Controller
     */
     public function show($id)
     {
-        /*
-        ** Get main and additional vehicle data
-        */
-        $vehicle = Vehicle::where('vehicles.id', $id)
-        ->select('vehicles.id as id','vehicles.*','vehicle_types.id as vehicle_type_id','vehicle_types.type','users.email as user_email')
-        ->join('vehicle_types', 'vehicles.vehicle_type_id', '=', 'vehicle_types.id')
-        ->leftJoin('users', 'users.id', '=', 'vehicles.user_id')
-        ->firstOrFail();
+
+        /** @var Vehicle $vehicle */
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->load('vehicleType');
 
         if(isset($vehicle->photos)){
             $vehicle->photos = json_decode($vehicle->photos);
@@ -42,69 +40,29 @@ class VehicleController extends Controller
             $vehicle->photos = $photos;
         }else{$vehicle->photos = [];}
 
-        $registrationCard = RegistrationCard::where('vehicle_id', $vehicle->id)->firstOrFail();
-
-        $insurances = Insurance::where('vehicle_id', $vehicle->id)->first();
-
-        $incidents_resolved = Incident::where([
-            ['vehicle_id', '=', $vehicle->id],
-            ['status', '=', 'resolved']
-        ])->get()->sortBy('created_at');
-
-        $incidents_others = Incident::where([
-            ['vehicle_id', '=', $vehicle->id],
-            ['status', '<>', 'resolved']
-        ])->get()->sortBy('created_at');
-
-        $incidents_count = Incident::where([
-            ['vehicle_id', '=', $vehicle->id]
-        ])->count();
-
-        $jobs_count = Job::where([
-            ['vehicle_id', '=', $vehicle->id]
-        ])->count();
-
-        $insuranceActive = Insurance::where([
-            ['vehicle_id', '=', $vehicle->id],
-            ['status', '=', 'active']
-        ])->get()->sortBy('created_at');
-
-        $insuranceActiveOC = Insurance::where([
-            ['vehicle_id', '=', $vehicle->id],
-            ['type', '=', 'oc'],
-            ['status', '=', 'active']
-        ])->get()->sortBy('created_at');
-
-        $insuranceActiveEndIn7Days = Insurance::where([
-            ['vehicle_id', '=', $vehicle->id],
-            ['status', '=', 'active'],
-        ])->whereBetween('expiration_date', [date('Y-m-d'), date('Y-m-d',strtotime("+7 day"))])->get()->sortBy('created_at');
-
-        $assignedUserID = $vehicle->user_id;
-        $assignedUser = User::findOrFail($assignedUserID);
-
-        //jobs list
-        $jobs = Job::where('jobs.vehicle_id' , $id)->get();
+        $vehicleActiveInsurancesQuery = $vehicle->insurance()->where('status','=',InsuranceStatusEnum::ACTIVE);
 
         /*
         ** Passing data to view
         */
         return view('vehicle.show', [
             'vehicle' => $vehicle,
-            'registration_card' => $registrationCard,
-            'insurances' => $insurances,
-            'incidents_resolved' => $incidents_resolved,
-            'incidents_others' => $incidents_others,
-            'carInsurances' => Insurance::where('vehicle_id', '=', $id)->get(),
+            'registration_card' => $vehicle->registrationCards()->first(),
+            'insurances' => $vehicle->insurance()->get(),
+            'incidents_resolved' => $vehicle->incidents()->where('status', '=' , 'resolved')->get(),
+            'incidents_others' => $vehicle->incidents()->where('status', '<>' , 'resolved')->get(),
+            'carInsurances' =>$vehicle->insurance()->get(),
             'entitlements' => Auth::user()->auth_level,
-            'reservations' => Reservation::where('vehicle_id' , '=', $id)->get(),
-            'activeInsurance' => $insuranceActive,
-            'jobs' => $jobs,
-            'activeInsuraneOC' => $insuranceActiveOC,
-            'insuranceEnds' => $insuranceActiveEndIn7Days,
-            'assignedUser' => $assignedUser,
-            'incidents_count' => $incidents_count,
-            'jobs_count' => $jobs_count
+            'reservations' => $vehicle->reservations()->with('user')->get(),
+            'activeInsurance' => $vehicleActiveInsurancesQuery->get(),
+            'jobs' => $vehicle->jobs()->get(),
+            'activeInsuraneOC' => $vehicleActiveInsurancesQuery
+                ->whereIn('type', [InsuranceTypeEnum::OC, InsuranceTypeEnum::OC_AC])->get(),
+            'insuranceEnds' => $vehicleActiveInsurancesQuery
+                ->whereBetween('expiration_date', [date('Y-m-d'), date('Y-m-d',strtotime("+7 day"))])->get(),
+            'assignedUser' => $vehicle->user()->first(),
+            'incidents_count' => $vehicle->incidents()->count(),
+            'jobs_count' => $vehicle->jobs()->count()
         ]);
     }
 
