@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserStatusEnum;
+use App\Enums\VehicleStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Vehicle;
 use App\Models\User;
@@ -15,35 +17,25 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
+        $userId = Auth::user()->id;
 
-        $userID = Auth::user()-> id;
-        $vehicles = Vehicle::all();
-        $allVehicles = [];
-        foreach($vehicles as $vehicle){
-            if($vehicle->user_id == $userID){
-                array_push($allVehicles, $vehicle);
-            }
-        }
+        $vehicles = Vehicle::where('status', '=', VehicleStatusEnum::READY)->get();
+        $users = User::where('status', '=', UserStatusEnum::FREE)->get();
 
+        $jobs = Job::where('jobs.user_id', Auth::user()->id)->where('jobs.status', 'in_progress')->get();
+        $jobs->load('vehicle');
         return view('dashboard', [
-            //Trzeba zmienić żeby zwracało tylko wolne pojazdy a nie wszystkie
-            'availableVehicles' => Vehicle::all(), 
-            'numberOfVehicles'  => Vehicle::all()->count(),
-            'numberOfUsers'     => User::all()->count(), 
-            
-            //Trzeba zmienić żeby zwracało tylko wolnych pracowników a nie wszystkich
-            'avaibleUsers'      => User::all(), 
+            'availableVehicles' => $vehicles,
+            'numberOfVehicles' => $vehicles->count(),//można policzyć na froncie
+            'numberOfUsers' => $users->count(),//można policzyć na froncie
+            'avaibleUsers' => $users,
             'numberOfIncidents' => Incident::all()->count(),
-            'numberOfServices'  => Service::all()->count(),
-            'entitlements'      => Auth::user()-> auth_level,
-            'userVehicles'      => $allVehicles,
+            'numberOfServices' => Service::all()->count(),
+            'entitlements' => Auth::user()->auth_level,
+            'userVehicles' => Vehicle::where('user_id', '=', $userId),
 
             // trasy dla aktualnie zalogowanego użytkownika
-            'userJobs'          => Job::where('jobs.user_id' , Auth::user()->id)
-                                    ->where('jobs.status', 'in_progress')
-                                    ->join('vehicles', 'vehicles.id', '=', 'jobs.vehicle_id')
-                                    ->select('jobs.*', 'vehicles.id as vehicle_id', 'vehicles.name')
-                                    ->get(),
+            'userJobs' => $jobs,
         ]);
     }
 }
