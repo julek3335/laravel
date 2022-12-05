@@ -5,7 +5,7 @@
     @method('POST')
     <x-adminlte-modal id="modalReservationVehicle" title="Rezerwacja pojazdu" theme="light" icon="fas fa-bolt">
         @php
-        $config = ['format' => 'YYYY.MM.DD'];
+        $config = ['format' => 'YYYY.MM.DD HH:mm'];
         @endphp
 
         <div id="firstSection">
@@ -25,8 +25,12 @@
         <div id="secondSection" style="display: none;">
             <div style="margin-bottom: 20px;">
                 <p><strong>Wybierz pojazd</strong></p>
-                <select name="vehicle_id" id="selectList" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                    <select name="vehicle_id" id="selectList" class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                    @if(isset($vehicle))   
+                    <option value="{{$vehicle->id}}">{{$vehicle->license_plate}}</option>  
+                    @endif 
                 </select>
+                
             </div>
             <!-- pokaz możliwość wyboru pracownika tylko dla Administratora albo edytora -->
             @if($entitlements == 0 || $entitlements == 1)

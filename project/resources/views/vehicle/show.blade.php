@@ -92,7 +92,7 @@
                         <strong>Numer VIN</strong> <span class="float-right">{{ $registration_card->vehicle_identification_number	}}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Typ</strong> <span class="float-right">{{$vehicle->type}}</span>
+                        <strong>Typ</strong> <span class="float-right">{{$vehicle->vehicleType->type}}</span>
                     </li>
                     <li class="list-group-item">
                         <strong>Rok produkcji</strong> <span class="float-right">{{ $registration_card->production_year }}</span>
@@ -323,18 +323,16 @@
                 </div>
             </div>
     </x-adminlte-card>
-
 <script>
-
     var events = []
     @foreach ($reservations as $reservation)
-        events.push({
-            title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}',
+    events.push({
+            title: 'Rezerwacja - Użytkownik {{$reservation->user->name}}',
             start: "{{$reservation->start_date}}",
             end: "{{$reservation->end_date}}",
             extendedProps: {
-                'user_name': "{{$reservation->user_name}}",
-                'user_last_name': "{{$reservation->user_last_name}}",
+                'user_name': "{{$reservation->user->name}}",
+                'user_last_name': "{{$reservation->user->last_name}}",
                 'user_id': "{{$reservation->user_id}}",
                 'vehicle_name': "{{$vehicle->name}}",
                 'vehicle_id': "{{$reservation->vehicle_id}}",
@@ -342,7 +340,6 @@
             },
             backgroundColor: '#f39c12', //yellow
             borderColor    : '#f39c12', //yellow
-            allDay: false
         });
     @endforeach
 </script>
@@ -367,7 +364,7 @@
             },
             themeSystem: 'bootstrap',
             selectable: false,
-            displayEventTime: false,
+            displayEventTime: true,
             events: events,
             eventClick: function(info) {
                 $('#modal_event').modal();

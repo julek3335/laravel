@@ -62,7 +62,8 @@ class VehicleController extends Controller
                 ->whereBetween('expiration_date', [date('Y-m-d'), date('Y-m-d',strtotime("+7 day"))])->get(),
             'assignedUser' => $vehicle->user()->first(),
             'incidents_count' => $vehicle->incidents()->count(),
-            'jobs_count' => $vehicle->jobs()->count()
+            'jobs_count' => $vehicle->jobs()->count(),
+            'avaibleUsers' => User::all()
         ]);
     }
 

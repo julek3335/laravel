@@ -41,7 +41,7 @@ class UserController extends Controller
 
         return view('user.show',[
             'user' => $user,
-            'reservations'              => Reservation::where('user_id' , '=', $id)->get(),
+            'reservations'              => $user-> reservations()->with('vehicle')->get(),
             'entitlements'              => Auth::user()-> auth_level,
             'avaibleUsers'              => User::all(),
             'qualifications'            => Qualification::all(),
