@@ -68,7 +68,6 @@
                                     @include('partials.user.fields')
                                 </form>
                             </div>
-                            {{dump($reservations)}}
                             <!-- rezerwacje -->
                             <div class="tab-pane active" id="reservations">
                                 <div id="calendar"></div>
