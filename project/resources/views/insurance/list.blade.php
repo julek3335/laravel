@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $insurance->created_at }}</td>
                         <td>{{ __('status.'.$insurance->status->name) }}</td>
-                        <td>{{ $insurance->vehicle->license_plate }}</td>
+                        <td>{{ isset($insurance->vehicle->license_plate) ? $insurance->vehicle->license_plate : 'Brak pojazdu'}}</td>
                         <td>
                         @if($entitlements == 0 || $entitlements == 1)
                             <a href="/insurance/edit/{{ $insurance->id }}">

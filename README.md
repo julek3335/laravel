@@ -20,13 +20,8 @@ cd laravel/
 
 rm -rf project
 
-docker compose up #uruchomienie moze trwać 2-3 min
+docker compose up #uruchomienie moze trwać kilka minut
 
-Ctrl-C
-
-git restore .
-
-docker compose up
 ```
 ### Windows
 ```cmd
@@ -34,42 +29,39 @@ git clone https://github.com/julek3335/laravel.git
 
 cd laravel/
 
-rmdir project
+Remove-Item project -Recurse -force
 
-docker compose up  #uruchomienie moze trwać 2-3 min
-
-Ctrl-C
-
-git restore .
-
-docker compose up
+docker compose up  #uruchomienie moze trwać kilka minut
 ```
-### Instalacja modułów
-
-Linux & Windows
-Wykonujemy tylko za pierwszym razem (po stworzeniu kontenerów).
-
-```bash
-docker exec -it laravel-myapp-1 bash -c "composer require xvladqt/faker-lorem-flickr; composer require jeroennoten/laravel-adminlte ; php artisan adminlte:install -n; composer require laravel/breeze --dev; php artisan breeze:install;npm install; npm run dev"
-^C
-
-git restore . #Usuwamy z repo dodane po instalacji modułów pliki
-
-git clean -f #Usuwamy  z repo dodane po instalacji modułów pliki
-
-```
-
 ## Ustawienie ścieżki storage
+Linux i Windows
 ```bash
 docker exec -it laravel-myapp-1  php artisan storage:link
 ```
 
-## Migracja i seed
-```
-docker exec -it laravel-myapp-1 bash -c "php artisan migrate:fresh --seed"
+
+## Instalacja modułów
+
+Linux i Windows
+Wykonujemy tylko za pierwszym razem (po stworzeniu kontenerów).
+
+```bash
+docker exec -it laravel-myapp-1 bash -c "npm install; npm run build"
 ```
 
-## Interkcja z kontenerem:
+## Migracja i seed
+Linux i Windows
+```bash
+docker exec -it laravel-myapp-1 bash -c "php artisan migrate:fresh --seed"
+
+git restore . #Usuwamy z repo dodane po instalacji modułów pliki
+
+git clean -f #Usuwamy  z repo dodane po instalacji modułów pliki
+```
+
+## Przydatne polecenia
+
+### Interkcja z kontenerem:
 Uruchomienie pojedyńczego polecenia
 ```bash
 docker exec <laravel container id> <polecenie>

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pojazd') 
+@section('title', 'Pojazd')
 
 @section('content_header')
     <h1>Pojazd {{ $vehicle->name }}</h1>
@@ -8,6 +8,8 @@
 
 @section('content')
 @section('plugins.PhotoSwipe', true)
+@section('plugins.Fullcalendar', true)
+
 
     <x-adminlte-alert theme="warning" title="Przegląd olejowy" dismissable>
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
@@ -33,7 +35,7 @@
         </x-adminlte-alert>
     @endif
 
-    <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+    <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-4">
                 <x-adminlte-info-box title="Przebieg" text="125 458 km" icon="fas fa-light fa-car"/>
@@ -44,7 +46,7 @@
             </div>
         </div>
     </x-adminlte-card>
-    <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+    <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div clas="col-sm-12">
                 <div class="float-left m-1">
@@ -90,7 +92,7 @@
                         <strong>Numer VIN</strong> <span class="float-right">{{ $registration_card->vehicle_identification_number	}}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Typ</strong> <span class="float-right">{{$vehicle->type}}</span>
+                        <strong>Typ</strong> <span class="float-right">{{$vehicle->vehicleType->type}}</span>
                     </li>
                     <li class="list-group-item">
                         <strong>Rok produkcji</strong> <span class="float-right">{{ $registration_card->production_year }}</span>
@@ -157,7 +159,7 @@
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    $photo_size = getimagesize( ltrim($photo, '/') );     
+                    $photo_size = getimagesize( ltrim($photo, '/') );
                 @endphp
                 <div class="col-sm-4 p-2">
                     <a href="{{$photo}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
@@ -171,23 +173,11 @@
         <p>Brak zdjęć pojazdu</p>
         @endif
     </x-adminlte-card>
-    @section('plugins.Fullcalendar', true)
-    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
+    <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" id="card-calendar" maximizable>
         <div id='calendar'></div>
     </x-adminlte-card>
-    <script>
-        var events = []
-        @foreach ($reservations as $reservation)
-            events.push({
-                title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
-                start: "{{$reservation->start_date}}", 
-                end: "{{$reservation->end_date}}",
-                backgroundColor: '#f39c12', //yellow
-                borderColor    : '#f39c12' //yellow
-            });
-        @endforeach
-    </script>
-    <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
+
+    <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         @if($activeInsurance)
             @foreach($activeInsurance as $insurance)
                 @if( $insurance->status->name == 'ACTIVE')
@@ -235,7 +225,7 @@
         <p>Brak danych o ubezpieczeniach</p>
         @endif
     </x-adminlte-card>
-    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
+    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         @if($incidents_others || $incidents_resolved)
         <div id="accordion_incidents">
             <div class="card">
@@ -295,7 +285,7 @@
         </div>
         @endif
     </x-adminlte-card>
-    <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable >   
+    <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable >
             @php
             $heads = [
                 'Status',
@@ -333,53 +323,35 @@
                 </div>
             </div>
     </x-adminlte-card>
-    <x-adminlte-card title="Historia" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
-        <div class="timeline">
-            <div class="time-label">
-                <span class="bg-blue">{{ date('d.m.Y', strtotime($vehicle->updated_at)) }}</span>
-            </div>
+<script>
+    var events = []
+    @foreach ($reservations as $reservation)
+    events.push({
+            title: 'Rezerwacja - Użytkownik {{$reservation->user->name}}',
+            start: "{{$reservation->start_date}}",
+            end: "{{$reservation->end_date}}",
+            extendedProps: {
+                'user_name': "{{$reservation->user->name}}",
+                'user_last_name': "{{$reservation->user->last_name}}",
+                'user_id': "{{$reservation->user_id}}",
+                'vehicle_name': "{{$vehicle->name}}",
+                'vehicle_id': "{{$reservation->vehicle_id}}",
+                'vehcile_license_plate': "{{$vehicle->license_plate}}"
+            },
+            backgroundColor: '#f39c12', //yellow
+            borderColor    : '#f39c12', //yellow
+        });
+    @endforeach
+</script>
 
-            <div>
-                <i class="fas fa-save bg-yellow"></i>
-                <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($vehicle->updated_at)) }}</span>
-                    <h3 class="timeline-header"><a href="#">Aktualizacja</a></h3>
-                    <div class="timeline-body">
-                        Aktualizacja danych.
-                    </div>
-                </div>
-            </div>
-
-            <div class="time-label">
-                <span class="bg-green">{{ date('d.m.Y', strtotime($vehicle->created_at)) }}</span>
-            </div>
-
-            <div>
-                <i class="fa fa-car bg-yellow"></i>
-                <div class="timeline-item">
-                    <span class="time"><i class="fas fa-clock"></i> {{ date('m:H', strtotime($vehicle->created_at)) }}</span>
-                    <h3 class="timeline-header"><a href="#">Utworzenie pojazdu</a></h3>
-                    <div class="timeline-body">
-                        <p>Pojazd został stworzony</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <i class="fas fa-clock bg-gray"></i>
-            </div>
-        </div><!-- .timeline -->
-    </x-adminlte-card>
-@stop
-
-@section('css')
+@include('partials.reservation.eventModal')
 
 @stop
 
 @section('js')
 <script>
     /*
-    ** Calendar
+    ** Calendar re-render
     */
     $(document).ready(function(){
         var calendarEl = document.getElementById('calendar');
@@ -391,11 +363,34 @@
                 right : 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             themeSystem: 'bootstrap',
-            selectable: true,
-            events: events
+            selectable: false,
+            displayEventTime: true,
+            events: events,
+            eventClick: function(info) {
+                $('#modal_event').modal();
+                $('#modal_event_user_name')
+                    .attr('href', '/user/' + info.event.extendedProps['user_id'])
+                    .text(info.event.extendedProps['user_name'] + ' ' + info.event.extendedProps['user_last_name']);
+                $('#modal_event_vehicle')
+                    .attr('href', '/vehicles/' + info.event.extendedProps['vehicle_id'])
+                    .text(info.event.extendedProps['vehicle_name']);
+                $('#modal_event_vehcile_license_plate')
+                    .attr('href', '/vehicles/' + info.event.extendedProps['vehicle_id'])
+                    .text(info.event.extendedProps['vehcile_license_plate']);
+
+                let date_format_options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+                $('#modal_event_start')
+                    .text(info.event.start.toLocaleDateString("pl-PL", date_format_options));
+                $('#modal_event_end')
+                    .text(info.event.end.toLocaleDateString("pl-PL", date_format_options));
+            }
         });
 
-        calendar.render();
+        $('#card-calendar').click(function(){
+            setTimeout( function() {
+                calendar.render();
+            }, 1);
+        });
     });
 
     /*
@@ -405,7 +400,7 @@
         gallery: '.vehicle-gallery',
         children: 'a',
         // dynamic import is not supported in UMD version
-        pswpModule: PhotoSwipe 
+        pswpModule: PhotoSwipe
       });
       lightbox.init();
 </script>

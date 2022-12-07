@@ -17,7 +17,7 @@ class IncidentController extends Controller
         return view('incident.show', [
             'incident' => $incident,
             'vehicle'  => Vehicle::findOrFail($incident->vehicle_id),
-            'entitlements' => Auth::user()-> auth_level, 
+            'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
@@ -28,10 +28,10 @@ class IncidentController extends Controller
             $request->validate([
                 'photo' => 'mimes:jpeg,bmp,png,jpg'
             ]);
-            
+
             $new_file = $request->file('photo');
             $file_path = $new_file->store('incidents_photos');
- 
+
             $incident = new Incident([
                 "date" =>  new \DateTimeImmutable($request->date??now()),
                 "description" => $request->get('description'),
@@ -52,7 +52,7 @@ class IncidentController extends Controller
                 ->with('return_code', $code)
                 ->with('return_message', $message);
             }
-            
+
         }else{
             $code = 500;
             $message = 'Brak zdjęcia lub złe rozszerzenie';
@@ -71,7 +71,7 @@ class IncidentController extends Controller
         $incidents->load(['vehicle']);
         return view('incident.list', [
             'incidents' => $incidents,
-            'entitlements' => Auth::user()-> auth_level, 
+            'entitlements' => Auth::user()-> auth_level,
         ]);
     }
 
@@ -86,7 +86,7 @@ class IncidentController extends Controller
         return view('incident.edit', [
             'incident' => Incident::findOrFail($id),
             'vehicles' => Vehicle::all(),
-            'thisCar'  => $car 
+            'thisCar'  => $car
         ]);
     }
 
@@ -129,8 +129,8 @@ class IncidentController extends Controller
                 $message = $th->getMessage();
             }
         }else{return redirect()->back();}
-        
-        return redirect()->route('showAllIncidents')
+
+        return redirect()->route('incident-show-all')
         ->with('return_code', $code)
         ->with('return_message', $message);
     }

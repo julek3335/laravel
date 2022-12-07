@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{ $incident->created_at }}</td>
                         <td>{{ __('status.'.$incident->status) }}</td>
-                        <td>{{ $incident->vehicle->license_plate }}</td>
+                        <td>{{ isset($incident->vehicle->license_plate) ? $incident->vehicle->license_plate : 'Pojazd usunięty' }}</td>
                         <td>
                         @if($entitlements == 0 || $entitlements == 1)
                             <a href="/incident/edit/{{ $incident->id }}">

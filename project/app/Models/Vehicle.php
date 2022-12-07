@@ -36,9 +36,9 @@ class Vehicle extends Model
         return $this->hasMany(Incident::class);
     }
 
-    public function insurance(): HasOne
+    public function insurance(): HasMany
     {
-        return $this->hasOne(Insurance::class);
+        return $this->hasMany(Insurance::class);
     }
 
     public function reservations(): HasMany
@@ -61,8 +61,13 @@ class Vehicle extends Model
         return $this->BelongsTo(User::class);
     }
 
-    public function jobs():BelongsToMany
+    public function jobs():HasMany
     {
-        return  $this->belongsToMany(Job::class);
+        return  $this->hasMany(Job::class);
+    }
+
+    public function vehicleType(): BelongsTo
+    {
+        return $this->BelongsTo(VehicleType::class);
     }
 }
