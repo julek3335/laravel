@@ -21,7 +21,7 @@ services:
       - DB_USERNAME=defaultUser
       - DB_DATABASE=laravel-testdb
       - DB_PASSWORD=password
-      - FILESYSTEM_DISK=azure
+      - FILESYSTEM_DISK=public
        
     volumes:
       - './project:/app'
