@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pojazd') 
+@section('title', 'Pojazd')
 
 @section('content_header')
     <h1>Pojazd {{ $vehicle->name }}</h1>
@@ -9,6 +9,7 @@
 @section('content')
 @section('plugins.PhotoSwipe', true)
 @section('plugins.Fullcalendar', true)
+
 
     <x-adminlte-alert theme="warning" title="Przegląd olejowy" dismissable>
         Zbliża się interwał serwisu olejowego. Do <strong>30.09.2022 r.</strong> należy wykonać serwis.
@@ -34,7 +35,7 @@
         </x-adminlte-alert>
     @endif
 
-    <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+    <x-adminlte-card title="Szybki skrót" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div class="col-sm-4">
                 <x-adminlte-info-box title="Przebieg" text="125 458 km" icon="fas fa-light fa-car"/>
@@ -45,7 +46,7 @@
             </div>
         </div>
     </x-adminlte-card>
-    <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>   
+    <x-adminlte-card title="Akcje" theme="lightblue" theme-mode="outline" collapsible maximizable>
         <div class="row">
             <div clas="col-sm-12">
                 <div class="float-left m-1">
@@ -91,7 +92,7 @@
                         <strong>Numer VIN</strong> <span class="float-right">{{ $registration_card->vehicle_identification_number	}}</span>
                     </li>
                     <li class="list-group-item">
-                        <strong>Typ</strong> <span class="float-right">{{$vehicle->type}}</span>
+                        <strong>Typ</strong> <span class="float-right">{{$vehicle->vehicleType->type}}</span>
                     </li>
                     <li class="list-group-item">
                         <strong>Rok produkcji</strong> <span class="float-right">{{ $registration_card->production_year }}</span>
@@ -158,7 +159,7 @@
             <div class="row">
                 @foreach($vehicle->photos as $photo)
                 @php
-                    $photo_size = getimagesize( ltrim($photo, '/') );     
+                    $photo_size = getimagesize( ltrim($photo, '/') );
                 @endphp
                 <div class="col-sm-4 p-2">
                     <a href="{{$photo}}" data-pswp-width="{{$photo_size[0]}}" data-pswp-height="{{$photo_size[1]}}">
@@ -175,8 +176,8 @@
     <x-adminlte-card title="Kalendarz pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" id="card-calendar" maximizable>
         <div id='calendar'></div>
     </x-adminlte-card>
-   
-    <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
+
+    <x-adminlte-card title="Aktualne ubezpieczenie pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         @if($activeInsurance)
             @foreach($activeInsurance as $insurance)
                 @if( $insurance->status->name == 'ACTIVE')
@@ -224,7 +225,7 @@
         <p>Brak danych o ubezpieczeniach</p>
         @endif
     </x-adminlte-card>
-    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>   
+    <x-adminlte-card title="Usterki pojazdu" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable>
         @if($incidents_others || $incidents_resolved)
         <div id="accordion_incidents">
             <div class="card">
@@ -284,7 +285,7 @@
         </div>
         @endif
     </x-adminlte-card>
-    <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable >   
+    <x-adminlte-card title="Przejechane trasy" theme="lightblue" theme-mode="outline" collapsible="collapsed" maximizable >
             @php
             $heads = [
                 'Status',
@@ -322,25 +323,23 @@
                 </div>
             </div>
     </x-adminlte-card>
-
 <script>
     var events = []
     @foreach ($reservations as $reservation)
-        events.push({
-            title: 'Rezerwacja - Użytkownik {{$reservation->user_name}}', 
-            start: "{{$reservation->start_date}}", 
+    events.push({
+            title: 'Rezerwacja - Użytkownik {{$reservation->user->name}}',
+            start: "{{$reservation->start_date}}",
             end: "{{$reservation->end_date}}",
             extendedProps: {
-                'user_name': "{{$reservation->user_name}}",
-                'user_last_name': "{{$reservation->user_last_name}}",
-                'user_id': "{{$reservation->user_id}}", 
-                'vehicle_name': "{{$reservation->vehicle_name}}", 
+                'user_name': "{{$reservation->user->name}}",
+                'user_last_name': "{{$reservation->user->last_name}}",
+                'user_id': "{{$reservation->user_id}}",
+                'vehicle_name': "{{$vehicle->name}}",
                 'vehicle_id': "{{$reservation->vehicle_id}}",
-                'vehcile_license_plate': "{{$reservation->license_plate}}"
+                'vehcile_license_plate': "{{$vehicle->license_plate}}"
             },
             backgroundColor: '#f39c12', //yellow
             borderColor    : '#f39c12', //yellow
-            allDay: false
         });
     @endforeach
 </script>
@@ -365,8 +364,8 @@
             },
             themeSystem: 'bootstrap',
             selectable: false,
-            displayEventTime: false,
-            events: events, 
+            displayEventTime: true,
+            events: events,
             eventClick: function(info) {
                 $('#modal_event').modal();
                 $('#modal_event_user_name')
@@ -401,7 +400,7 @@
         gallery: '.vehicle-gallery',
         children: 'a',
         // dynamic import is not supported in UMD version
-        pswpModule: PhotoSwipe 
+        pswpModule: PhotoSwipe
       });
       lightbox.init();
 </script>

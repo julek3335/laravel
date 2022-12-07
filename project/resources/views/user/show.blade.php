@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <strong><i class="far fa-address-card"></i> Kategoria prawa jazdy</strong>
                         <p class="text-muted">
-                            {{$user->driving_licence_category}}
+                            {{$user->qualifications[0]->code}}
                         </p>
                         <hr>
                         <strong><i class="far fa-envelope-open"></i> Email</strong>
@@ -68,7 +68,6 @@
                                     @include('partials.user.fields')
                                 </form>
                             </div>
-
                             <!-- rezerwacje -->
                             <div class="tab-pane active" id="reservations">
                                 <div id="calendar"></div>
@@ -76,20 +75,19 @@
                                     var reservations = []
                                     @foreach($reservations as $reservation)
                                     reservations.push({
-                                        title: 'Rezerwacja: {{$reservation->user_name}} {{$reservation->user_last_name}}, Pojazd: {{$reservation->vehicle_name}}',
+                                        title: 'Rezerwacja: {{$reservation->user->name}} {{$reservation->user->last_name}}, Pojazd: {{$reservation->vehicle->license_plate}}',
                                         start: "{{$reservation->start_date}}",
                                         end: "{{$reservation->end_date}}",
                                         extendedProps: {
-                                            'user_name': "{{$reservation->user_name}}",
-                                            'user_last_name': "{{$reservation->user_last_name}}",
-                                            'user_id': "{{$reservation->user_id}}", 
-                                            'vehicle_name': "{{$reservation->vehicle_name}}", 
-                                            'vehicle_id': "{{$reservation->vehicle_id}}",
-                                            'vehcile_license_plate': "{{$reservation->license_plate}}"
+                                            'user_name': "{{$user->name}}",
+                                            'user_last_name': "{{$user->last_name}}",
+                                            'user_id': "{{$user->id}}", 
+                                            'vehicle_name': "{{$reservation->vehicle->name}}", 
+                                            'vehicle_id': "{{$reservation->vehicle->id}}",
+                                            'vehcile_license_plate': "{{$reservation->vehicle->license_plate}}"
                                         },
                                         backgroundColor: '#f39c12', //yellow
                                         borderColor: '#f39c12', //yellow
-                                        allDay: false
                                     });
                                     @endforeach
                                 </script>
@@ -160,7 +158,7 @@
             },
             themeSystem: 'bootstrap',
             selectable: true,
-            displayEventTime: false,
+            displayEventTime: true,
             events: reservations, 
             eventClick: function(info) {
                 $('#modal_event').modal();

@@ -102,7 +102,7 @@ class ReservationController extends Controller
                 ->with('return_code', $code)
                 ->with('return_message', $message);
         } else {
-            return redirect('/dashboard/')
+            return redirect('/')
                 ->with('return_code', 500)
                 ->with('return_message', $message);
         }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamp('start_time')->default(now());
             $table->timestamp('end_time')->nullable();
             $table->double('distance')->default(0);
-            $table->text('description')->default('');
+            $table->string('description')->default('');
             $table->timestamps();
         });
     }

@@ -15,7 +15,10 @@ $dataTableActiveJobsConfig = [
     @foreach ($userJobs as $key=>$job)
         <tr>
             <td>{{ $job->id }}</td>
-            <td>{{ $job->name }}</td>
+            <td>
+                <a href="/vehicles/{{ $job->vehicle_id }}">  
+                    {{ $job->vehicle->license_plate }}</td>
+                </a>
             <td>{{ $job->start_time }}</td>
             <td>
                 <a href="/jobs/{{ $job->id }}">

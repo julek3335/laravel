@@ -29,7 +29,6 @@
          },
          backgroundColor: '#f39c12', //yellow
          borderColor    : '#f39c12', //yellow
-         allDay: false
         });
     @endforeach
 </script>
@@ -51,7 +50,7 @@
             },
             themeSystem: 'bootstrap',
             selectable: false,
-            displayEventTime: false,
+            displayEventTime: true,
             events: reservations, 
             eventClick: function(info) {
                 $('#modal_event').modal();
