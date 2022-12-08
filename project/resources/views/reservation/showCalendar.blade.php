@@ -12,6 +12,8 @@
 <x-adminlte-card title="Kalendarz rezerwacji" theme="lightblue" theme-mode="outline" collapsible maximizable>
     <div id="calendar"></div>
 </x-adminlte-card>
+
+{{dump($reservations)}}
 <script>
     var reservations = []
     @foreach ($reservations as $reservation)
@@ -69,6 +71,8 @@
                     .text(info.event.start.toLocaleDateString("pl-PL", date_format_options));
                 $('#modal_event_end')
                     .text(info.event.end.toLocaleDateString("pl-PL", date_format_options));
+                
+                
             }
         });
 
