@@ -95,7 +95,7 @@ class ReservationController extends Controller
             $newReservation->vehicle_id = $req->vehicle_id;
             $newReservation->save();
             $code = 200;
-            $message = 'Rezervacja została dodana';
+            $message = 'Rezerwacja została dodana';
             $id = $newReservation->id;
 
             return redirect()->route('reservation-calendar-all')
