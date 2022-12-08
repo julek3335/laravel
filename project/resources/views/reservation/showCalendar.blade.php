@@ -13,7 +13,6 @@
     <div id="calendar"></div>
 </x-adminlte-card>
 
-{{dump($reservations)}}
 <script>
     var reservations = []
     @foreach ($reservations as $reservation)
