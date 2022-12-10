@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\ServiceEventStatusEnum;
 use App\Models\Service;
+use App\Models\ServiceEvent;
 use App\Notifications\ServiceTodayNotification;
 use Illuminate\Console\Command;
 
@@ -29,14 +31,23 @@ class ServiceActionStartCommand extends Command
      */
     public function handle()
     {
-        $services = Service::whereDate('next_time', '=',now())->get();
+        $services = Service::whereDate('next_time', '<=', now())->get();
         $services->load('vehicles');
-        foreach ($services as $service){
+        foreach ($services as $service) {
+            $currentServiceDate = $service->next_time;
             $this->changeDates($service);
-            $cars = $service->vehicles;
+            $cars = $service->vehicles()->get();
             $cars->load('user');
-            foreach ($cars as $car){
-               $car->user->notify(new ServiceTodayNotification('FIX your car!! ASAP'));
+            foreach ($cars as $car) {
+                ServiceEvent::create(
+                    [
+                        'vehicle_id' => $car->id,
+                        'service_id' => $service->id,
+                        'event_date' => $currentServiceDate,
+                        'status' => ServiceEventStatusEnum::WAITING
+                    ]
+                );
+                $car->user->notify(new ServiceTodayNotification('FIX your car!! ASAP'));
             }
         }
         return 0;
