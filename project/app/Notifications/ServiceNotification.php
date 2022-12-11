@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\Service;
+use App\Models\Vehicle;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,16 +13,18 @@ class ServiceNotification extends Notification
 {
     use Queueable;
 
-    private $message;
+    private Service $service;
+    private Vehicle $vehicle;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct(Service $service,Vehicle $vehicle)
     {
-        $this->message = $message;
+        $this->service = $service;
+        $this->vehicle = $vehicle;
     }
 
     /**
@@ -53,9 +57,9 @@ class ServiceNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->line('Zbliża się termin realizacji akcji serwisowej '.$this->service->name)
+            ->line('Termin realizacji '.$this->service->next_time)
+            ->line('Dla pojazdu o numerze rejestracyjnym '.$this->vehicle->license_plate);
     }
 
     /**
@@ -66,12 +70,6 @@ class ServiceNotification extends Notification
      */
     public function toDatabase($notifiable)
     {
-        // return [
-        //     'message' => $this->message
-        // ];
-        $preferences = json_decode($notifiable->notification);
-        return [
-            'message' => $preferences->vehicle[0]->email
-        ];
+
     }
 }
