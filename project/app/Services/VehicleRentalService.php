@@ -17,17 +17,18 @@ class VehicleRentalService
     {
         $vehicle = $this->vehicleIsFree($vehicleId, $userId);
         if (is_null($vehicle)) {
-            return null;
+            throw new \Error('Pojazd nie jest zajęty lub zarezerwowany przez kogoś innego', 400);
         }
 
 
         $user = $this->userIsReady($userId);
         if (is_null($user)) {
-            return null;
+            throw new \Error('Urzytkownik nie jest wolny', 400);
         }
 
         if (! $this->verifyQualification($user, $vehicle)) {
-            return null;
+            throw new \Error('Brak uprawnień', 400);
+
         }
 
         $job = Job::create(

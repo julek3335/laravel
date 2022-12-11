@@ -44,7 +44,13 @@ class JobController extends Controller
             'start_time' => new \DateTimeImmutable($request->start_time),
         ];
 
-        $job = $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id, $jobData);
+        try{
+            $job = $this->rentalService->rentVehicle($request->vehicle_id, Auth::user()->id, $jobData);
+        } catch (\Error $error){
+            return redirect('/jobs' )
+                ->with('return_code', $error->getCode())
+                ->with('return_message', $error->getMessage());
+        }
 
         if ($job !== null) {
             $code = 200;
@@ -156,7 +162,7 @@ class JobController extends Controller
         $gpx = new phpGPX();
 
         $url = Storage::url('routes_files/'.$job -> route_file);
-        
+
         // $gpx_file = $gpx->load($url);
         if(env("FILESYSTEM_DISK") == "public"){$gpx_file = $gpx->load('storage/routes_files/'.$job -> route_file);}
         if(env("FILESYSTEM_DISK") == "azure"){$gpx_file = $gpx->load($url);}
