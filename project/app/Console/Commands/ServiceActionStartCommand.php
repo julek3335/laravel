@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\ServiceEvent;
 use App\Notifications\ServiceTodayNotification;
 use Illuminate\Console\Command;
+use Throwable;
 
 class ServiceActionStartCommand extends Command
 {
@@ -47,7 +48,11 @@ class ServiceActionStartCommand extends Command
                         'status' => ServiceEventStatusEnum::WAITING
                     ]
                 );
-                $car->user->notify(new ServiceTodayNotification('FIX your car!! ASAP'));
+                try {
+                    $car->user->notify(new ServiceTodayNotification('FIX your car!! ASAP'));
+                } catch (Throwable $exception){
+                    $this->alert($exception->getMessage());
+                }
             }
         }
         return 0;

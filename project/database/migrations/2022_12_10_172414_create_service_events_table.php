@@ -16,12 +16,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('service_events', function (Blueprint $table) {
+            $table->id();
             $table->date('event_date');
             $table->foreignIdFor(Vehicle::class);
             $table->foreignIdFor(Service::class);
             $table->string('status', 30);
             $table->text('note')->default('');
-            $table->primary(['vehicle_id', 'service_id', 'event_date']);
+            $table->index(['vehicle_id', 'service_id', 'event_date']);
             $table->timestamps();
         });
     }

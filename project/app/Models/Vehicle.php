@@ -70,4 +70,10 @@ class Vehicle extends Model
     {
         return $this->BelongsTo(VehicleType::class);
     }
+
+    public function serviceEvents(): HasMany
+    {
+        return $this->hasMany(ServiceEvent::class);
+    }
+
 }
