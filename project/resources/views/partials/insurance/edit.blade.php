@@ -6,7 +6,7 @@
                 @csrf
                 <x-adminlte-input name="policy_number" type="number" label="Numer polisy" placeholder="Number polisy" value="{{ $insurance->policy_number }}" disable-feedback required/>
                 @php
-                $config = ['format' => 'DD.MM.YYYY HH:mm'];
+                $config = ['format' => 'YYYY-MM-DD'];
                 @endphp
                 <x-adminlte-input-date name="expiration_date" :config="$config" label="Data wygaśnięcia" value="{{ $insurance->expiration_date }}" disable-feedback required>
                     <x-slot name="appendSlot">

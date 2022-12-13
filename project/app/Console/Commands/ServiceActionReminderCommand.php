@@ -46,7 +46,7 @@ class ServiceActionReminderCommand extends Command
             $cars = $service->vehicles;
             $cars->load('user');
             foreach ($cars as $car){
-                $car->user->notify(new ServiceNotification('FIX your car!! Incoming Service'));
+                $car->user->notify(new ServiceNotification($service,$car));
             }
         }
     }

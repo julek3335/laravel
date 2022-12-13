@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\ServiceEventController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\IncidentController;
@@ -42,6 +43,12 @@ Route::group(['middleware'=>'auth'],function(){
         Route::get('/vehicles/{id}', 'show')->name('vehicle-details');
         Route::get('/calendar/{id}', 'showCalendar')->name('vehicle-calendar-show');
     });
+
+    Route::controller(ServiceEventController::class)->group(
+        function () {
+            Route::post('/service/event/finish', 'finishServiceEvent')->name('service-event-finish');
+        }
+    );
 
     Route::controller(JobController::class)->group(function () {
         Route::post('/rent', 'startJob')->name('job-start');
@@ -113,5 +120,7 @@ Route::group(['middleware'=>'auth'],function(){
     });
 });
 
-
+Route::get('/map', function () {
+    return view('map.show');
+});
 require __DIR__.'/auth.php';
