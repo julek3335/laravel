@@ -24,7 +24,6 @@ class ServiceController extends Controller
     {
         /** @var Service $service */
         $service = Service::findOrFail($id);
-        dd($service->serviceEvents()->get());
         return view('service.show', [
             'service' => $service,
             'services_vehicles' => $service->vehicles()->get(),
