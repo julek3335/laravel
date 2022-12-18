@@ -63,7 +63,8 @@ class VehicleController extends Controller
             'assignedUser' => $vehicle->user()->first(),
             'incidents_count' => $vehicle->incidents()->count(),
             'jobs_count' => $vehicle->jobs()->count(),
-            'avaibleUsers' => User::all()
+            'avaibleUsers' => User::all(),
+            'serviceEvents' => $vehicle->serviceEvents()->get()
         ]);
     }
 

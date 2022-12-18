@@ -22,11 +22,13 @@ class ServiceController extends Controller
 
     public function show($id)
     {
+        /** @var Service $service */
+        $service = Service::findOrFail($id);
+        dd($service->serviceEvents()->get());
         return view('service.show', [
-            'service' => Service::findOrFail($id),
-            'services_vehicles' => DB::table('service_vehicle')
-                ->join('vehicles', 'service_vehicle.vehicle_id', '=', 'vehicles.id')
-                ->where('service_id', $id)->get()
+            'service' => $service,
+            'services_vehicles' => $service->vehicles()->get(),
+            'serviceEvents' => $service->serviceEvents()->get()
         ]);
     }
 
