@@ -24,7 +24,7 @@ class EndJobRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required',
+            'description' => 'nullable|string',
             'end_odometer' => 'required',
             'end_time' => 'required'
         ];
