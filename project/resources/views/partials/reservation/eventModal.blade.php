@@ -20,6 +20,20 @@
         </li>
     </ul>
     <x-slot name="footerSlot">
+        <x-adminlte-button theme="danger" label="Usuń wydarzenie" data-toggle="modal" data-target="#modal_event_delete" class="mr-auto" icon="fa fa-trash-can"/>
         <x-adminlte-button theme="danger" label="Zamknij" data-dismiss="modal"/>
     </x-slot>
 </x-adminlte-modal>
+
+<form id="form_event_delete" action="" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('DELETE')
+    <x-adminlte-modal id="modal_event_delete" title="Potwierdź usunięcie wydarzenia" theme="danger" icon="fas fa-bolt">
+        Czy na pewno chcesz usunąć wydarzenie?
+        <span id="event_delete_details"></span>
+        <x-slot name="footerSlot">
+            <x-adminlte-button theme="success" label="Potwierdź" data-dismiss="modal" type="submit" class="mr-auto" icon="fas fa-save"/>
+            <x-adminlte-button theme="danger" label="Zamknij" data-dismiss="modal"/>
+        </x-slot>
+    </x-adminlte-modal>
+</form>

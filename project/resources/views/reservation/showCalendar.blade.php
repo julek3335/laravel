@@ -21,6 +21,7 @@
          start: "{{$reservation->start_date}}", 
          end: "{{$reservation->end_date}}",
          extendedProps: {
+            'reservation_id' : "{{$reservation->id}}",
             'user_name': "{{$reservation->user_name}}",
             'user_last_name': "{{$reservation->user_last_name}}",
             'user_id': "{{$reservation->user_id}}", 
@@ -33,6 +34,8 @@
         });
     @endforeach
 </script>
+
+{{dd($reservation)}}
 
 @include('partials.reservation.eventModal')
 
@@ -71,7 +74,8 @@
                 $('#modal_event_end')
                     .text(info.event.end.toLocaleDateString("pl-PL", date_format_options));
                 
-                
+                //Render delete event modal
+                $('#form_event_delete').attr('action', '/reservations/' + info.event.extendedProps['resrvation_id'] );
             }
         });
 
