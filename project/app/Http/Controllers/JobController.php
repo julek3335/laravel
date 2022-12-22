@@ -113,6 +113,8 @@ class JobController extends Controller
         $id = $request->id;
         $gpx_data = $request->gpx_data;
 
+        // dd($gpx_data);
+
 
         $job = Job::findOrFail($id);
         if( is_null( $job->route_file ) ){
@@ -135,14 +137,15 @@ class JobController extends Controller
             $gpx_file->tracks[] = $track;
 
 
-            $path = "routes_files/route".$id.".gpx";
+            $filename = sha1("route".$id).".gpx";
+            $path = "routes_files/".$filename;
             $document = $gpx_file->toXML();
             $string = $document->saveXML();
             Storage::disk(env("FILESYSTEM_DISK"))->put($path, $string);
 
 
             //save filename to Job
-            $job -> route_file = "route".$id.".gpx";
+            $job -> route_file = $filename;
 
             try {
                 $job -> update();
@@ -153,7 +156,7 @@ class JobController extends Controller
                 $message = $th->getMessage();
             }
 
-            return Storage::url('routes_files/'.$job -> route_file);
+            // return Storage::url('routes_files/'.$job -> route_file);
         }
 
 
@@ -175,6 +178,7 @@ class JobController extends Controller
         // create new segment
         $segment = new Segment();
 
+        var_dump($request);
 
         foreach ($gpx_data as $gpx_point)
         {
@@ -182,7 +186,7 @@ class JobController extends Controller
             $point = new Point(Point::TRACKPOINT);
             $point->latitude = $gpx_point['latitude'];
             $point->longitude = $gpx_point['longitude'];
-            $point->elevation = $gpx_point['elevation'];
+            // $point->elevation = $gpx_point['elevation'];
             $point->time = $gpx_point['time'];
 
             $segment->points[] = $point;
@@ -194,22 +198,19 @@ class JobController extends Controller
         $track->recalculateStats();
 
 
-        $path = "routes_files/route".$id.".gpx";
+        $path = "routes_files/".$job -> route_file;
         $document = $gpx_file->toXML();
         $string = $document->saveXML();
-        Storage::disk(env("FILESYSTEM_DISK"))->put($path, $string);
+
+        try{
+            Storage::disk(env("FILESYSTEM_DISK"))->put($path, $string);
+            dd("działa");
+
+        }catch(\Throwable $th){dd("nie zapisało");}
 
         //save filename to Job
-        $job -> route_file = "route".$id.".gpx";
+        // $job -> route_file = "route".$id.".gpx";
 
-        try {
-            $job -> update();
-            $code = 200;
-            $message = 'Trasa została utworzona';
-        } catch (\Throwable $th) {
-            $code = 400;
-            $message = $th->getMessage();
-        }
         return Storage::url('routes_files/'.$job -> route_file);
 
     }
