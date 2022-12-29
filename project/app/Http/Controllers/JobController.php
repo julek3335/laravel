@@ -110,14 +110,22 @@ class JobController extends Controller
 
     public function route(Request $request){
 
+        error_log('enter route');
+
         $id = $request->id;
         $gpx_data = $request->gpx_data;
+
+        if( is_null($gpx_data) )
+        {
+            error_log('request is empty');
+            return "error request is empty";}
 
         // dd($gpx_data);
 
 
         $job = Job::findOrFail($id);
         if( is_null( $job->route_file ) ){
+            error_log('start creatin new file');
 
             // GpxFile contains data and handles serialization of objects
             $gpx_file = new GpxFile();
@@ -155,10 +163,13 @@ class JobController extends Controller
                 $code = 400;
                 $message = $th->getMessage();
             }
+        error_log('end creating route file');
+
 
             // return Storage::url('routes_files/'.$job -> route_file);
         }
 
+        error_log('start adding points');
 
         ///if file allready exists
 
@@ -174,11 +185,11 @@ class JobController extends Controller
         // get last track from file
         $track = end($gpx_file->tracks);
 
+        error_log('last track');
 
         // create new segment
         $segment = new Segment();
 
-        var_dump($request);
 
         foreach ($gpx_data as $gpx_point)
         {
@@ -187,7 +198,7 @@ class JobController extends Controller
             $point->latitude = $gpx_point['latitude'];
             $point->longitude = $gpx_point['longitude'];
             // $point->elevation = $gpx_point['elevation'];
-            $point->time = $gpx_point['time'];
+            // $point->time = $gpx_point['time'];
 
             $segment->points[] = $point;
         }
@@ -204,9 +215,9 @@ class JobController extends Controller
 
         try{
             Storage::disk(env("FILESYSTEM_DISK"))->put($path, $string);
-            dd("działa");
+            error_log('punkty zapsane');
 
-        }catch(\Throwable $th){dd("nie zapisało");}
+        }catch(\Throwable $th){error_log('punkty zapsane'.$th);}
 
         //save filename to Job
         // $job -> route_file = "route".$id.".gpx";
