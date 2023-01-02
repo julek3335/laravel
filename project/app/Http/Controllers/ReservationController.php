@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\Reservation;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\ReservationCreatedRequest;
 
 class ReservationController extends Controller
 {
@@ -45,7 +46,7 @@ class ReservationController extends Controller
         return view('reservation.showVehicleReservations', ['reservations' => Reservation::all()->where('vehicle_id', $req -> vehicle_id)]);
     }
 
-    public function created(Request $req){
+    public function created(ReservationCreatedRequest $req){
 
         // jezeli poziom uzytkownika edytor lub admin pobiera userId z widoku jezeli poziom uzytkownik pobiera id obecnie zalogowanego uzytkownika
         if(Auth::user()-> auth_level == 0 || Auth::user()-> auth_level ==1)

@@ -9,6 +9,7 @@ use App\Services\ServiceHandlingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -22,17 +23,22 @@ class ServiceController extends Controller
 
     public function show($id)
     {
+        /** @var Service $service */
+        $service = Service::findOrFail($id);
         return view('service.show', [
-            'service' => Service::findOrFail($id),
-            'services_vehicles' => DB::table('service_vehicle')
-                ->join('vehicles', 'service_vehicle.vehicle_id', '=', 'vehicles.id')
-                ->where('service_id', $id)->get()
+            'service' => $service,
+            'services_vehicles' => $service->vehicles()->get(),
+            'serviceEvents' => $service->serviceEvents()->get(),
+            'entitlements' => Auth::user()-> auth_level
         ]);
     }
 
     public function showAll()
     {
-        return view('service.list', ['services' => Service::all()->sortBy("created_at")]);
+        return view('service.list', [
+            'services' => Service::all()->sortBy("created_at"),
+            'entitlements' => Auth::user()-> auth_level
+        ]);
     }
 
     public function prepareAdd()

@@ -26,11 +26,11 @@ class DashboardController extends Controller
         $jobs->load('vehicle');
         return view('dashboard', [
             'availableVehicles' => $vehicles,
-            'numberOfVehicles' => $vehicles->count(),//można policzyć na froncie
-            'numberOfUsers' => $users->count(),//można policzyć na froncie
+            'numberOfVehicles' => $vehicles,
+            'numberOfUsers' => $users,
             'avaibleUsers' => $users,
-            'numberOfIncidents' => Incident::all()->count(),
-            'numberOfServices' => Service::all()->count(),
+            'numberOfIncidents' => Incident::all(),
+            'numberOfServices' => Service::all(),
             'entitlements' => Auth::user()->auth_level,
             'userVehicles' => Vehicle::where('user_id', '=', $userId),
 

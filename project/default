@@ -25,6 +25,9 @@ server {
         log_not_found off;
     }
 
+    # set client body size to 2M #
+    client_max_body_size 2M;
+
     # Add locations of phpmyadmin here.
     location ~ [^/]\.php(/|$) {
         fastcgi_split_path_info ^(.+?\.php)(|/.*)$;

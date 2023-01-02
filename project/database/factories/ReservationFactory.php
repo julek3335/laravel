@@ -14,7 +14,8 @@ class ReservationFactory extends Factory
         $start_date = fake()->dateTimeBetween('-15 week', '+15 week');
         return [
             'start_date' => $start_date,
-            'end_date' => date_add($start_date,date_interval_create_from_date_string("2 days")),
+            // 'end_date' => date_add($start_date,date_interval_create_from_date_string("2 days")),
+            'end_date' => fake()->dateTimeInInterval($start_date),
             'user_id' => fake()->numberBetween(1, 125),
         ];
     }

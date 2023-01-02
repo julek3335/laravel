@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EndJobRequest extends FormRequest
+class ReservationCreatedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class EndJobRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'nullable|string',
-            'end_odometer' => 'required',
-            'end_time' => 'required'
+            'start_date'=> 'date_format:Y-m-d H:i:s',
+            'end_date'=> 'date_format:Y-m-d H:i:s|after_or_equal:start_date',
         ];
     }
 }
