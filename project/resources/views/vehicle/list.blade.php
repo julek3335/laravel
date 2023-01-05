@@ -34,7 +34,7 @@
                     <tr>
                         <td>{{ $vehicle->name }}</td>
                         <td>{{ $vehicle->type }}</td>
-                        <td>{{ $vehicle->status->name }}</td>
+                        <td>{{ __('status.'.$vehicle->status->name) }}</td>
                         <td>{{ $vehicle->license_plate }}</td>
                         <td>
                         @if($entitlements == 0 || $entitlements == 1)

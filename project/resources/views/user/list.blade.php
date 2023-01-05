@@ -35,7 +35,7 @@
                         <td>{{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->qualifications[0]->code }}</td>
-                        <td>{{ $user->status->name }}</td>
+                        <td>{{ __('status.'.$user->status->name) }}</td>
                         <td>
                         @if($entitlements == 0 || $entitlements == 1)
                             <a href="/user/edit/{{ $user->id }}">
