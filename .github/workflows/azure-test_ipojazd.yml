@@ -64,7 +64,7 @@ jobs:
           name: php-app
 
       - name: unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip -d project
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
