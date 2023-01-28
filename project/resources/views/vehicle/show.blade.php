@@ -209,7 +209,7 @@
                         </div>
                         <div class="col-sm-5 offset-sm-1">
                             <ul class="mt-4 list-group list-group-unbordered">
-                                <img src="{{asset('storage/insurance_photos/'. $insurance->photo)}}" class="img-fluid p-4">
+                                <img src="{{Storage::url('insurance_photos/'.$insurance -> photo)}}" class="img-fluid p-4">
                             </ul>
                         </div>
                         @if($entitlements == 0 || $entitlements == 1)
@@ -245,7 +245,7 @@
                             @include('partials.incident.show')
                         </div>
                         <div class="col-sm-6">
-                            <img src="{{asset('storage/incidents_photos/'. $incident->photo)}}" class="img-fluid p-4">
+                            <img src="{{Storage::url('incidents_photos/'.$incident -> photo)}}" class="img-fluid p-4">
                         </div>
                     </div>
                     @endforeach
@@ -269,7 +269,7 @@
                             @include('partials.incident.show')
                         </div>
                         <div class="col-sm-6">
-                            <img src="{{asset('storage/incidents_photos/'. $incident->photo)}}" class="img-fluid p-4">
+                            <img src="{{Storage::url('incidents_photos/'.$incident -> photo)}}" class="img-fluid p-4">
                         </div>
                     </div>
                     @endforeach
